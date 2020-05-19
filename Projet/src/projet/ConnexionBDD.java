@@ -21,10 +21,12 @@ import javax.swing.JTextField;
  */
 public class ConnexionBDD implements ActionListener  {
     //public Connection conn;
-    
+    int typeU; // 1 = étudiant , 2= Enseignant 
     static JTextField login1,mdp1 ;  
     Statement statement;
     ResultSet resultat;
+    ResultSet resultat1;
+    ResultSet resultat2;
     
     
       static Connection myConnection; 
@@ -42,16 +44,37 @@ public class ConnexionBDD implements ActionListener  {
             try{
                 System.out.print("allez la");
                 statement = myConnection.createStatement();
-                String sql = "SELECT Nom FROM Prenom WHERE Nom ='"+login+"'";
+                String sql = "SELECT * FROM utilisateur WHERE Mail ='"+login+"'";
                 resultat = statement.executeQuery(sql);
                  
                 if(resultat.next()){
                      
-                    String motDePasse = resultat.getString(1);
+                    String motDePasse = resultat.getString("Mdp");
          
                 if(motDePasse.equals(mdp)){
              
                     JOptionPane.showMessageDialog(null,"Connexion réussie ! ","Success",JOptionPane.PLAIN_MESSAGE);
+                    String ID_Utilisateur = resultat.getString("ID");
+                    System.out.print("ID de l'utilisateur = "+ ID_Utilisateur);
+                    
+                    statement = myConnection.createStatement();
+                    String sql1 = "SELECT * FROM etudiant WHERE ID_Utilisateur ='"+ID_Utilisateur+"'";
+                    resultat1 = statement.executeQuery(sql1);
+                    if(resultat1.next()){//si l'utilisateur est un étudiant
+                     
+                    Etudiant nouveau = new Etudiant();
+                    }else  {
+                    
+                    statement = myConnection.createStatement();
+                    String sql2 = "SELECT * FROM Enseignant WHERE ID_Utilisateur ='"+ID_Utilisateur+"'";
+                    resultat2 = statement.executeQuery(sql2);
+                    if(resultat2.next()){ //Si l'utilsateur est un enseignant
+                     
+                    Enseignant nouveau = new Enseignant();
+                    }
+                    
+                    }
+                    
                 }else {
                      
                     JOptionPane.showMessageDialog(null,"Mot de passe incorrect ! ","Error",1);

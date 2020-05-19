@@ -5,10 +5,17 @@
  */
 package projet;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author lele1
  */
 public class Enseignant extends Utilisateur {
+    private  String nom;
     
+    public Enseignant () throws SQLException
+    { super();
+      System.out.print("Coucou l'enseignant");
+    }
 }
