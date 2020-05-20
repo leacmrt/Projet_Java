@@ -16,6 +16,7 @@ public class Enseignant extends Utilisateur {
     private int ID_Enseignant;
     private int[] ID_Cours;//car un prof peut avoir plusieurs cours 
     
+    
     public Enseignant () throws SQLException
     { super();
       

@@ -35,7 +35,7 @@ public class ConnexionBDD implements ActionListener  {
       
  
       
-      public void verification(String login, String mdp)
+      public void verification(Authentification connct,String login, String mdp)
       {
           
          myConnection = init();
@@ -50,9 +50,11 @@ public class ConnexionBDD implements ActionListener  {
                     String motDePasse = resultat.getString("Mdp");
          
                 if(motDePasse.equals(mdp)){
+                   
                     
-                    JOptionPane.showMessageDialog(null,"Connexion réussie ! ","Success",JOptionPane.PLAIN_MESSAGE);
-                    
+                    JOptionPane.showMessageDialog(null,"Connexion réussie ! Bienvenue "+login,"Success",JOptionPane.PLAIN_MESSAGE);
+                    connct.dispose(); //on ferme la fenetre d'avant
+                   
                     ID= resultat.getInt("ID");
                     Email=resultat.getString("Mail");
                     Passwd= resultat.getString("Mdp");

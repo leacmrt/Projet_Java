@@ -31,11 +31,13 @@ public class Authentification extends JFrame {
     //JPasswordField mdp1;
     JButton valider,annuler;
     String Login, motdepasse;
+    ConnexionBDD op;
     
          
-    public Authentification(){
+    public Authentification() throws SQLException{
          
         super();
+        this.op = new ConnexionBDD();
         this.setTitle(" CONNEXION WEBAPPS ");
         this.setSize(new Dimension(400,200));
         this.setLocationRelativeTo(null);
@@ -86,7 +88,7 @@ public class Authentification extends JFrame {
  
         class ValiderListener extends JFrame implements ActionListener{
          
-            @Override
+            //@Override
             public void actionPerformed(ActionEvent e) {
                     ActionEvent a = null;
                     String login2=login1.getText();
@@ -94,20 +96,15 @@ public class Authentification extends JFrame {
                     System.out.println("Bonjour");
                     System.out.println("login=" + login2);
                     System.out.println("password=" + password);
+                   
                     
                     
-                    
-                    //logger.login1(login1.getText(), mdp1.getText());
-                    ConnexionBDD ta;
-                try {
-                    ta = new ConnexionBDD();
-                    ta.verification(login2,password);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Authentification.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                //logger.login1(login1.getText(), mdp1.getText());
+                op.verification(Authentification.this,login2,password);
                     
             }
-             
+
+          
         }
         
         
