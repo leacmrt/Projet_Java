@@ -14,9 +14,17 @@ import java.sql.SQLException;
 public class Etudiant extends Utilisateur {
     
     private  String nom;
+    private int ID_Etudiant, ID_Groupe;
     
     public Etudiant () throws SQLException
     { super();
-      System.out.print("Coucou l'étudiant");
+      
+    }
+    public Etudiant(int NewID,String NewEmail,String NewPass, String NewNom,String NewPrenom,String NewDroit) throws SQLException
+    {
+       
+      super(NewID,NewEmail,NewPass,NewNom,NewPrenom,NewDroit);
+      NewID= ID_Etudiant;
+      System.out.println("Coucou l'étudiant ");
     }
 }

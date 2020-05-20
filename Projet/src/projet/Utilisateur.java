@@ -13,12 +13,9 @@ import java.sql.SQLException;
  */
 public class Utilisateur {
 
-    /**
-     * @param args the command line arguments
-     */
- 
+  
    private  int ID;
-   private String EMAIL ,PASSWD, Nom, PRENOM, DROIT;
+   private String Email ,Passwd, Nom, Prenom, Droit;
    public ConnexionBDD connec;
    
    public Utilisateur() throws SQLException
@@ -26,12 +23,20 @@ public class Utilisateur {
        connec = new ConnexionBDD();
    } //constructeur par défaut 
    
-   //faire un autre contruscteur qui récupère donner avec la BDD
+   
+    public Utilisateur(int NewID,String NewEmail,String NewPass, String NewNom,String NewPrenom,String NewDroit) throws SQLException
+   { 
+       NewID=ID;
+       NewEmail=Email;
+       NewPass=Passwd;
+       NewNom=Nom;
+       NewPrenom=Prenom;
+       NewDroit=Droit;
+       System.out.println("Bonjour nouvel utilisateur"); //test affichage
+      
+   } //constructeur Normal
+   
     
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException, SQLException {
-        //Utilisateur essai= new Utilisateur();
-        Authentification essai1 = new Authentification();
-    }
     
     public void connexion()
     {

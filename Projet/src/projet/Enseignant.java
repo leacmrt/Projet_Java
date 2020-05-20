@@ -12,10 +12,19 @@ import java.sql.SQLException;
  * @author lele1
  */
 public class Enseignant extends Utilisateur {
-    private  String nom;
+    private String nom;
+    private int ID_Enseignant;
+    private int[] ID_Cours;//car un prof peut avoir plusieurs cours 
     
     public Enseignant () throws SQLException
     { super();
-      System.out.print("Coucou l'enseignant");
+      
+    }
+    
+    public Enseignant(int NewID,String NewEmail,String NewPass, String NewNom,String NewPrenom,String NewDroit) throws SQLException
+    {
+      super(NewID,NewEmail,NewPass,NewNom,NewPrenom,NewDroit);
+      NewID = ID_Enseignant;
+      System.out.println("Coucou l'enseignant");//test affichage 
     }
 }

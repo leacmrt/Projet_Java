@@ -20,29 +20,27 @@ import javax.swing.JTextField;
  * @author lele1
  */
 public class ConnexionBDD implements ActionListener  {
-    //public Connection conn;
+    
     int typeU; // 1 = étudiant , 2= Enseignant 
     static JTextField login1,mdp1 ;  
     Statement statement;
-    ResultSet resultat;
-    ResultSet resultat1;
-    ResultSet resultat2;
+    ResultSet resultat,resultat1,resultat2;
+    int ID;
+    String Email ,Passwd, Nom, Prenom, Droit;
     
     
       static Connection myConnection; 
       
-      public ConnexionBDD() throws SQLException{
-          System.out.print("Coucou");         
-      }
+      public ConnexionBDD() throws SQLException{}
       
-     
+ 
       
       public void verification(String login, String mdp)
       {
           
          myConnection = init();
             try{
-                System.out.print("allez la");
+              
                 statement = myConnection.createStatement();
                 String sql = "SELECT * FROM utilisateur WHERE Mail ='"+login+"'";
                 resultat = statement.executeQuery(sql);
@@ -52,28 +50,35 @@ public class ConnexionBDD implements ActionListener  {
                     String motDePasse = resultat.getString("Mdp");
          
                 if(motDePasse.equals(mdp)){
-             
+                    
                     JOptionPane.showMessageDialog(null,"Connexion réussie ! ","Success",JOptionPane.PLAIN_MESSAGE);
-                    String ID_Utilisateur = resultat.getString("ID");
-                    System.out.print("ID de l'utilisateur = "+ ID_Utilisateur);
                     
-                    statement = myConnection.createStatement();
-                    String sql1 = "SELECT * FROM etudiant WHERE ID_Utilisateur ='"+ID_Utilisateur+"'";
-                    resultat1 = statement.executeQuery(sql1);
-                    if(resultat1.next()){//si l'utilisateur est un étudiant
-                     
-                    Etudiant nouveau = new Etudiant();
-                    }else  {
+                    ID= resultat.getInt("ID");
+                    Email=resultat.getString("Mail");
+                    Passwd= resultat.getString("Mdp");
+                    Droit=resultat.getString("Droit");
+                    Prenom= resultat.getString("Prenom");
+                    Nom=resultat.getString("Nom");
                     
-                    statement = myConnection.createStatement();
-                    String sql2 = "SELECT * FROM Enseignant WHERE ID_Utilisateur ='"+ID_Utilisateur+"'";
-                    resultat2 = statement.executeQuery(sql2);
-                    if(resultat2.next()){ //Si l'utilsateur est un enseignant
-                     
-                    Enseignant nouveau = new Enseignant();
+                    
+                    System.out.println("ID de l'utilisateur = "+ ID);
+                    System.out.println("Droit de l'utilisateur = "+ Droit);
+                    
+                    
+                    if("Oui".equals(Droit)){//si l'utilisateur est un étudiant
+                    
+                    Etudiant nouveau = new Etudiant(ID,Email,Passwd,Prenom,Nom,Droit);
                     }
                     
+                  
+                    if("Non".equals(Droit)){ //Si l'utilsateur est un enseignant
+                     
+                    Enseignant nouveau = new Enseignant(ID,Email,Passwd,Prenom,Nom,Droit);
                     }
+                    
+                    
+                    
+                
                     
                 }else {
                      
@@ -97,7 +102,7 @@ public class ConnexionBDD implements ActionListener  {
       public static Connection init(){
     
        try{
-        System.out.print("coucou2");
+        
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = myConnection=DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/essaiprojet","root", ""
@@ -112,16 +117,11 @@ public class ConnexionBDD implements ActionListener  {
       }
        
        public Connection getMyConnection(){
-           System.out.print("allez la3");
+           
         return myConnection;
        }
-       public String getNom(Connection conn ) throws SQLException
-       {      String NewNom = null; 
-           Statement state = conn.createStatement();
-           ResultSet result = state.executeQuery("SELECT Nom FROM prenom");
-           ResultSetMetaData resultMeta = result.getMetaData();
-           return NewNom; 
-       }
+       
+       
     
     public void close(ResultSet rs){
         

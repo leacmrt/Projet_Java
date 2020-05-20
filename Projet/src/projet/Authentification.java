@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.System.exit;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +31,7 @@ public class Authentification extends JFrame {
     //JPasswordField mdp1;
     JButton valider,annuler;
     String Login, motdepasse;
-    static  Logger logger; 
+    
          
     public Authentification(){
          
@@ -49,7 +50,7 @@ public class Authentification extends JFrame {
         mdp1 = new JPasswordField();
          
         valider = new JButton("Valider ");
-        annuler = new JButton(" Annuler");
+        annuler = new JButton(" Quitter");
          
          
         Container contenu = this.getContentPane();
@@ -72,9 +73,10 @@ public class Authentification extends JFrame {
          
         contenu.add(annuler);
         annuler.setBounds(225, 100, 82, 20);
-         Login = login1.getText();
-         motdepasse = mdp.getText();
+        Login = login1.getText();
+        motdepasse = mdp.getText();
         valider.addActionListener(new ValiderListener());  
+        annuler.addActionListener(new AnnulerListener());
          
         this.setVisible(true);
      
@@ -107,6 +109,21 @@ public class Authentification extends JFrame {
             }
              
         }
+        
+        
+        class AnnulerListener extends JFrame implements ActionListener{
+         
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    ActionEvent a = null;
+                    System.out.print("FERME MOI CETTE FENETRE");//test affichage oups
+                    exit(0);
+                    
+                    
+            }
+             
+        }
+        
         
       
         
