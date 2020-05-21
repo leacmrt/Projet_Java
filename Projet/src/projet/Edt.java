@@ -5,85 +5,45 @@
  */
 package projet;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.System.exit;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
 
 /**
  *
  * @author lele1
  */
-public class Edt extends JPanel {
+public class Edt {
+
+    JTextField recherche1;
+    Statement statement;
+    ResultSet resultat,resultat1,resultat2;
     
-    private JPanel contentPane,contentPane1;
-    private Color color = Color.black;
-    private static int COUNT = 0;
-    private String message = "";
+    
+    public Edt(View aThis) {
+        essau(aThis);
+    }
    
-  public Edt(){}
-
-  
-    /**
-     * Launch the application.
-     * @param ong
-     * @param color
-     */
-public Edt(Onglet ong, Color color)
-{    
-    
-    this.color = color;
-     this.message = "Contenu du panneau N°" + (++COUNT);
-    
-    if (COUNT==1)
-    {this.message="EDT";
-     essau(this);
-    this.repaint();
-    
-    }
-        
-    if (COUNT==2)
-    {this.message="RECAP"; 
-    essau1(this);
-     this.repaint();
-    }
-
-    
-  
-    }
-
-    @Override
-    public void paintComponent(Graphics g){
-    g.setColor(this.color);
-    g.fillRect(0, 0, this.getWidth(), this.getHeight());
-    g.setColor(Color.white);
-    g.setFont(new Font("Arial", Font.BOLD, 15));
-    g.drawString(this.message, 40, 20);
-  }
-
-
-
-public void  essau (JPanel la)
+    public void  essau (JPanel la)
 {
+    JButton recherche;
+    //JTextField recherche1;
     JButton btnCration = new JButton("Emploi du temps ");
     JButton deco=new JButton("Deconnexion ");
-    deco.addActionListener(new DeconnexionListener() );
+    
+    recherche = new JButton("Recherche");//module de recherche
+    recherche1 = new JTextField();
+    System.out.print(recherche1.getText());
+    
+    deco.addActionListener(new Edt.DeconnexionListener() );
+    recherche.addActionListener(new Edt.RechercheListener() ); 
         btnCration.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -92,33 +52,29 @@ public void  essau (JPanel la)
                  
             }
         });
+        btnCration.setBounds(10, 10, 150, 20); 
         la.add(btnCration);
+        deco.setBounds(840,10, 130, 30);
         la.add(deco);
+        
+        recherche.setBounds(190, 10, 100, 20); 
+        la.add(recherche);
+        
+        
+        
+        la.add(recherche1);
+        recherche1.setBounds(290, 10, 150,20);
+           
+        la.setVisible(true);
+        
 }
- 
-
-public void  essau1 (JPanel la)
-{
-    JButton btnCration = new JButton("Recaputatif des cours ");
-    JButton deco=new JButton("Deconnexion ");
-    deco.addActionListener(new DeconnexionListener() );
-        btnCration.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                System.out.println("Affichage du recapitulatif des cours ");
-                 
-                 
-            }
-        });
-        la.add(btnCration);
-}
-
+    public void recupdonnées()//recupere les données de la BDD 
+    {
     
-      
-  
-
-     
-   
+    }
+    
+    
+    
     
     class DeconnexionListener extends JPanel implements ActionListener{ //pour se déconnecter
          
@@ -132,6 +88,22 @@ public void  essau1 (JPanel la)
             }
              
         }
-       
+    
+    
+    
+       class RechercheListener extends JPanel implements ActionListener{
+         
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    ActionEvent a = null;
+                    String login2=recherche1.getText();
+                    
+                    System.out.println("Recherche dans BDD : " + login2);
+                   
+                   
+            }
+
+          
+        }
 }
- 

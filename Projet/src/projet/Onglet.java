@@ -22,23 +22,24 @@ public class Onglet extends JFrame {
    
       
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setSize(new Dimension(800,600));
+    this.setSize(new Dimension(1000,800));
     this.setLocationRelativeTo(null);
     this.setResizable(false);
         setTitle("Accueil");
     
-    Edt edt = new Edt(this,Color.RED); //page emploi du temps
-    Edt recap = new Edt(this,Color.GREEN); // page recapitulatif de cours 
-    //Création de plusieurs Panneau
-    Edt[] tPan = {edt , recap};
+    View edt = new View(this,Color.lightGray); //page emploi du temps
+    View recap = new View(this,Color.blue); // page recapitulatif de cours 
+    
+//Création de plusieurs Panneau
+    View[] tPan = {edt , recap};
       
     //Création de notre conteneur d'onglets
     onglet = new JTabbedPane();
     int i = 0;
     String titre= "";
-    for(Edt pan : tPan){
-      if(i==0) titre = "Emploi du temps ";
-      if(i==1) titre = "Recapitulatif des cours ";
+    for(View pan : tPan){
+    if(i==0) titre = "Emploi du temps ";
+    if(i==1) titre = "Recapitulatif des cours ";
       
       onglet.addTab(titre, pan);
       i++;
@@ -51,6 +52,7 @@ public class Onglet extends JFrame {
 		
     //On passe ensuite les onglets au content pane
     this.getContentPane().add(onglet);
+    //this.pack();
     this.setVisible(true);
   }
 }
