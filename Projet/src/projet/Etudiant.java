@@ -5,6 +5,7 @@
  */
 package projet;
 
+import java.awt.EventQueue;
 import java.sql.SQLException;
 
 /**
@@ -26,5 +27,7 @@ public class Etudiant extends Utilisateur {
       super(NewID,NewEmail,NewPass,NewNom,NewPrenom,NewDroit);
       NewID= ID_Etudiant;
       System.out.println("Coucou l'étudiant ");
+      
+       
     }
 }

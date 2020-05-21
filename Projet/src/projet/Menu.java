@@ -5,7 +5,11 @@
  */
 package projet;
 
+import java.awt.Toolkit;
 import java.sql.SQLException;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -16,5 +20,6 @@ public class Menu {
         
         Authentification essai1 = new Authentification();//On se connecte 
     }
-    
 }
+
+
