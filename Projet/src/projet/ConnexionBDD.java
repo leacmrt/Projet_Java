@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 package projet;
+
+import java.awt.Color;
+import static java.awt.Color.blue;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +28,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 /**
@@ -108,7 +116,7 @@ public class ConnexionBDD implements ActionListener  {
             }
       }
       
-      public void chargecours(int semaine,JPanel la) throws SQLException
+      public void chargecours(int semaine,JPanel la,int ID_utli1) throws SQLException
       {
            myConnection = init();
            Statement util = null;
@@ -130,7 +138,10 @@ public class ConnexionBDD implements ActionListener  {
                 
                 while (resulutil.next()) { //on remplit le tableau
                     
-                  
+              
+               
+                
+                
                 int id = resulutil.getInt("ID");
                 int date=resulutil.getInt("Date");
                 int jour= resulutil.getInt("Jour");
@@ -168,8 +179,10 @@ public class ConnexionBDD implements ActionListener  {
                    default:
                        break;
                }
-                
+               
                 System.out.println(i);
+                
+                Cours cour= new Cours(id_cours,cours,Color.blue);
                 Seance sea = new Seance(id,date,jour,semaine1,Heure_deb,Heure_fin,etat,id_cours,id_groupe);
                 
                 
@@ -177,6 +190,8 @@ public class ConnexionBDD implements ActionListener  {
                 String remplir =" "+Heure_deb+"h - "+Heure_fin+ "h - "+cours+"- "+nom;
                 textArea.append(remplir);
                 data[i][jour] =remplir;
+               
+               
                 
                 }
                 resulutil.close();
@@ -190,16 +205,40 @@ public class ConnexionBDD implements ActionListener  {
           table.setShowGrid(true);
           table.setShowVerticalLines(true);
           table.setRowHeight(75);
+           
+           for (int a = 0; a<table.getColumnCount(); a++) { 
+            (table.getColumnModel().getColumn(i)).setCellRenderer(new CustomTableCellRenderer()); 
+     } 
           JScrollPane pane = new JScrollPane(table);
-          pane.setBounds(10,60,950,600); 
+          pane.setBounds(10,60,950,600);
           la.add(pane);
 
       }
 
-           
-           
-      
-              
+  
+      public class CustomTableCellRenderer extends DefaultTableCellRenderer { 
+    public Component getTableCellRendererComponent(JTable table, 
+      Object obj, boolean isSelected, boolean hasFocus, int row, int column) { 
+     Component cell = super.getTableCellRendererComponent(
+       table, obj, isSelected, hasFocus, row, column); 
+
+     setHorizontalAlignment(SwingConstants.LEFT); 
+
+     int selectedRow = table.convertRowIndexToModel(row); 
+     if (table.getModel().getValueAt(selectedRow, 3) != null && table.getModel().getValueAt(selectedRow, 4) != null) { 
+      int quantite = Integer.parseInt(table.getModel().getValueAt(selectedRow, 3).toString()); 
+      int minQuantite = Integer.parseInt(table.getModel().getValueAt(selectedRow, 4).toString()); 
+      if (quantite < minQuantite) { 
+       if (isSelected) { 
+        cell.setBackground(new Color(255, 138, 239)); 
+       } else { 
+        cell.setBackground(new Color(252, 189, 252)); 
+       } 
+      } 
+     } 
+     return cell; 
+    } 
+      }       
       
       public static Connection init(){
     

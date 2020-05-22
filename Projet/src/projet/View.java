@@ -47,7 +47,7 @@ public class View extends JPanel {
      * @param ong
      * @param color
      */
-public View(Onglet ong, Color color) throws SQLException
+public View(Onglet ong, Color color, int ID_Utilisateur) throws SQLException
 {    
     this.setLayout(null);
     this.color = color;
@@ -55,7 +55,7 @@ public View(Onglet ong, Color color) throws SQLException
     
     if (COUNT==1)
     {this.message=" ";
-    edt= new Edt(this);
+    edt= new Edt(this,ID_Utilisateur);
      
     this.repaint();
     

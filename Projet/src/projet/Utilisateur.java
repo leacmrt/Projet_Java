@@ -46,7 +46,7 @@ public class Utilisateur extends JFrame{
        System.out.println("Bonjour nouvel utilisateur"); //test affichage
        
        //Edt EDT = new Edt();
-       Onglet onglet = new Onglet();
+       Onglet onglet = new Onglet(NewID);
        
    
    } //constructeur Normal

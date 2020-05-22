@@ -31,11 +31,11 @@ public class Edt {
     ResultSet resultat,resultat1,resultat2;
     
     
-    public Edt(View aThis) throws SQLException {
-        essau(aThis);
+    public Edt(View aThis,int ID_Utilisateur) throws SQLException {
+        essau(aThis,ID_Utilisateur);
     }
    
-    public void  essau (JPanel la) throws SQLException
+    public void  essau (JPanel la,int ID_Utilisateur) throws SQLException
 {
     ConnexionBDD ici= new ConnexionBDD();
     
@@ -67,12 +67,12 @@ public class Edt {
         
         recherche.setBounds(190, 10, 100, 20); 
         la.add(recherche);
-        ici.chargecours(1,la);
+        
         
         
         la.add(recherche1);
         recherche1.setBounds(290, 10, 150,20);
-        ici.chargecours(1,la); 
+        ici.chargecours(1,la,ID_Utilisateur); 
        
           la.setVisible(true);
         
