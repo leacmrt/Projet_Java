@@ -118,35 +118,68 @@ public class ConnexionBDD implements ActionListener  {
      
           String data[][] = new String[8][6];
            util= myConnection.createStatement();
-           String sql = "SELECT * FROM seance_groupe INNER JOIN seance ON seance_groupe.ID_Groupe=seance.ID  WHERE ID_Groupe ='1'";
+           String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
+                   sql+=" INNER JOIN seance_enseignant sa ON sa.ID_Seance=s.ID_Seance";
+                   sql+=" INNER JOIN enseignant en ON en.ID_Utilisateur=sa.ID_Enseignant";
+                   sql+=" INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur";
+                   sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
+                   sql += "  WHERE s.ID_Groupe ='1'";
            resulutil = util.executeQuery(sql);
-           ResultSetMetaData resultMeta = resulutil.getMetaData();
-                 
-            
-               
+           
                 int i = 0;
                 
                 while (resulutil.next()) { //on remplit le tableau
+                    
+                  
                 int id = resulutil.getInt("ID");
+                int date=resulutil.getInt("Date");
+                int jour= resulutil.getInt("Jour");
                 int semaine1 = resulutil.getInt("Semaine");
                 int Heure_deb = resulutil.getInt("Heure_Debut");
                 int Heure_fin = resulutil.getInt("Heure_Fin");   
                 String etat = resulutil.getString("Etat");
                 int id_cours = resulutil.getInt("ID_Cours");
                 int id_groupe = resulutil.getInt("ID_Groupe");
+                String nom= resulutil.getString("Nom");
+                String cours= resulutil.getString("Nom_Cours");
                 
-                Seance sea = new Seance(id,semaine1,Heure_deb,Heure_fin,etat,id_cours,id_groupe);
+               switch (Heure_deb) {
+                   case 8:
+                       i=0;
+                       break;
+                   case 10:
+                       i=1;
+                       break;
+                   case 12:
+                       i=2;
+                       break;
+                   case 14:
+                       i=3;
+                       break;
+                   case 16:
+                       i=4;
+                       break;
+                   case 18:
+                       i=5;
+                       break;
+                   case 20:
+                       i=6;
+                       break;
+                   default:
+                       break;
+               }
                 
-                String newLine = System.getProperty("line.separator");
+                System.out.println(i);
+                Seance sea = new Seance(id,date,jour,semaine1,Heure_deb,Heure_fin,etat,id_cours,id_groupe);
+                
+                
                 JTextArea textArea = new JTextArea(5, 20);
-                String remplir =" Debut "+Heure_deb+newLine+"\n Fin "+Heure_fin+newLine+ "\n Etat : "+etat+""+id_cours+newLine+" \n Groupe :"+id_groupe+ "";
+                String remplir =" "+Heure_deb+"h - "+Heure_fin+ "h - "+cours+"- "+nom;
                 textArea.append(remplir);
-                data[i][0] =remplir;
+                data[i][jour] =remplir;
                 
-                
-                //System.out.print(data[i][0]);
-                i++;
                 }
+                resulutil.close();
                 
         String columns[] = { "Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
        
