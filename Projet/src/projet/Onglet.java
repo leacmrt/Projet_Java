@@ -12,13 +12,14 @@ package projet;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 public class Onglet extends JFrame {
   private JTabbedPane onglet;
    
-  public Onglet(){
+  public Onglet() throws SQLException{
    
       
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

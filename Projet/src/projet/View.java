@@ -17,6 +17,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.System.exit;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -46,14 +47,14 @@ public class View extends JPanel {
      * @param ong
      * @param color
      */
-public View(Onglet ong, Color color)
+public View(Onglet ong, Color color) throws SQLException
 {    
     this.setLayout(null);
     this.color = color;
      this.message = "Contenu du panneau N°" + (++COUNT);
     
     if (COUNT==1)
-    {this.message="EDT";
+    {this.message=" ";
     edt= new Edt(this);
      
     this.repaint();

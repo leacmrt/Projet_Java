@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.System.exit;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,11 +28,11 @@ public class Edt {
     ResultSet resultat,resultat1,resultat2;
     
     
-    public Edt(View aThis) {
+    public Edt(View aThis) throws SQLException {
         essau(aThis);
     }
    
-    public void  essau (JPanel la)
+    public void  essau (JPanel la) throws SQLException
 {
     JButton recherche;
     //JTextField recherche1;
@@ -64,7 +65,9 @@ public class Edt {
         
         la.add(recherche1);
         recherche1.setBounds(290, 10, 150,20);
-           
+        ConnexionBDD essai= new ConnexionBDD();
+        essai.chargecours(1);
+        
         la.setVisible(true);
         
 }

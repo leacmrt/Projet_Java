@@ -99,7 +99,39 @@ public class ConnexionBDD implements ActionListener  {
             }
       }
       
-      
+      public void chargecours(int semaine) throws SQLException
+      {
+           myConnection = init();
+           Statement util = null;
+           ResultSet resulutil;
+           Object[][] donnees;
+           String[] entetes = null;
+           util= myConnection.createStatement();
+           String sql = "SELECT * FROM seance_groupe INNER JOIN seance ON seance_groupe.ID_Groupe=seance.ID  WHERE ID_Groupe ='1'";
+           resulutil = util.executeQuery(sql);
+           ResultSetMetaData resultMeta = resulutil.getMetaData();
+                 
+               for(int i = 1; i <= resultMeta.getColumnCount(); i++) //test affichage de recup de données 
+               {System.out.print("\t" + resultMeta.getColumnName(i).toUpperCase() + "\t *");
+               //entetes.add(resultMeta.getColumnName(i));
+               
+               }
+               
+               System.out.println("\n");
+               System.out.print("\t");
+               while(resulutil.next()){         
+        for(int i = 1; i <= resultMeta.getColumnCount(); i++)
+        {     if(i==2||i==5||i==6||i==8) System.out.print("\t");
+             System.out.print("\t" + resulutil.getObject(i).toString() + "\t |");}
+            
+        System.out.println("\n");
+
+      }
+
+           
+           
+      }
+              
       
       public static Connection init(){
     
