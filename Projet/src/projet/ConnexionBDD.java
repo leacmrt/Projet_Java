@@ -141,7 +141,7 @@ public class ConnexionBDD implements ActionListener  {
                 JTextArea textArea = new JTextArea(5, 20);
                 String remplir =" Debut "+Heure_deb+newLine+"\n Fin "+Heure_fin+newLine+ "\n Etat : "+etat+""+id_cours+newLine+" \n Groupe :"+id_groupe+ "";
                 textArea.append(remplir);
-                //data[i][0] =remplir;
+                data[i][0] =remplir;
                 
                 
                 //System.out.print(data[i][0]);
