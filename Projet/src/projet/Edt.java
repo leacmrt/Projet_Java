@@ -15,7 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,11 +37,13 @@ public class Edt {
    
     public void  essau (JPanel la) throws SQLException
 {
+    ConnexionBDD ici= new ConnexionBDD();
+    
     JButton recherche;
-    //JTextField recherche1;
     JButton btnCration = new JButton("Emploi du temps ");
     JButton deco=new JButton("Deconnexion ");
     
+          
     recherche = new JButton("Recherche");//module de recherche
     recherche1 = new JTextField();
     System.out.print(recherche1.getText());
@@ -53,6 +58,8 @@ public class Edt {
                  
             }
         });
+        
+        
         btnCration.setBounds(10, 10, 150, 20); 
         la.add(btnCration);
         deco.setBounds(840,10, 130, 30);
@@ -60,15 +67,14 @@ public class Edt {
         
         recherche.setBounds(190, 10, 100, 20); 
         la.add(recherche);
-        
+        ici.chargecours(1,la);
         
         
         la.add(recherche1);
         recherche1.setBounds(290, 10, 150,20);
-        ConnexionBDD essai= new ConnexionBDD();
-        essai.chargecours(1);
-        
-        la.setVisible(true);
+        ici.chargecours(1,la); 
+       
+          la.setVisible(true);
         
 }
     public void recupdonnées()//recupere les données de la BDD 
