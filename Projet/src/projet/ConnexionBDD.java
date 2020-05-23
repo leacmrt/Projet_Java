@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import static javafx.scene.paint.Color.GREY;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -120,7 +121,7 @@ public class ConnexionBDD implements ActionListener  {
                     JOptionPane.showMessageDialog(null,"Login incorrect ! ","Error",1);
                 }
  
-                    myConnection.close();
+                     myConnection.close();
          
             }catch (SQLException e4) {
              
@@ -136,7 +137,7 @@ public class ConnexionBDD implements ActionListener  {
            System.out.print(semaine);
     
      
-          String data[][] = new String[6][6];
+          String data[][] = new String[11][6];
            util= myConnection.createStatement();
            String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
                    sql+=" INNER JOIN seance_enseignant sa ON sa.ID_Seance=s.ID_Seance";
@@ -150,25 +151,44 @@ public class ConnexionBDD implements ActionListener  {
                JLabel h1=new JLabel("8h30");
                h1.setBounds(20, 100, 50, 20); 
                la.add(h1);
-              JLabel h2=new JLabel("10h");
-               h2.setBounds(24, 180, 50, 20); 
+               JLabel h2=new JLabel("10h");
+               h2.setBounds(25, 165, 50, 20); 
                la.add(h2);
-               JLabel h3=new JLabel("11h30");
-               h3.setBounds(15, 275, 50, 20); 
+               JLabel h8=new JLabel("10h15");
+               h8.setBounds(15, 195, 50, 20); 
+               la.add(h8);
+               JLabel h3=new JLabel("11h45");
+               h3.setBounds(15, 265, 50, 20); 
                la.add(h3);
-               JLabel h4=new JLabel("13h");
-               h4.setBounds(24, 370, 50, 20); 
+               
+               JLabel h12=new JLabel("12h");
+               h12.setBounds(25, 360, 50, 20); 
+               la.add(h12);
+               
+               JLabel h10=new JLabel("13h30");
+               h10.setBounds(15, 360, 50, 20); 
+               la.add(h10);
+               
+               JLabel h4=new JLabel("13h45");
+               h4.setBounds(15, 390, 50, 20); 
                la.add(h4);
-               JLabel h5=new JLabel("14h30");
+               
+               JLabel h5=new JLabel("15h15");
                h5.setBounds(15, 465, 50, 20); 
                la.add(h5);
-               JLabel h6=new JLabel("16h");
-               h6.setBounds(24, 565, 50, 20); 
+               
+               JLabel h6=new JLabel("15h30");
+               h6.setBounds(15, 500, 50, 20); 
                la.add(h6);
-               JLabel h7=new JLabel("17h30");
+               
+               JLabel h11=new JLabel("17h");
+               h11.setBounds(15, 565, 50, 20); 
+               la.add(h11);
+               
+               JLabel h7=new JLabel("17h15");
                h7.setBounds(15, 655, 50, 20); 
                la.add(h7);
-              
+            
                 
                 
                 while (resulutil.next()) { //on remplit le tableau
@@ -192,19 +212,19 @@ public class ConnexionBDD implements ActionListener  {
                        i=0;
                        break;
                    case 10:
-                       i=1;
-                       break;
-                   case 12:
                        i=2;
                        break;
-                   case 14:
-                       i=3;
-                       break;
-                   case 16:
+                   case 12:
                        i=4;
                        break;
+                   case 14:
+                       i=6;
+                       break;
+                   case 16:
+                       i=8;
+                       break;
                    case 18:
-                       i=5;
+                       i=10;
                        break;
                    case 20:
                        i=6;
@@ -256,7 +276,9 @@ public class ConnexionBDD implements ActionListener  {
              
              
             }else if(!essai.hasFocus()) essai.setBackground(null);
-           
+            
+            if(rowIndex==1||rowIndex==3||rowIndex==5||rowIndex==7||rowIndex==9)
+            essai.setBackground(new Color(248,176,176));
    
             return component;
         }
@@ -264,11 +286,18 @@ public class ConnexionBDD implements ActionListener  {
         
         
           };
-          //table.getColumnModel().getColumn(0).setPreferredWidth(3);
+         
+          for(int u=0;u<11;u++)
+          {if(u==1||u==3||u==5||u==7||u==9){
+              table.setRowHeight(u,15);
+          }
+          else table.setRowHeight(u,84);
+          }
+          
           table.setColumnSelectionAllowed(true);
           table.setShowGrid(true);
           table.setShowVerticalLines(true);
-          table.setRowHeight(96);
+         
           
           
            
