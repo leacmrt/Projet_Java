@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -132,7 +133,7 @@ public class ConnexionBDD implements ActionListener  {
            myConnection = init();
            Statement util = null;
            ResultSet resulutil;
-           
+           System.out.print(semaine);
     
      
           String data[][] = new String[6][6];
@@ -142,19 +143,36 @@ public class ConnexionBDD implements ActionListener  {
                    sql+=" INNER JOIN enseignant en ON en.ID_Utilisateur=sa.ID_Enseignant";
                    sql+=" INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur";
                    sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
-                   sql += "  WHERE s.ID_Groupe ='"+ID_utli1+"'";
+                   sql += "  WHERE s.ID_Groupe ='"+ID_utli1+"' AND se.Semaine='"+semaine+"'";
            resulutil = util.executeQuery(sql);
            
-                int i = 0;
+               int i = 0;
+               JLabel h1=new JLabel("8h30");
+               h1.setBounds(20, 100, 50, 20); 
+               la.add(h1);
+              JLabel h2=new JLabel("10h");
+               h2.setBounds(24, 180, 50, 20); 
+               la.add(h2);
+               JLabel h3=new JLabel("11h30");
+               h3.setBounds(15, 275, 50, 20); 
+               la.add(h3);
+               JLabel h4=new JLabel("13h");
+               h4.setBounds(24, 370, 50, 20); 
+               la.add(h4);
+               JLabel h5=new JLabel("14h30");
+               h5.setBounds(15, 465, 50, 20); 
+               la.add(h5);
+               JLabel h6=new JLabel("16h");
+               h6.setBounds(24, 565, 50, 20); 
+               la.add(h6);
+               JLabel h7=new JLabel("17h30");
+               h7.setBounds(15, 655, 50, 20); 
+               la.add(h7);
+              
+                
                 
                 while (resulutil.next()) { //on remplit le tableau
                     
-               data[0][0] =" 8h - 10h";
-               data[1][0] =" 10h - 12h";
-               data[2][0] =" 12h - 14h";
-               data[3][0] =" 14h - 16h";
-               data[4][0] =" 16h - 18h";
-               data[5][0] =" 18h - 20h";
               
                 
                 int id = resulutil.getInt("ID");
@@ -204,14 +222,14 @@ public class ConnexionBDD implements ActionListener  {
                 JTextArea textArea = new JTextArea(5, 20);
                 String remplir =" "+cours+"- "+nom;
                 textArea.append(remplir);
-                data[i][jour+1] =remplir;
+                data[i][jour] =remplir;
                
                
                 
                 }
                 resulutil.close();
                 
-        String columns[] = {"", "Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
+        String columns[] = {"Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
        
         
          
@@ -246,7 +264,7 @@ public class ConnexionBDD implements ActionListener  {
         
         
           };
-          table.getColumnModel().getColumn(0).setPreferredWidth(3);
+          //table.getColumnModel().getColumn(0).setPreferredWidth(3);
           table.setColumnSelectionAllowed(true);
           table.setShowGrid(true);
           table.setShowVerticalLines(true);
@@ -255,7 +273,7 @@ public class ConnexionBDD implements ActionListener  {
           
            
           JScrollPane pane = new JScrollPane(table);
-          pane.setBounds(10,60,950,600);
+          pane.setBounds(50,80,970,600);
           la.add(pane);
 
       }

@@ -23,7 +23,7 @@ public class Onglet extends JFrame {
    
       
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setSize(new Dimension(1000,800));
+    this.setSize(new Dimension(1050,800));
     this.setLocationRelativeTo(null);
     this.setResizable(false);
         setTitle("Accueil");

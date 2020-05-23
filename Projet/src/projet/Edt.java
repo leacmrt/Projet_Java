@@ -5,12 +5,16 @@
  */
 package projet;
 
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.System.exit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  * @author lele1
  */
 public class Edt {
-
+    int semaine=1;
     JTextField recherche1;
     Statement statement;
     ResultSet resultat,resultat1,resultat2;
@@ -60,20 +64,56 @@ public class Edt {
         });
         
         
+         
+        int plus=19;
+        ici.chargecours(1,la,ID_Utilisateur);
+        for(int h=1;h<51;h++)
+        {
+            int nombre =h;
+        String text = Integer.toString(h); 
+        
+        JButton jour = new JButton(text);
+       
+        jour.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        jour.setBounds(plus, 60, 20, 20); 
+        jour.setMargin(new Insets(0, 0, 0, 0));
+        la.add(jour);
+        
+        jour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try { 
+                    ici.chargecours(nombre,la,ID_Utilisateur);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 
+                 
+            }
+            
+           
+        });
+        
+        plus+=20;
+        
+        }
+        
         btnCration.setBounds(10, 10, 150, 20); 
         la.add(btnCration);
-        deco.setBounds(840,10, 130, 30);
+        deco.setBounds(900,10, 130, 30);
         la.add(deco);
         System.out.println(droit);
         
         if(!"".equals(droit))
-        {recherche.setBounds(440, 10, 100, 20); 
+        {recherche.setBounds(470, 10, 100, 20); 
         la.add(recherche);
-       
+        
+
+        
         
         la.add(recherche1);
-        recherche1.setBounds(290, 10, 150,20);}
-        ici.chargecours(1,la,ID_Utilisateur); 
+        recherche1.setBounds(320, 10, 150,20);}
+       
        
           la.setVisible(true);
         
@@ -84,7 +124,7 @@ public class Edt {
     }
     
     
-    
+
     
     class DeconnexionListener extends JPanel implements ActionListener{ //pour se déconnecter
          
