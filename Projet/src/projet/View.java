@@ -47,7 +47,7 @@ public class View extends JPanel {
      * @param ong
      * @param color
      */
-public View(Onglet ong, Color color, int ID_Utilisateur) throws SQLException
+public View(Onglet ong, Color color, int ID_Utilisateur,String droit) throws SQLException
 {    
     this.setLayout(null);
     this.color = color;
@@ -55,14 +55,14 @@ public View(Onglet ong, Color color, int ID_Utilisateur) throws SQLException
     
     if (COUNT==1)
     {this.message=" ";
-    edt= new Edt(this,ID_Utilisateur);
+    edt= new Edt(this,ID_Utilisateur,droit);
      
     this.repaint();
     
     }
         
     if (COUNT==2)
-    {this.message="RECAP"; 
+    {this.message=" "; 
     essau1(this);
      this.repaint();
     }
@@ -88,6 +88,7 @@ public View(Onglet ong, Color color, int ID_Utilisateur) throws SQLException
 public void  essau1 (JPanel la)
 {
     JButton btnCration = new JButton("Recaputatif des cours ");
+    
     JButton deco=new JButton("Deconnexion ");
     deco.addActionListener(new DeconnexionListener() );
         btnCration.addActionListener(new ActionListener() {
@@ -98,8 +99,14 @@ public void  essau1 (JPanel la)
                  
             }
         });
+        
+        
+        btnCration.setBounds(50, 10, 200, 20);
+        deco.setBounds(800, 10, 150, 20);
+        
         la.add(btnCration);
         la.add(deco);
+        
 }
 
     

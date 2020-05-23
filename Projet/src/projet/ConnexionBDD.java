@@ -5,6 +5,7 @@
  */
 package projet;
 
+
 import java.awt.Color;
 import static java.awt.Color.blue;
 import java.awt.Component;
@@ -88,8 +89,15 @@ public class ConnexionBDD implements ActionListener  {
                     
                     
                     if("Oui".equals(Droit)){//si l'utilisateur est un étudiant
+                    statement = myConnection.createStatement();
+                    String sql1 = "SELECT * FROM etudiant WHERE ID_Utilisateur ='"+ID+"'";
+                    resultat = statement.executeQuery(sql1);
+                 
+                    if(resultat.next()){
+                     
+                    int ID_Groupe = resultat.getInt("ID_Groupe");
                     
-                    Etudiant nouveau = new Etudiant(ID,Email,Passwd,Prenom,Nom,Droit);
+                    Etudiant nouveau = new Etudiant(ID,Email,Passwd,Prenom,Nom,Droit,ID_Groupe);}
                     }
                     
                   
@@ -127,23 +135,27 @@ public class ConnexionBDD implements ActionListener  {
            
     
      
-          String data[][] = new String[8][6];
+          String data[][] = new String[6][6];
            util= myConnection.createStatement();
            String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
                    sql+=" INNER JOIN seance_enseignant sa ON sa.ID_Seance=s.ID_Seance";
                    sql+=" INNER JOIN enseignant en ON en.ID_Utilisateur=sa.ID_Enseignant";
                    sql+=" INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur";
                    sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
-                   sql += "  WHERE s.ID_Groupe ='1'";
+                   sql += "  WHERE s.ID_Groupe ='"+ID_utli1+"'";
            resulutil = util.executeQuery(sql);
            
                 int i = 0;
                 
                 while (resulutil.next()) { //on remplit le tableau
                     
+               data[0][0] =" 8h - 10h";
+               data[1][0] =" 10h - 12h";
+               data[2][0] =" 12h - 14h";
+               data[3][0] =" 14h - 16h";
+               data[4][0] =" 16h - 18h";
+               data[5][0] =" 18h - 20h";
               
-               
-                
                 
                 int id = resulutil.getInt("ID");
                 int date=resulutil.getInt("Date");
@@ -190,16 +202,16 @@ public class ConnexionBDD implements ActionListener  {
                 
                 
                 JTextArea textArea = new JTextArea(5, 20);
-                String remplir =" "+Heure_deb+"h - "+Heure_fin+ "h - "+cours+"- "+nom;
+                String remplir =" "+cours+"- "+nom;
                 textArea.append(remplir);
-                data[i][jour] =remplir;
+                data[i][jour+1] =remplir;
                
                
                 
                 }
                 resulutil.close();
                 
-        String columns[] = { "Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
+        String columns[] = {"", "Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
        
         
          
@@ -207,29 +219,38 @@ public class ConnexionBDD implements ActionListener  {
           
           JTable table = new JTable(model) {
         @Override
-        public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,  int columnIndex) {
+        public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,  int columnIndex) { //colorie les cases avec cours 
             JComponent component = (JComponent) super.prepareRenderer(renderer, rowIndex, columnIndex);  
             String la= (String)this.getValueAt(rowIndex, columnIndex);
-             JComponent essai=(JComponent) renderer.getTableCellRendererComponent(this, la, false,false ,rowIndex, columnIndex);
-            if(la!=null)
+             JComponent essai=(JComponent) renderer.getTableCellRendererComponent(this, la, false,true ,rowIndex, columnIndex);
+            if(la!=null&&!("".equals(la)))
             {
+             int java = la.indexOf("JAVA");//faire ça pour tout les cours 
+             int web = la.indexOf("DYNAMIQUE");//pour l'instant flemme 
+             int anglais = la.indexOf("ANGLAIS");
              
-              essai.setBackground(Color.red);
-              this.setForeground(Color.black);
- 
+             if (java>0) essai.setBackground(new Color(247,191,131) );
+             else if (web>0) essai.setBackground(new Color(247,234,211) );
+             else if (anglais>0) essai.setBackground(new Color(131,144,247));
+             else essai.setBackground(Color.lightGray);
              
-            }else essai.setBackground(Color.white);
+             this.setForeground(Color.black);
              
+             
+            }else if(!essai.hasFocus()) essai.setBackground(null);
+           
+   
             return component;
         }
+        
+        
+        
           };
-          
-          
-          
+          table.getColumnModel().getColumn(0).setPreferredWidth(3);
+          table.setColumnSelectionAllowed(true);
           table.setShowGrid(true);
           table.setShowVerticalLines(true);
-          table.setRowHeight(75);
-         
+          table.setRowHeight(96);
           
           
            

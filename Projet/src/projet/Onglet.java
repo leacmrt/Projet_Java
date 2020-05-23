@@ -19,7 +19,7 @@ import javax.swing.JTabbedPane;
 public class Onglet extends JFrame {
   private JTabbedPane onglet;
    
-  public Onglet(int ID_Utilisateur) throws SQLException{
+  public Onglet(int ID_Utilisateur,String droit) throws SQLException{
    
       
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,8 +28,8 @@ public class Onglet extends JFrame {
     this.setResizable(false);
         setTitle("Accueil");
     
-    View edt = new View(this,Color.lightGray,ID_Utilisateur); //page emploi du temps
-    View recap = new View(this,Color.blue,ID_Utilisateur); // page recapitulatif de cours 
+    View edt = new View(this,Color.lightGray,ID_Utilisateur,droit); //page emploi du temps
+    View recap = new View(this,Color.blue,ID_Utilisateur,droit); // page recapitulatif de cours 
     
 //Création de plusieurs Panneau
     View[] tPan = {edt , recap};

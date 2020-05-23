@@ -21,12 +21,13 @@ public class Etudiant extends Utilisateur {
     { super();
       
     }
-    public Etudiant(int NewID,String NewEmail,String NewPass, String NewNom,String NewPrenom,String NewDroit) throws SQLException
+    public Etudiant(int NewID,String NewEmail,String NewPass, String NewNom,String NewPrenom,String NewDroit,int NewID_Groupe) throws SQLException
     {
        
-      super(NewID,NewEmail,NewPass,NewNom,NewPrenom,NewDroit);
+      super(NewID,NewEmail,NewPass,NewNom,NewPrenom,"Oui",NewID_Groupe);
       NewID= ID_Etudiant;
-      System.out.println("Coucou l'étudiant ");
+      NewID_Groupe=ID_Groupe;
+      System.out.println("Coucou l'étudiant "+NewDroit);
       
        
     }

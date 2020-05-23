@@ -31,11 +31,11 @@ public class Edt {
     ResultSet resultat,resultat1,resultat2;
     
     
-    public Edt(View aThis,int ID_Utilisateur) throws SQLException {
-        essau(aThis,ID_Utilisateur);
+    public Edt(View aThis,int ID_Utilisateur,String droit) throws SQLException {
+        essau(aThis,ID_Utilisateur,droit);
     }
    
-    public void  essau (JPanel la,int ID_Utilisateur) throws SQLException
+    public void  essau (JPanel la,int ID_Utilisateur,String droit) throws SQLException
 {
     ConnexionBDD ici= new ConnexionBDD();
     
@@ -44,7 +44,7 @@ public class Edt {
     JButton deco=new JButton("Deconnexion ");
     
           
-    recherche = new JButton("Recherche");//module de recherche
+    recherche = new JButton("Recherche");//module de recherche faire en sorte que ce soit que pour un enseignant 
     recherche1 = new JTextField();
     System.out.print(recherche1.getText());
     
@@ -64,14 +64,15 @@ public class Edt {
         la.add(btnCration);
         deco.setBounds(840,10, 130, 30);
         la.add(deco);
+        System.out.println(droit);
         
-        recherche.setBounds(440, 10, 100, 20); 
+        if(!"".equals(droit))
+        {recherche.setBounds(440, 10, 100, 20); 
         la.add(recherche);
-        
-        
+       
         
         la.add(recherche1);
-        recherche1.setBounds(290, 10, 150,20);
+        recherche1.setBounds(290, 10, 150,20);}
         ici.chargecours(1,la,ID_Utilisateur); 
        
           la.setVisible(true);

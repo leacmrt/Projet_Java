@@ -34,7 +34,7 @@ public class Utilisateur extends JFrame{
    {} //constructeur par défaut 
    
    
-    public Utilisateur(int NewID,String NewEmail,String NewPass, String NewNom,String NewPrenom,String NewDroit) throws SQLException
+    public Utilisateur(int NewID,String NewEmail,String NewPass, String NewNom,String NewPrenom,String NewDroit,int ID_Groupe) throws SQLException
    { 
        
        NewID=ID;
@@ -43,10 +43,10 @@ public class Utilisateur extends JFrame{
        NewNom=Nom;
        NewPrenom=Prenom;
        NewDroit=Droit;
-       System.out.println("Bonjour nouvel utilisateur"); //test affichage
+       System.out.println("Bonjour nouvel utilisateur"+Droit); //test affichage
        
        //Edt EDT = new Edt();
-       Onglet onglet = new Onglet(NewID);
+       Onglet onglet = new Onglet(ID_Groupe,NewDroit);
        
    
    } //constructeur Normal
