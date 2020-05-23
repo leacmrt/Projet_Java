@@ -65,7 +65,7 @@ public class Edt {
         deco.setBounds(840,10, 130, 30);
         la.add(deco);
         
-        recherche.setBounds(190, 10, 100, 20); 
+        recherche.setBounds(440, 10, 100, 20); 
         la.add(recherche);
         
         
@@ -79,7 +79,7 @@ public class Edt {
 }
     public void recupdonnées()//recupere les données de la BDD 
     {
-    
+      
     }
     
     

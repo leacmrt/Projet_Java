@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,7 +32,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableCellRenderer;
 /**
  *
  * @author lele1
@@ -199,46 +202,45 @@ public class ConnexionBDD implements ActionListener  {
         String columns[] = { "Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
        
         
-        
+         
           DefaultTableModel model = new DefaultTableModel(data, columns);
-          JTable table = new JTable(model);
+          
+          JTable table = new JTable(model) {
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,  int columnIndex) {
+            JComponent component = (JComponent) super.prepareRenderer(renderer, rowIndex, columnIndex);  
+            String la= (String)this.getValueAt(rowIndex, columnIndex);
+             JComponent essai=(JComponent) renderer.getTableCellRendererComponent(this, la, false,false ,rowIndex, columnIndex);
+            if(la!=null)
+            {
+             
+              essai.setBackground(Color.red);
+              this.setForeground(Color.black);
+ 
+             
+            }else essai.setBackground(Color.white);
+             
+            return component;
+        }
+          };
+          
+          
+          
           table.setShowGrid(true);
           table.setShowVerticalLines(true);
           table.setRowHeight(75);
+         
+          
+          
            
-           for (int a = 0; a<table.getColumnCount(); a++) { 
-            (table.getColumnModel().getColumn(i)).setCellRenderer(new CustomTableCellRenderer()); 
-     } 
           JScrollPane pane = new JScrollPane(table);
           pane.setBounds(10,60,950,600);
           la.add(pane);
 
       }
-
   
-      public class CustomTableCellRenderer extends DefaultTableCellRenderer { 
-    public Component getTableCellRendererComponent(JTable table, 
-      Object obj, boolean isSelected, boolean hasFocus, int row, int column) { 
-     Component cell = super.getTableCellRendererComponent(
-       table, obj, isSelected, hasFocus, row, column); 
-
-     setHorizontalAlignment(SwingConstants.LEFT); 
-
-     int selectedRow = table.convertRowIndexToModel(row); 
-     if (table.getModel().getValueAt(selectedRow, 3) != null && table.getModel().getValueAt(selectedRow, 4) != null) { 
-      int quantite = Integer.parseInt(table.getModel().getValueAt(selectedRow, 3).toString()); 
-      int minQuantite = Integer.parseInt(table.getModel().getValueAt(selectedRow, 4).toString()); 
-      if (quantite < minQuantite) { 
-       if (isSelected) { 
-        cell.setBackground(new Color(255, 138, 239)); 
-       } else { 
-        cell.setBackground(new Color(252, 189, 252)); 
-       } 
-      } 
-     } 
-     return cell; 
-    } 
-      }       
+  
+ 
       
       public static Connection init(){
     
