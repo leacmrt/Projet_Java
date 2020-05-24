@@ -129,6 +129,61 @@ public class ConnexionBDD implements ActionListener  {
             }
       }
       
+      
+      public int recherche(String envoie) throws SQLException
+      {    int IDRecup;
+           myConnection = init();
+           System.out.println("ici :"+envoie);
+           try{
+           Statement util = myConnection.createStatement();
+           ResultSet resulutil = null;
+           String sql = "SELECT * FROM utilisateur WHERE  CONCAT(Prenom, ' ', Nom) LIKE '"+envoie+"'";
+                   resulutil = util.executeQuery(sql);
+                   if(resulutil.next())
+                   {
+                       IDRecup=resulutil.getInt("ID");
+                       System.out.println("ID recherche ICI  : "+IDRecup);
+                       return IDRecup;
+                      
+                    } else{ System.out.println("Pas dans la BDD");
+                            JOptionPane.showMessageDialog(null,"Utilisateur introuvable","Error",JOptionPane.PLAIN_MESSAGE);
+                            return 0;
+                           }
+           }catch (SQLException e4) {
+             
+                System.out.println(e4.getMessage());
+            }
+        return 0;
+      }
+      
+       public int recherche1(String envoie) throws SQLException
+      {    int EtatRecup;
+           String EtatRecup1;
+           myConnection = init();
+           System.out.println("ici :"+envoie);
+           try{
+           Statement util = myConnection.createStatement();
+           ResultSet resulutil = null;
+           String sql = "SELECT * FROM utilisateur WHERE  CONCAT(Prenom, ' ', Nom) LIKE '"+envoie+"'";
+                   resulutil = util.executeQuery(sql);
+                   if(resulutil.next())
+                   {
+                      
+                       EtatRecup1=resulutil.getString("Droit");
+                       if("Oui".equals(EtatRecup1)) EtatRecup=1;
+                       else EtatRecup=0;
+                       
+                       return EtatRecup;
+                    } else{ 
+                            return 0;
+                           }
+           }catch (SQLException e4) {
+             
+                System.out.println(e4.getMessage());
+            }
+        return 0;
+      }
+      
       public void chargecours(int semaine,JPanel la,int ID_utli1,int etat) throws SQLException
       {
            myConnection = init();

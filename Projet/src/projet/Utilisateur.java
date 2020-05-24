@@ -28,7 +28,7 @@ public class Utilisateur extends JFrame{
    private JPanel contentPane; //pour affichage
    private  int ID;
    private static int etat;
-   private String Email ,Passwd, Nom, Prenom, Droit;
+   private String Email ,Passwd, Nom, Prenom, Droit,Entier;
    public ConnexionBDD connec;
    
    public Utilisateur() throws SQLException
@@ -45,6 +45,7 @@ public class Utilisateur extends JFrame{
        this.Prenom=NewPrenom;
        this.Droit=NewDroit;
        this.etat=NewEtat;
+       
        System.out.println("Bonjour nouvel utilisateur"+ getetat()); //test affichage
        
        //Edt EDT = new Edt();

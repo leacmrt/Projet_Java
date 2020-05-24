@@ -30,6 +30,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Edt {
     int semaine=1;
+    int ID_Utilisateur1;
+    int EtatUT;
     JTextField recherche1;
     Statement statement;
     ResultSet resultat,resultat1,resultat2;
@@ -47,13 +49,44 @@ public class Edt {
     JButton btnCration = new JButton("Emploi du temps ");
     JButton deco=new JButton("Deconnexion ");
     System.out.println("ID 0 : "+ID_Utilisateur);
-          
+    Edt.this.ID_Utilisateur1=ID_Utilisateur; 
+    Edt.this.EtatUT=etat;
+    
     recherche = new JButton("Recherche");//module de recherche faire en sorte que ce soit que pour un enseignant 
     recherche1 = new JTextField();
     System.out.print(recherche1.getText());
     
     deco.addActionListener(new Edt.DeconnexionListener() );
-    recherche.addActionListener(new Edt.RechercheListener() ); 
+   
+    recherche.addActionListener(new ActionListener() {
+        
+        @Override
+        @SuppressWarnings("empty-statement")
+        public void actionPerformed(ActionEvent e) {
+                    ActionEvent a = null;
+                    String login2=recherche1.getText();
+                    System.out.println("Recherche dans BDD : " + login2);
+            try {
+                 int nouveau = ici.recherche((String)login2);
+                 int nouveau1 = ici.recherche1((String)login2);
+                 System.out.println("nouveau = "+nouveau1);
+                 if(nouveau!=0)//si on trouve quelqu'un
+                 {
+                 Edt.this.ID_Utilisateur1=nouveau;
+                 Edt.this.EtatUT=nouveau1;
+                 ici.chargecours(1,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
+                 } else System.out.print("C'est pourtant égal à 0");
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                   
+                   
+            }
+
+          
+        });
+    
         btnCration.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -66,7 +99,7 @@ public class Edt {
         
          
         int plus=20;
-        ici.chargecours(1,la,ID_Utilisateur,etat);
+        ici.chargecours(1,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
         for(int h=1;h<51;h++)
         {
             int nombre =h;
@@ -83,7 +116,7 @@ public class Edt {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try { 
-                    ici.chargecours(nombre,la,ID_Utilisateur,etat);
+                    ici.chargecours(nombre,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
                 } catch (SQLException ex) {
                     Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -118,14 +151,8 @@ public class Edt {
           la.setVisible(true);
         
 }
-    public void recupdonnées()//recupere les données de la BDD 
-    {
-      
-    }
-    
-    
-
-    
+   
+     
     class DeconnexionListener extends JPanel implements ActionListener{ //pour se déconnecter
          
             @Override
@@ -139,21 +166,4 @@ public class Edt {
              
         }
     
-    
-    
-       class RechercheListener extends JPanel implements ActionListener{
-         
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    ActionEvent a = null;
-                    String login2=recherche1.getText();
-                    
-                    System.out.println("Recherche dans BDD : " + login2);
-                   
-                   
-            }
-
-          
-        }
 }
