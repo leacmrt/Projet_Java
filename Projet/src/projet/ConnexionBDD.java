@@ -129,30 +129,45 @@ public class ConnexionBDD implements ActionListener  {
             }
       }
       
-      public void chargecours(int semaine,JPanel la,int ID_utli1) throws SQLException
+      public void chargecours(int semaine,JPanel la,int ID_utli1,int etat) throws SQLException
       {
            myConnection = init();
            Statement util = null;
-           ResultSet resulutil;
-           System.out.print(semaine);
+           ResultSet resulutil = null;
+          
     
      
           String data[][] = new String[11][6];
            util= myConnection.createStatement();
-           String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
+           
+           if(etat==1)
+                   {String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
                    sql+=" INNER JOIN seance_enseignant sa ON sa.ID_Seance=s.ID_Seance";
                    sql+=" INNER JOIN enseignant en ON en.ID_Utilisateur=sa.ID_Enseignant";
                    sql+=" INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur";
                    sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
                    sql += "  WHERE s.ID_Groupe ='"+ID_utli1+"' AND se.Semaine='"+semaine+"'";
-           resulutil = util.executeQuery(sql);
+                   resulutil = util.executeQuery(sql);
+                  
+                   }
+           else if (etat==0){
+               String sql = "SELECT * FROM enseignant en INNER JOIN utilisateur ut ON en.ID_Utilisateur=ut.ID";
+                   sql += " INNER JOIN seance_enseignant sa ON sa.ID_Enseignant =ut.ID";
+                    sql += " INNER JOIN seance se ON se.ID =sa.ID_Seance";
+                    sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
+                    sql+=" INNER JOIN seance_groupe s ON s.ID_Seance=se.ID";
+                   sql += "  WHERE ut.ID ='"+ID_utli1+"' AND se.Semaine='"+semaine+"'";
+                   resulutil = util.executeQuery(sql);
+                   
+           }
+           
            
                int i = 0;
                JLabel h1=new JLabel("8h30");
                h1.setBounds(20, 100, 50, 20); 
                la.add(h1);
                JLabel h2=new JLabel("10h");
-               h2.setBounds(25, 165, 50, 20); 
+               h2.setBounds(26, 165, 50, 20); 
                la.add(h2);
                JLabel h8=new JLabel("10h15");
                h8.setBounds(15, 195, 50, 20); 
@@ -162,15 +177,15 @@ public class ConnexionBDD implements ActionListener  {
                la.add(h3);
                
                JLabel h12=new JLabel("12h");
-               h12.setBounds(25, 360, 50, 20); 
+               h12.setBounds(26, 295, 50, 20); 
                la.add(h12);
                
                JLabel h10=new JLabel("13h30");
-               h10.setBounds(15, 360, 50, 20); 
+               h10.setBounds(15, 365, 50, 20); 
                la.add(h10);
                
                JLabel h4=new JLabel("13h45");
-               h4.setBounds(15, 390, 50, 20); 
+               h4.setBounds(15, 395, 50, 20); 
                la.add(h4);
                
                JLabel h5=new JLabel("15h15");
@@ -182,11 +197,15 @@ public class ConnexionBDD implements ActionListener  {
                la.add(h6);
                
                JLabel h11=new JLabel("17h");
-               h11.setBounds(15, 565, 50, 20); 
+               h11.setBounds(26, 565, 50, 20); 
                la.add(h11);
                
-               JLabel h7=new JLabel("17h15");
-               h7.setBounds(15, 655, 50, 20); 
+               JLabel h13=new JLabel("17h15");
+               h13.setBounds(15, 595, 50, 20); 
+               la.add(h13);
+               
+               JLabel h7=new JLabel("18h45");
+               h7.setBounds(15, 660, 50, 20); 
                la.add(h7);
             
                 
@@ -200,12 +219,15 @@ public class ConnexionBDD implements ActionListener  {
                 int jour= resulutil.getInt("Jour");
                 int semaine1 = resulutil.getInt("Semaine");
                 int Heure_deb = resulutil.getInt("Heure_Debut");
-                int Heure_fin = resulutil.getInt("Heure_Fin");   
-                String etat = resulutil.getString("Etat");
                 int id_cours = resulutil.getInt("ID_Cours");
                 int id_groupe = resulutil.getInt("ID_Groupe");
-                String nom= resulutil.getString("Nom");
+                int Heure_fin = resulutil.getInt("Heure_Fin");   
+                String Etat = resulutil.getString("Etat");
                 String cours= resulutil.getString("Nom_Cours");
+               
+                String nom= resulutil.getString("Nom");
+              
+                
                 
                switch (Heure_deb) {
                    case 8:
@@ -236,7 +258,7 @@ public class ConnexionBDD implements ActionListener  {
                 System.out.println(i);
                 
                 Cours cour= new Cours(id_cours,cours,Color.blue);
-                Seance sea = new Seance(id,date,jour,semaine1,Heure_deb,Heure_fin,etat,id_cours,id_groupe);
+                Seance sea = new Seance(id,date,jour,semaine1,Heure_deb,Heure_fin,Etat,id_cours,id_groupe);
                 
                 
                 JTextArea textArea = new JTextArea(5, 20);

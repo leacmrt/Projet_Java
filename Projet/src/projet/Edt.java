@@ -35,18 +35,18 @@ public class Edt {
     ResultSet resultat,resultat1,resultat2;
     
     
-    public Edt(View aThis,int ID_Utilisateur,String droit) throws SQLException {
-        essau(aThis,ID_Utilisateur,droit);
+    public Edt(View aThis,int ID_Utilisateur,String droit,int etat) throws SQLException {
+        essau(aThis,ID_Utilisateur,droit,etat);
     }
    
-    public void  essau (JPanel la,int ID_Utilisateur,String droit) throws SQLException
+    public void  essau (JPanel la,int ID_Utilisateur,String droit,int etat) throws SQLException
 {
     ConnexionBDD ici= new ConnexionBDD();
     
     JButton recherche;
     JButton btnCration = new JButton("Emploi du temps ");
     JButton deco=new JButton("Deconnexion ");
-    
+    System.out.println("ID 0 : "+ID_Utilisateur);
           
     recherche = new JButton("Recherche");//module de recherche faire en sorte que ce soit que pour un enseignant 
     recherche1 = new JTextField();
@@ -65,8 +65,8 @@ public class Edt {
         
         
          
-        int plus=19;
-        ici.chargecours(1,la,ID_Utilisateur);
+        int plus=20;
+        ici.chargecours(1,la,ID_Utilisateur,etat);
         for(int h=1;h<51;h++)
         {
             int nombre =h;
@@ -83,7 +83,7 @@ public class Edt {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try { 
-                    ici.chargecours(nombre,la,ID_Utilisateur);
+                    ici.chargecours(nombre,la,ID_Utilisateur,etat);
                 } catch (SQLException ex) {
                     Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -104,7 +104,7 @@ public class Edt {
         la.add(deco);
         System.out.println(droit);
         
-        if(!"".equals(droit))
+        if("Non".equals(droit))
         {recherche.setBounds(470, 10, 100, 20); 
         la.add(recherche);
         
