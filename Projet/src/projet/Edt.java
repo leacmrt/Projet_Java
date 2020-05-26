@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -44,6 +45,9 @@ public class Edt {
     public void  essau (JPanel la,int ID_Utilisateur,String droit,int etat) throws SQLException
 {
     ConnexionBDD ici= new ConnexionBDD();
+    int tmp_ID=ID_Utilisateur;
+    String tmp_droit=droit;
+    int tmp_etat=etat;
     
     JButton recherche;
     JButton btnCration = new JButton("Emploi du temps ");
@@ -91,7 +95,11 @@ public class Edt {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Affichage emploi du temps ");
-                 
+                try {  
+                    ici.chargecours(1,la,tmp_ID,tmp_etat);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
+                }
                  
             }
         });
@@ -136,9 +144,12 @@ public class Edt {
         deco.setBounds(900,10, 130, 30);
         la.add(deco);
         System.out.println(droit);
-        
-        if("Non".equals(droit))
-        {recherche.setBounds(470, 10, 100, 20); 
+        Object[] elements = new Object[]{"Utilisateur", "Salle"};
+	JComboBox liste1 = new JComboBox(elements);
+        liste1.setBounds(470, 10, 100, 20);
+        la.add(liste1);
+        //if("Non".equals(droit))
+        {recherche.setBounds(470, 30, 100, 20); 
         la.add(recherche);
         
 
