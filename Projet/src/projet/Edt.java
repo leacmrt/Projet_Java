@@ -36,6 +36,7 @@ public class Edt {
     JTextField recherche1;
     Statement statement;
     ResultSet resultat,resultat1,resultat2;
+    private JComboBox liste1;
     
     
     public Edt(View aThis,int ID_Utilisateur,String droit,int etat) throws SQLException {
@@ -59,19 +60,28 @@ public class Edt {
     recherche = new JButton("Recherche");//module de recherche faire en sorte que ce soit que pour un enseignant 
     recherche1 = new JTextField();
     System.out.print(recherche1.getText());
-    
+  
+    Object[] elements = new Object[]{"Utilisateur", "Salle"};
+    JComboBox liste1 = new JComboBox(elements);
+    liste1.setSelectedItem("Utilisateur");
+    liste1.setBounds(470, 10, 100, 20);
     deco.addActionListener(new Edt.DeconnexionListener() );
-   
+    
+       
     recherche.addActionListener(new ActionListener() {
-        
+    
         @Override
         @SuppressWarnings("empty-statement")
         public void actionPerformed(ActionEvent e) {
                     ActionEvent a = null;
-                    String login2=recherche1.getText();
+                    String selected= (String)liste1.getSelectedItem();
+                    System.out.println("Selection : "+selected); 
+                    
+                   String login2=recherche1.getText();
                     System.out.println("Recherche dans BDD : " + login2);
             try {
-                 int nouveau = ici.recherche((String)login2);
+                if(selected=="Utilisateur")
+                {int nouveau = ici.recherche((String)login2);
                  int nouveau1 = ici.recherche1((String)login2);
                  System.out.println("nouveau = "+nouveau1);
                  if(nouveau!=0)//si on trouve quelqu'un
@@ -81,7 +91,7 @@ public class Edt {
                  ici.chargecours(1,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
                  } else System.out.print("C'est pourtant égal à 0");
                 
-            } catch (SQLException ex) {
+            }} catch (SQLException ex) {
                 Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
             }
                    
@@ -144,9 +154,7 @@ public class Edt {
         deco.setBounds(900,10, 130, 30);
         la.add(deco);
         System.out.println(droit);
-        Object[] elements = new Object[]{"Utilisateur", "Salle"};
-	JComboBox liste1 = new JComboBox(elements);
-        liste1.setBounds(470, 10, 100, 20);
+        
         la.add(liste1);
         //if("Non".equals(droit))
         {recherche.setBounds(470, 30, 100, 20); 
@@ -177,4 +185,9 @@ public class Edt {
              
         }
     
+    
+    public JComboBox getListe1(){ //pour récuppérer l'action de la liste 
+		return liste1;
+	}
 }
+
