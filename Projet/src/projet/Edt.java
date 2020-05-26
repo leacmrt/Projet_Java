@@ -80,7 +80,7 @@ public class Edt {
                    String login2=recherche1.getText();
                     System.out.println("Recherche dans BDD : " + login2);
             try {
-                if(selected=="Utilisateur")
+                if("Utilisateur".equals(selected))
                 {int nouveau = ici.recherche((String)login2);
                  int nouveau1 = ici.recherche1((String)login2);
                  System.out.println("nouveau = "+nouveau1);
@@ -91,7 +91,12 @@ public class Edt {
                  ici.chargecours(1,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
                  } else System.out.print("C'est pourtant égal à 0");
                 
-            }} catch (SQLException ex) {
+            } else{ //ici recherche de salle 
+                   
+                    
+                }
+            
+            } catch (SQLException ex) {
                 Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
             }
                    
