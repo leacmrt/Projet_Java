@@ -91,9 +91,14 @@ public class Edt {
                  ici.chargecours(1,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
                  } else System.out.print("C'est pourtant égal à 0");
                 
-            } else{ //ici recherche de salle 
-                   
-                    
+            } else  if("Salle".equals(selected)){ //ici recherche de salle 
+                int nouveau = ici.rechercheSalle((String)login2); 
+               
+                 
+                 if(nouveau!=0)//si on trouve une salle
+                 {  System.out.println("la salle existe");
+                    ici.chargecours(semaine, la,nouveau,2);
+                 }
                 }
             
             } catch (SQLException ex) {
