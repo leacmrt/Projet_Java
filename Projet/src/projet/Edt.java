@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -117,6 +118,7 @@ public class Edt {
                 System.out.println("Affichage emploi du temps ");
                 try {  
                     ici.chargecours(1,la,tmp_ID,tmp_etat);
+                     JOptionPane.showMessageDialog(null,"Votre emploi du temps","Success",JOptionPane.PLAIN_MESSAGE);
                 } catch (SQLException ex) {
                     Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -194,11 +194,11 @@ public class ConnexionBDD implements ActionListener  {
            try{
            Statement util = myConnection.createStatement();
            ResultSet resulutil = null;
-           String sql = "SELECT * FROM salle WHERE Nom LIKE '"+envoie+"'";
+           String sql = "SELECT * FROM salle WHERE Nom_Salle LIKE '"+envoie+"'";
                    resulutil = util.executeQuery(sql);
                    if(resulutil.next())
                    {
-                      NomRecup=resulutil.getString("Nom");
+                      NomRecup=resulutil.getString("Nom_Salle");
                        NomRecup1=resulutil.getInt("ID");
                        System.out.println("Recherche de la salle : "+NomRecup);
                        return NomRecup1;
@@ -231,6 +231,8 @@ public class ConnexionBDD implements ActionListener  {
                    sql+=" INNER JOIN seance_enseignant sa ON sa.ID_Seance=s.ID_Seance";
                    sql+=" INNER JOIN enseignant en ON en.ID_Utilisateur=sa.ID_Enseignant";
                    sql+=" INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur";
+                   sql+=" INNER JOIN seance_salle sea ON sea.ID_Seance=se.ID";
+                   sql+=" INNER JOIN salle sal ON sal.ID=sea.ID_Salle";
                    sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
                    sql += "  WHERE s.ID_Groupe ='"+ID_utli1+"' AND se.Semaine='"+semaine+"'";
                    resulutil = util.executeQuery(sql);
@@ -242,6 +244,8 @@ public class ConnexionBDD implements ActionListener  {
                     sql += " INNER JOIN seance se ON se.ID =sa.ID_Seance";
                     sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
                     sql+=" INNER JOIN seance_groupe s ON s.ID_Seance=se.ID";
+                    sql+=" INNER JOIN seance_salle sea ON sea.ID_Seance=se.ID";
+                   sql+=" INNER JOIN salle sal ON sal.ID=sea.ID_Salle";
                    sql += "  WHERE ut.ID ='"+ID_utli1+"' AND se.Semaine='"+semaine+"'";
                    resulutil = util.executeQuery(sql);
                    
@@ -252,6 +256,9 @@ public class ConnexionBDD implements ActionListener  {
                    sql+=" INNER JOIN seance se ON se.ID=sea.ID_Seance";
                    sql+=" INNER JOIN cours co ON se.ID_Cours=co.ID";
                    sql+=" INNER JOIN seance_groupe s on s.ID_Seance=se.ID";
+                   sql+=" INNER JOIN seance_enseignant see ON see.ID_Seance=se.ID";
+                   sql+=" INNER JOIN enseignant en ON en.ID_Utilisateur=see.ID_Enseignant";
+                   sql+=" INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur"; 
                    sql += "  WHERE se.Semaine='"+semaine+"' AND sa.ID='"+ID_utli1+"'";
                    resulutil = util.executeQuery(sql);}
                    
@@ -274,6 +281,9 @@ public class ConnexionBDD implements ActionListener  {
                 int Heure_fin = resulutil.getInt("Heure_Fin");   
                 String Etat = resulutil.getString("Etat");
                 String cours= resulutil.getString("Nom_Cours");
+                String nom_salle=resulutil.getString("Nom_Salle");
+                
+                
                
                 String nom= resulutil.getString("Nom");
               
@@ -307,12 +317,14 @@ public class ConnexionBDD implements ActionListener  {
                
                 System.out.println(i);
                 
+               
                 Cours cour= new Cours(id_cours,cours,Color.blue);
+                //Salle salle=new Salle()
                 Seance sea = new Seance(id,date,jour,semaine1,Heure_deb,Heure_fin,Etat,id_cours,id_groupe);
                 
                 
                 JTextArea textArea = new JTextArea(5, 20);
-                String remplir =" "+cours+"- "+nom;
+                String remplir =" "+cours+"- "+nom+" - "+nom_salle;
                 textArea.append(remplir);
                 data[i][jour] =remplir;
                
