@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 27 mai 2020 à 07:51
+-- Généré le :  mer. 27 mai 2020 à 10:03
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
