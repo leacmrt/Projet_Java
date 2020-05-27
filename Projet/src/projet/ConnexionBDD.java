@@ -218,7 +218,7 @@ public class ConnexionBDD implements ActionListener  {
            
            
                int i = 0;
-               JLabel h1=new JLabel("8h30");
+               /*JLabel h1=new JLabel("8h30");
                h1.setBounds(20, 100, 50, 20); 
                la.add(h1);
                JLabel h2=new JLabel("10h");
@@ -261,7 +261,7 @@ public class ConnexionBDD implements ActionListener  {
                
                JLabel h7=new JLabel("18h45");
                h7.setBounds(15, 660, 50, 20); 
-               la.add(h7);
+               la.add(h7);*/
             
                 
                 
@@ -326,7 +326,7 @@ public class ConnexionBDD implements ActionListener  {
                 }
                 resulutil.close();
                 
-        String columns[] = {"Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
+          String columns[] = {"Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
        
         
          
@@ -359,12 +359,12 @@ public class ConnexionBDD implements ActionListener  {
    
             return component;
         }
-        
+           
         
         
           };
-         
-          for(int u=0;u<11;u++)
+         remplirtableau(table,la);
+          /*for(int u=0;u<11;u++)
           {if(u==1||u==3||u==5||u==7||u==9){
               table.setRowHeight(u,15);
           }
@@ -380,11 +380,76 @@ public class ConnexionBDD implements ActionListener  {
            
           JScrollPane pane = new JScrollPane(table);
           pane.setBounds(50,80,970,600);
-          la.add(pane);
+          la.add(pane);*/
 
       }
   
-  
+     public void remplirtableau(JTable table, JPanel la)
+     {
+         
+         int i = 0;
+               JLabel h1=new JLabel("8h30");
+               h1.setBounds(20, 100, 50, 20); 
+               la.add(h1);
+               JLabel h2=new JLabel("10h");
+               h2.setBounds(26, 165, 50, 20); 
+               la.add(h2);
+               JLabel h8=new JLabel("10h15");
+               h8.setBounds(15, 195, 50, 20); 
+               la.add(h8);
+               JLabel h3=new JLabel("11h45");
+               h3.setBounds(15, 265, 50, 20); 
+               la.add(h3);
+               
+               JLabel h12=new JLabel("12h");
+               h12.setBounds(26, 295, 50, 20); 
+               la.add(h12);
+               
+               JLabel h10=new JLabel("13h30");
+               h10.setBounds(15, 365, 50, 20); 
+               la.add(h10);
+               
+               JLabel h4=new JLabel("13h45");
+               h4.setBounds(15, 395, 50, 20); 
+               la.add(h4);
+               
+               JLabel h5=new JLabel("15h15");
+               h5.setBounds(15, 465, 50, 20); 
+               la.add(h5);
+               
+               JLabel h6=new JLabel("15h30");
+               h6.setBounds(15, 500, 50, 20); 
+               la.add(h6);
+               
+               JLabel h11=new JLabel("17h");
+               h11.setBounds(26, 565, 50, 20); 
+               la.add(h11);
+               
+               JLabel h13=new JLabel("17h15");
+               h13.setBounds(15, 595, 50, 20); 
+               la.add(h13);
+               
+               JLabel h7=new JLabel("18h45");
+               h7.setBounds(15, 660, 50, 20); 
+               la.add(h7);
+               
+               
+          for(int u=0;u<11;u++)
+          {if(u==1||u==3||u==5||u==7||u==9){
+              table.setRowHeight(u,15);
+          }
+          else table.setRowHeight(u,84);
+          }
+          
+          table.setColumnSelectionAllowed(true);
+          table.setShowGrid(true);
+          table.setShowVerticalLines(true);
+     
+     
+          JScrollPane pane = new JScrollPane(table);
+          pane.setBounds(50,80,970,600);
+          la.add(pane);
+     }       
  
       
       public static Connection init(){
