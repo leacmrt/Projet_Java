@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 19 mai 2020 à 16:56
+-- Généré le :  mer. 27 mai 2020 à 07:51
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -39,7 +39,9 @@ CREATE TABLE IF NOT EXISTS `enseignant` (
 --
 
 INSERT INTO `enseignant` (`ID_Utilisateur`, `ID_Cours`) VALUES
-(2, 1);
+(2, 1),
+(3, 2),
+(4, 3);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 20 mai 2020 à 15:15
+-- Généré le :  mer. 27 mai 2020 à 07:51
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -31,9 +31,18 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `cours`;
 CREATE TABLE IF NOT EXISTS `cours` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom` text NOT NULL,
+  `Nom_Cours` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `cours`
+--
+
+INSERT INTO `cours` (`ID`, `Nom_Cours`) VALUES
+(1, 'POO JAVA'),
+(2, 'WEB DYNAMIQUE'),
+(3, 'ANGLAIS');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
