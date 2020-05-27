@@ -38,6 +38,7 @@ public class View extends JPanel {
     private static int COUNT = 0;
     private String message = "";
     Edt edt;
+    Modification modification;
    
   public View(){}
 
@@ -64,6 +65,12 @@ public View(Onglet ong, Color color, int ID_Utilisateur,String droit,int etat) t
     if (COUNT==2)
     {this.message=" "; 
     essau1(this);
+     this.repaint();
+    }
+         
+    if (COUNT==3)
+    {this.message=" ICI SERONT LES MODIFICATIONS FAIT PAR L'ADMINISTRATEUR "; 
+     modification = new Modification(this,ID_Utilisateur,droit,etat);
      this.repaint();
     }
 

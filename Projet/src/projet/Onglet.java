@@ -31,9 +31,10 @@ public class Onglet extends JFrame {
     
     View edt = new View(this,fond,ID_Utilisateur,droit,etat); //page emploi du temps
     View recap = new View(this,Color.blue,ID_Utilisateur,droit,etat); // page recapitulatif de cours 
+    View modification = new View(this,Color.lightGray,ID_Utilisateur,droit,etat);
     
 //Création de plusieurs Panneau
-    View[] tPan = {edt , recap};
+    View[] tPan = {edt , recap,modification};
       
     //Création de notre conteneur d'onglets
     onglet = new JTabbedPane();
@@ -42,6 +43,7 @@ public class Onglet extends JFrame {
     for(View pan : tPan){
     if(i==0) titre = "Emploi du temps ";
     if(i==1) titre = "Recapitulatif des cours ";
+    if(i==2) titre = "Modifications";
       
       onglet.addTab(titre, pan);
       i++;
