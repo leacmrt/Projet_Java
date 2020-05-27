@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 19 mai 2020 à 16:56
+-- Généré le :  mer. 27 mai 2020 à 07:54
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -37,15 +37,17 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `Nom` text NOT NULL,
   `Droit` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`ID`, `Mail`, `Mdp`, `Prenom`, `Nom`, `Droit`) VALUES
-(1, 'lea.commaret@edu.ece.fr', 'mdp', 'Léa', 'Commaret', 'oui'),
-(2, 'enseignant@edu.ece.fr', 'mdp', 'Jean-Pierre', 'Segado', 'oui');
+(1, 'lea.commaret@edu.ece.fr', 'mdp', 'Léa', 'Commaret', 'Oui'),
+(2, 'enseignant@edu.ece.fr', 'mdp', 'Jean-Pierre', 'Segado', 'Non'),
+(3, 'enseignant2@edu.ece.fr', 'mdp', 'Is', 'Rendler', 'Non'),
+(4, 'enseignant3@edu.ece.fr', 'mdp', 'S', 'Ingham', 'Non');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

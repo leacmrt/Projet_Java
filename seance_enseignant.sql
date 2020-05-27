@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 20 mai 2020 à 15:13
+-- Généré le :  mer. 27 mai 2020 à 07:54
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -33,6 +33,16 @@ CREATE TABLE IF NOT EXISTS `seance_enseignant` (
   `ID_Enseignant` int(11) NOT NULL,
   `ID_Seance` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `seance_enseignant`
+--
+
+INSERT INTO `seance_enseignant` (`ID_Enseignant`, `ID_Seance`) VALUES
+(2, 1),
+(2, 2),
+(3, 3),
+(4, 4);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
