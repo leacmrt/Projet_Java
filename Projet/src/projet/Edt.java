@@ -54,7 +54,7 @@ public class Edt {
     JButton recherche;
     JButton btnCration = new JButton("Emploi du temps ");
     JButton deco=new JButton("Deconnexion ");
-    System.out.println("ID 0 : "+ID_Utilisateur);
+    //System.out.println("ID 0 : "+ID_Utilisateur);
     Edt.this.ID_Utilisateur1=ID_Utilisateur; 
     Edt.this.EtatUT=etat;
     
@@ -165,7 +165,7 @@ public class Edt {
         la.add(btnCration);
         deco.setBounds(900,10, 130, 30);
         la.add(deco);
-        System.out.println(droit);
+        //System.out.println(droit);
         
         la.add(liste1);
         //if("Non".equals(droit))
