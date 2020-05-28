@@ -22,7 +22,8 @@ import javax.swing.JTextField;
  * @author lele1
  */
 class Modification extends JPanel implements ItemListener{
-    
+    int x=90;
+     int y=110;
     public Modification(View aThis,int ID_Utilisateur,String droit,int etat)
     {
     JButton etu= new JButton("ETUDIANT");
@@ -33,14 +34,14 @@ class Modification extends JPanel implements ItemListener{
      JCheckBox check2 = new JCheckBox("Type");
      
       JTextField ID = new JTextField("ID"); 
-      JTextField Date = new JTextField("Date"); 
-      JTextField Jour= new JTextField("Jour"); 
-      JTextField Semaine = new JTextField("Semaine"); 
-      JTextField Heuredeb = new JTextField("Heure de debut"); 
-      JTextField HeureFin= new JTextField("Heure de fin"); 
-      JTextField Etat= new JTextField("Etat"); 
-      JTextField cours = new JTextField("Cours"); 
-      JTextField Groupe= new JTextField("Groupe(s)"); 
+      JTextField Date = new JTextField(" Date"); 
+      JTextField Jour= new JTextField(" Jour"); 
+      JTextField Semaine = new JTextField(" Semaine"); 
+      JTextField Heuredeb = new JTextField(" Heure de debut"); 
+      JTextField HeureFin= new JTextField(" Heure de fin"); 
+      JTextField Etat= new JTextField(" Etat"); 
+      JTextField cours = new JTextField(" Cours"); 
+      JTextField Groupe= new JTextField(" Groupe(s)"); 
 
     deco.addActionListener(new Modification.DeconnexionListener() );
     JComboBox choix = new JComboBox();
@@ -59,13 +60,30 @@ class Modification extends JPanel implements ItemListener{
                     
                     if("Modifier".equals(selected))
             {
-              
+               x=0;
+               y=0;
+               repaint();
             
             }
                   else if("Ajouter".equals(selected))
             {
+                x=90;
+                y=110;
+                //ID.setBounds(140,330, 90, 30); 
+                Date.setBounds(300,330, x, 30);
+                Jour.setBounds(420,330, x, 30);
+                Semaine.setBounds(530,330, x, 30);
+                Heuredeb.setBounds(650,330, y, 30);
+                HeureFin.setBounds(790,330, x, 30);
+                Etat.setBounds(300,430, x, 30);
+                cours.setBounds(420,430, x, 30);
+                Groupe.setBounds(530,430, x, 30);
                   
             }
+            else{ x=0;
+               y=0;}
+               
+                    
         }});
     
     
@@ -84,8 +102,8 @@ class Modification extends JPanel implements ItemListener{
                     if("Modifier".equals(selected))
             {
                 System.out.println("ON MODIFIE");
-               check1.setBounds(300,220, 90, 30);
-               check2.setBounds(400,220, 90, 30);
+               check1.setBounds(300,220, 70, 20);
+               check2.setBounds(400,220, 70, 20);
                
               
             
@@ -100,6 +118,15 @@ class Modification extends JPanel implements ItemListener{
     co.setBounds(10,220, 130, 30);
     se.setBounds(10,330, 130, 30);
     
+    aThis.add(ID);
+    aThis.add(Date);
+    aThis.add(Jour);
+    aThis.add(Semaine);
+    aThis.add(Heuredeb);
+    aThis.add(HeureFin);
+    aThis.add(Etat);
+    aThis.add(cours);
+    aThis.add(Groupe);
     aThis.add(deco);
     aThis.add(choix1);
     aThis.add(choix);
