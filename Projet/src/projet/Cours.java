@@ -73,7 +73,7 @@ public class Cours {
              Statement statement;
              ResultSet resultat;
              statement = myConnection.createStatement();
-             String sql="SELECT * FROM cours WHERE utilisateur.nom = '"+nom+"'";  
+             String sql="SELECT * FROM cours WHERE Nom_Cours = '"+nom+"'";  
              ResultSet result = statement.executeQuery(sql);
              int i=0;
              while (result.next())

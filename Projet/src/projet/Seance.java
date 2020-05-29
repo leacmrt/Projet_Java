@@ -17,6 +17,7 @@ import java.sql.Statement;
 public class Seance {
     private int id ;
     private int date;
+    private String Dte;
     private int jour;
     private int semaine1;
     private int Heure_deb;
@@ -24,6 +25,7 @@ public class Seance {
     private String etat;
     private int id_cours;
     private int id_groupe;
+    private int id_type;
     
     public Seance(int NewID,int NewDate,int NewJour, int NewSemaine,int NewDeb,int NewFin,String NewEtat,int NewIDc,int NewIDg)
     {
@@ -36,14 +38,29 @@ public class Seance {
     NewEtat= etat;
     NewIDc= id_cours;
     NewIDg= id_groupe;
+    
     System.out.println("nouvelle seance");
     }
     
     
+    public Seance(String NewDate,int NewJour, int NewSemaine,int NewDeb,int NewFin,String NewEtat,int NewIDc,int NewIDt)
+    {
+        
+    NewDate=Dte;
+    NewJour=jour;
+    NewSemaine= semaine1;
+    NewDeb=Heure_deb;
+    NewFin= Heure_fin;   
+    NewEtat= etat;
+    NewIDc= id_cours;
+    NewIDt= id_groupe;
+    System.out.println("nouvelle seance");
+    }
+    
     public int getid()
     { return this.id;}
     
-    public int getidsql(int NewDate,int NewJour, int NewSemaine,int NewDeb,int NewFin,String NewEtat,int NewIDc,int NewIDt) throws SQLException
+    public int getidsql(String NewDate,int NewJour, int NewSemaine,int NewDeb,int NewFin,String NewEtat,int NewIDc,int NewIDt) throws SQLException
     {
         int recup=0;
        Connection myConnection;
@@ -60,10 +77,13 @@ public class Seance {
                
              }
              
-             System.out.println("ID prof : "+recup );
+             System.out.println("ID SEANCE: "+recup );
+      setid(recup);
       
       return recup;
     }
+    
+    
      public int getdate()
     { return this.date;} 
     
@@ -87,6 +107,10 @@ public class Seance {
          
           public int getid_groupe()
     { return this.id_groupe;}
+          
+          
+           public void setid(int nouveau)
+    {     this.id=nouveau;}
           
           public void setjour(int nouveau)
     {     this.jour=nouveau;}

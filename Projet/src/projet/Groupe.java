@@ -15,24 +15,24 @@ import java.util.ArrayList;
  *
  * @author lele1
  */
-public class Salle {
-    private int ID, ID_Site, Capacite;
+public class Groupe {
+    private int ID ,ID_Promotion;
     private String Nom;
     
-    
-    public Salle(){} //constructeur par défaut 
-    
-    public Salle(int NewID,int NewID_Site,int NewCapacite,String NewNom)
+    public Groupe(int NewID,int NewID_Promotion,String NewNom)
     {
-       this.ID=NewID;
-       this.ID_Site=NewID_Site;
-       this.Capacite=NewCapacite;
-       this.Nom=NewNom;
-       System.out.println("Création de la salle "+this.Nom);    
+     this.ID=NewID;
+     this.ID_Promotion=NewID_Promotion;
+     this.Nom=NewNom;
+     
+    }
+
+   public Groupe() {
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
-    public ArrayList<String> gettoutlesnoms() throws SQLException //recupère la liste des noms de salles 
+    public ArrayList<String> gettoutlesnoms() throws SQLException
             {
              ArrayList<String> cars = new ArrayList<>();
              
@@ -41,12 +41,15 @@ public class Salle {
              Statement statement;
              ResultSet resultat;
              statement = myConnection.createStatement();
-             String sql="SELECT * FROM salle WHERE 1";  
+             String sql="SELECT * FROM groupe INNER JOIN promotion ON groupe.ID_Promotion=promotion.ID WHERE 1";  
              ResultSet result = statement.executeQuery(sql);
              int i=0;
              while (result.next())
              {
-                String nom=result.getString("Nom_Salle");
+                String nom=result.getString("groupe.Nom");
+                //nom+=" - ";
+                //nom+=result.getString("promotion.Nom");
+                
                 if(!nom.isEmpty())
                 {cars.add(nom);}
                 
@@ -63,15 +66,16 @@ public class Salle {
             }
     
     
-    public int gettryID(String nom) throws SQLException
+    
+    public int getsqlID(String nom) throws SQLException
     {
-      int recup=0;
+       int recup=0;
        Connection myConnection;
              myConnection=ConnexionBDD.init();
              Statement statement;
              ResultSet resultat;
              statement = myConnection.createStatement();
-             String sql="SELECT * FROM salle  WHERE Nom_Salle = '"+nom+"'";  
+             String sql="SELECT * FROM groupe WHERE Nom= '"+nom+"'";  
              ResultSet result = statement.executeQuery(sql);
              int i=0;
              while (result.next())
@@ -80,9 +84,8 @@ public class Salle {
                
              }
              
-             System.out.println("ID: "+recup );
+             System.out.println("ID groupe : "+recup );
       
       return recup;
     }
-    
 }
