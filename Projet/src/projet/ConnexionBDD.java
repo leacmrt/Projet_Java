@@ -223,7 +223,7 @@ public class ConnexionBDD implements ActionListener  {
           
     
      
-          String data[][] = new String[11][6];
+          String data[][] = new String[11][7];
            util= myConnection.createStatement();
            
            if(etat==1)

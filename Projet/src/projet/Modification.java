@@ -10,12 +10,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import static java.lang.System.exit;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import static projet.ConnexionBDD.myConnection;
 
 /**
  *
@@ -41,7 +48,9 @@ class Modification extends JPanel implements ItemListener{
       JTextField HeureFin= new JTextField(" Heure de fin"); 
       JTextField Etat= new JTextField(" Etat"); 
       JTextField cours = new JTextField(" Cours"); 
-      JTextField Groupe= new JTextField(" Groupe(s)"); 
+      JTextField Groupe= new JTextField(" Groupe(s)");
+      JTextField Prof= new JTextField(" Professeur ");
+       JTextField Salle= new JTextField(" Salle");
 
     deco.addActionListener(new Modification.DeconnexionListener() );
     JComboBox choix = new JComboBox();
@@ -78,13 +87,24 @@ class Modification extends JPanel implements ItemListener{
                 Etat.setBounds(300,430, x, 30);
                 cours.setBounds(420,430, x, 30);
                 Groupe.setBounds(530,430, x, 30);
+                Prof.setBounds(650,430, x, 30);
+                Salle.setBounds(790,430, x, 30);
+                        try {
+                            ajout(Date,Jour,Semaine,Heuredeb,HeureFin,Etat,cours,Groupe,Prof,Salle);
+                            
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                   
             }
             else{ x=0;
                y=0;}
                
                     
-        }});
+        }
+
+
+    });
     
     
     JComboBox choix1 = new JComboBox();
@@ -127,6 +147,8 @@ class Modification extends JPanel implements ItemListener{
     aThis.add(Etat);
     aThis.add(cours);
     aThis.add(Groupe);
+    aThis.add(Prof);
+    aThis.add(Salle);
     aThis.add(deco);
     aThis.add(choix1);
     aThis.add(choix);
@@ -155,6 +177,25 @@ class Modification extends JPanel implements ItemListener{
                     
                     
             }
+             
+        }
+    
+     private void ajout(JTextField Date, JTextField Jour, JTextField Semaine, JTextField Heuredeb, JTextField HeureFin, JTextField Etat, JTextField cours, JTextField Groupe,JTextField Prof,JTextField Salle) throws SQLException {
+             
+             Connection myConnection;
+             myConnection=ConnexionBDD.init();
+             Statement statement;
+             ResultSet resultat;
+             
+             statement = myConnection.createStatement();
+             String sql = "INSERT INTO seance(`Date`, `Jour`, `Semaine`, `Heure_Debut`, `Heure_Fin`, `Etat`, `ID_Cours`, `ID_Type`) VALUES ('2020-07-18','6','4','8','10','passe','2','1')";
+             String sql1="INSERT INTO seance_enseignant(`ID_Seance`, `ID_Enseignant`) VALUES ('7','2')";
+             String sql2="INSERT INTO seance_groupe(`ID_Seance`, `ID_Groupe`) VALUES ('7','1')";
+             String sql3="INSERT INTO seance_salle(`ID_Seance`, `ID_Salle`) VALUES ('7','3')";  
+             int update = statement.executeUpdate(sql);
+             int update1 = statement.executeUpdate(sql1);
+             int update2 = statement.executeUpdate(sql2);
+             int update3 = statement.executeUpdate(sql3);
              
         }
    

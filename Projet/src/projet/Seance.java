@@ -35,5 +35,49 @@ public class Seance {
     }
     
     
+    public int getid()
+    { return this.id;}
     
+     public int getdate()
+    { return this.date;} 
+    
+     public int getjour()
+    { return this.jour;}
+     
+      public int getsemaine1()
+    { return this.semaine1;}
+      
+       public int getHeure_deb()
+    { return this.Heure_deb;}
+       
+         public int getHeure_fin()
+    { return this.Heure_fin;}
+         
+        public String getetat()
+    { return this.etat;}
+        
+         public int getid_cours()
+    { return this.id_cours;}
+         
+          public int getid_groupe()
+    { return this.id_groupe;}
+          
+          public void setjour(int nouveau)
+    {     this.jour=nouveau;}
+           public void setdate(int nouveau)
+    {     this.date=nouveau;}
+           
+            public void setseamine1(int nouveau)
+    {     this.semaine1=nouveau;}
+            
+             public void setHeure_deb(int nouveau)
+    {     this.Heure_deb=nouveau;}
+             
+              public void setHeure_fin(int nouveau)
+    {     this.Heure_fin=nouveau;}
+              
+          public void setetat(String nouveau)
+    {     this.etat=nouveau;}
+          
+         
 }
