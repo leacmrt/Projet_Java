@@ -5,7 +5,11 @@
  */
 package projet;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,4 +32,36 @@ public class Enseignant extends Utilisateur {
       this.ID_Enseignant=NewID;
       System.out.println("Coucou l'enseignant");//test affichage 
     }
+    
+    
+    public ArrayList<String> gettoutlesnoms() throws SQLException
+            {
+             ArrayList<String> cars = new ArrayList<>();
+             
+             Connection myConnection;
+             myConnection=ConnexionBDD.init();
+             Statement statement;
+             ResultSet resultat;
+             statement = myConnection.createStatement();
+             String sql="SELECT * FROM enseignant INNER JOIN utilisateur ON enseignant.ID_Utilisateur=utilisateur.ID WHERE 1";  
+             ResultSet result = statement.executeQuery(sql);
+             int i=0;
+             while (result.next())
+             {
+                String nom=result.getString("Nom");
+                if(!nom.isEmpty())
+                {cars.add(nom);}
+                
+                i++;
+             }
+             
+             for(int u=0;u<cars.size();u++)
+             {
+                 System.out.print(cars.get(u)+" ");
+             }
+             
+             
+            return cars;
+            }
+    
 }

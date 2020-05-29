@@ -5,6 +5,12 @@
  */
 package projet;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 /**
  *
  * @author lele1
@@ -24,5 +30,36 @@ public class Salle {
        this.Nom=NewNom;
        System.out.println("Création de la salle "+this.Nom);    
     }
+    
+    
+    public ArrayList<String> gettoutlesnoms() throws SQLException //recupère la liste des noms de salles 
+            {
+             ArrayList<String> cars = new ArrayList<>();
+             
+             Connection myConnection;
+             myConnection=ConnexionBDD.init();
+             Statement statement;
+             ResultSet resultat;
+             statement = myConnection.createStatement();
+             String sql="SELECT * FROM salle WHERE 1";  
+             ResultSet result = statement.executeQuery(sql);
+             int i=0;
+             while (result.next())
+             {
+                String nom=result.getString("Nom_Salle");
+                if(!nom.isEmpty())
+                {cars.add(nom);}
+                
+                i++;
+             }
+             
+             for(int u=0;u<cars.size();u++)
+             {
+                 System.out.print(cars.get(u)+" ");
+             }
+             
+             
+            return cars;
+            }
     
 }
