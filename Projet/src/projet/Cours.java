@@ -64,5 +64,26 @@ public class Cours {
              
             return cars;
             }
-    
+   
+    public int gettryID(String nom) throws SQLException
+    {
+      int recup=0;
+       Connection myConnection;
+             myConnection=ConnexionBDD.init();
+             Statement statement;
+             ResultSet resultat;
+             statement = myConnection.createStatement();
+             String sql="SELECT * FROM cours WHERE utilisateur.nom = '"+nom+"'";  
+             ResultSet result = statement.executeQuery(sql);
+             int i=0;
+             while (result.next())
+             {
+               recup=result.getInt("ID");
+               
+             }
+             
+             System.out.println("ID Cours : "+recup );
+      
+      return recup;
+    }
 }

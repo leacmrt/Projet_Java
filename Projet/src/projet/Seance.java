@@ -5,6 +5,11 @@
  */
 package projet;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author lele1
@@ -38,6 +43,27 @@ public class Seance {
     public int getid()
     { return this.id;}
     
+    public int getidsql(int NewDate,int NewJour, int NewSemaine,int NewDeb,int NewFin,String NewEtat,int NewIDc,int NewIDt) throws SQLException
+    {
+        int recup=0;
+       Connection myConnection;
+             myConnection=ConnexionBDD.init();
+             Statement statement;
+             ResultSet resultat;
+             statement = myConnection.createStatement();
+             String sql="SELECT * FROM seance WHERE Date = '"+NewDate+"' AND Jour='"+NewJour+"' AND Semaine ='"+NewSemaine+"' AND Heure_Debut='"+NewDeb+"' AND Heure_Fin='"+NewFin+"' AND Etat= '"+NewEtat+"' AND ID_Cours ='"+NewIDc+"' AND ID_Type ='"+NewIDt+"'";  
+             ResultSet result = statement.executeQuery(sql);
+             int i=0;
+             while (result.next())
+             {
+               recup=result.getInt("ID");
+               
+             }
+             
+             System.out.println("ID prof : "+recup );
+      
+      return recup;
+    }
      public int getdate()
     { return this.date;} 
     

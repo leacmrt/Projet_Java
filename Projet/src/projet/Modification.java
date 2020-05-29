@@ -34,6 +34,7 @@ class Modification extends JPanel implements ItemListener{
     int x=90;
      int y=110;
      String jour1,cours1,salle1,enseignant1,Etat1;
+     int id_prof,id_cours;
     public Modification(View aThis,int ID_Utilisateur,String droit,int etat) throws SQLException
     {
     JButton etu= new JButton("ETUDIANT");
@@ -154,6 +155,7 @@ class Modification extends JPanel implements ItemListener{
                     public void actionPerformed(ActionEvent ae) {
                         Etat1= (String)etat1.getSelectedItem();
                        System.out.println("Selection : "+Etat1);
+                       
                     }
             });
                  
@@ -166,6 +168,11 @@ class Modification extends JPanel implements ItemListener{
                     public void actionPerformed(ActionEvent ae) {
                         enseignant1= (String)choixenseignant.getSelectedItem();
                        System.out.println("Selection : "+enseignant1);
+                        try {
+                            id_prof=recup1.gettryID(enseignant1);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
             });
                  
@@ -178,6 +185,11 @@ class Modification extends JPanel implements ItemListener{
                     public void actionPerformed(ActionEvent ae) {
                         cours1= (String)choixcours.getSelectedItem();
                        System.out.println("Selection : "+cours1);
+                        try {
+                            id_cours=recu.gettryID(cours1);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
             });
                  
@@ -198,7 +210,7 @@ class Modification extends JPanel implements ItemListener{
             public void actionPerformed(ActionEvent arg0) {
                
                 try {
-                    ajout(Date,jour1,Semaine,Heuredeb,HeureFin,Etat1,cours1,Groupe,enseignant1,salle1);
+                    ajout(Date,jour1,Semaine,Heuredeb,HeureFin,Etat1,cours1,Groupe,enseignant1,salle1,id_prof,id_cours);
                 } catch (SQLException ex) {
                     Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -290,7 +302,7 @@ class Modification extends JPanel implements ItemListener{
              
         }
     
-     private void ajout(JTextField Date, String jour1, JTextField Semaine, JTextField Heuredeb, JTextField HeureFin, String Etat, String cours, JTextField Groupe,String Prof,String Salle) throws SQLException
+     private void ajout(JTextField Date, String jour1, JTextField Semaine, JTextField Heuredeb, JTextField HeureFin, String Etat, String cours, JTextField Groupe,String Prof,String Salle,int id_prof,int id_cours) throws SQLException
      {
              
              Connection myConnection;
@@ -341,15 +353,19 @@ class Modification extends JPanel implements ItemListener{
              {    
             
              statement = myConnection.createStatement();
-             /*String sql = "INSERT INTO seance(`Date`, `Jour`, `Semaine`, `Heure_Debut`, `Heure_Fin`, `Etat`, `ID_Cours`, `ID_Type`) VALUES ('2020-07-18','"+jour+"','4','"+heuredeb+"','"+heurefin+"','"+Etat+"','2','1')";
-             String sql1="INSERT INTO seance_enseignant(`ID_Seance`, `ID_Enseignant`) VALUES ('7','2')";
-             String sql2="INSERT INTO seance_groupe(`ID_Seance`, `ID_Groupe`) VALUES ('7','1')";
-             String sql3="INSERT INTO seance_salle(`ID_Seance`, `ID_Salle`) VALUES ('7','3')";  
+             String sql = "INSERT INTO seance(`Date`, `Jour`, `Semaine`, `Heure_Debut`, `Heure_Fin`, `Etat`, `ID_Cours`, `ID_Type`) VALUES ('2020-07-18','"+jour+"','4','"+heuredeb+"','"+heurefin+"','"+Etat+"','"+id_cours+"','1')";
+             /*Seance nouvelle = new Seance(0,Date,jour, semaine,heuredeb,heurefin,Etat,id_cours,NewIDg);
+             
+             int idseance = nouvelle.getidsql(Date,jour, semaine,heuredeb,heurefin,Etat,id_cours,NewIDt);
+             
+             String sql1="INSERT INTO seance_enseignant(`ID_Seance`, `ID_Enseignant`) VALUES ('"+idseance+"','"+id_prof+"')";
+             String sql2="INSERT INTO seance_groupe(`ID_Seance`, `ID_Groupe`) VALUES ('"+idseance+"','1')";
+             String sql3="INSERT INTO seance_salle(`ID_Seance`, `ID_Salle`) VALUES ('"+idseance+"','3')";  
              int update = statement.executeUpdate(sql);
              int update1 = statement.executeUpdate(sql1);
              int update2 = statement.executeUpdate(sql2);
-             int update3 = statement.executeUpdate(sql3);*/
-             System.out.println("tu veux ajouter !");
+             int update3 = statement.executeUpdate(sql3);
+             System.out.println("tu veux ajouter !");*/
              
              }else    JOptionPane.showMessageDialog(null,"Erreur entrée Heure, incompatible ou les horraires ne se suivent pas","Error",JOptionPane.PLAIN_MESSAGE);
              

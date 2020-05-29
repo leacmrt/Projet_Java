@@ -64,4 +64,28 @@ public class Enseignant extends Utilisateur {
             return cars;
             }
     
+    public int gettryID(String nom) throws SQLException
+    {
+      int recup=0;
+       Connection myConnection;
+             myConnection=ConnexionBDD.init();
+             Statement statement;
+             ResultSet resultat;
+             statement = myConnection.createStatement();
+             String sql="SELECT * FROM enseignant INNER JOIN utilisateur ON enseignant.ID_Utilisateur=utilisateur.ID WHERE utilisateur.nom = '"+nom+"'";  
+             ResultSet result = statement.executeQuery(sql);
+             int i=0;
+             while (result.next())
+             {
+               recup=result.getInt("ID_Utilisateur");
+               
+             }
+             
+             System.out.println("ID prof : "+recup );
+      
+      return recup;
+    }
+    
+    
+    
 }
