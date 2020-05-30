@@ -13,6 +13,7 @@ import static java.lang.Integer.parseInt;
 import static java.lang.System.exit;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -355,7 +356,7 @@ class Modification extends JPanel implements ItemListener{
              
              Connection myConnection;
              myConnection=ConnexionBDD.init();
-             Statement statement;
+             Statement statement,statement2;
              ResultSet resultat;
              
            
@@ -427,26 +428,36 @@ class Modification extends JPanel implements ItemListener{
              
             
              
-             if((((8==heuredeb))&&(10==heurefin))||((10==heuredeb)&&(12==heurefin))||((12==heuredeb)&&(14==heurefin))||((14==heuredeb)&&(16==heurefin))||((16==heuredeb)&&(18==heurefin))||((18==heuredeb)&&(20==heurefin)))
+             if(Semaine1!=0&&(((8==heuredeb))&&(10==heurefin))||((10==heuredeb)&&(12==heurefin))||((12==heuredeb)&&(14==heurefin))||((14==heuredeb)&&(16==heurefin))||((16==heuredeb)&&(18==heurefin))||((18==heuredeb)&&(20==heurefin)))
              {    
             
              statement = myConnection.createStatement();
              String sql = "INSERT INTO seance(`Date`, `Jour`, `Semaine`, `Heure_Debut`, `Heure_Fin`, `Etat`, `ID_Cours`, `ID_Type`) VALUES ('"+date+"','"+jour+"','"+Semaine1+"','"+heuredeb+"','"+heurefin+"','"+Etat+"','"+id_cours+"','1')";
              Seance nouvelle = new Seance(date,jour,Semaine1,heuredeb,heurefin,Etat,id_cours,1);
+             
+              PreparedStatement statement3 = myConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+              statement3.executeUpdate();
+
+              ResultSet rs = statement3.getGeneratedKeys();
+             if (rs != null && rs.next()) {
+             long generatedId= rs.getLong(1);
+          
              //Seance nouvelle = new Seance("2020-06-12",0,1,14,16,"attente",1,1);
              
              int idseance = nouvelle.getidsql(date,jour,Semaine1,heuredeb,heurefin,Etat,id_cours,1);
              //int idseance = nouvelle.getidsql("2020-06-12",0,1,14,16,"attente",1,1);
-             String sql1="INSERT INTO seance_enseignant(`ID_Seance`, `ID_Enseignant`) VALUES ('"+idseance+"','"+id_prof+"')";
-             String sql2="INSERT INTO seance_groupe(`ID_Seance`, `ID_Groupe`) VALUES ('"+idseance+"',+'"+Groupe+"')";
-             String sql3="INSERT INTO seance_salle(`ID_Seance`, `ID_Salle`) VALUES ('"+idseance+"','"+id_salle+"')";  
-             int update = statement.executeUpdate(sql);
+             String sql1="INSERT INTO seance_enseignant(`ID_Seance`, `ID_Enseignant`) VALUES ('"+generatedId +"','"+id_prof+"')";
+             String sql2="INSERT INTO seance_groupe(`ID_Seance`, `ID_Groupe`) VALUES ('"+generatedId +"',+'"+Groupe+"')";
+             String sql3="INSERT INTO seance_salle(`ID_Seance`, `ID_Salle`) VALUES ('"+generatedId +"','"+id_salle+"')";  
+             
+             
+             //int update = statement.executeUpdate(sql);
              int update1 = statement.executeUpdate(sql1);
              int update2 = statement.executeUpdate(sql2);
              int update3 = statement.executeUpdate(sql3);
              System.out.println("tu veux ajouter !");
              
-             }else    JOptionPane.showMessageDialog(null,"Erreur entrée Heure, incompatible ou les horraires ne se suivent pas","Error",JOptionPane.PLAIN_MESSAGE);
+             }}else    JOptionPane.showMessageDialog(null,"Erreur entrée Heure, incompatible ou les horraires ne se suivent pas","Error",JOptionPane.PLAIN_MESSAGE);
            
        
    
