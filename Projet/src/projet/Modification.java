@@ -557,13 +557,13 @@ class Modification extends JPanel implements ItemListener{
      
      public void modifseance(String titre )
      { System.out.println("ça modifie ");
-     JLabel titre1 = new JLabel("SEANCE "+titre);
       JFrame essai = new JFrame();
       essai.setTitle("MODIFICATION");
       essai.setSize(new Dimension(800,600));
       essai.setLocationRelativeTo(null);
       //essai.setResizable(false);
-      //titre1.setBounds(20,350,100,30);
+      JLabel titre1 = new JLabel("SEANCE "+titre);
+      titre1.setBounds(350,20,100,30);
       essai.add(titre1);
       essai.setVisible(true);
      }

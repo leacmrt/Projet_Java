@@ -147,6 +147,8 @@ public class Edt {
             public void actionPerformed(ActionEvent arg0) {
                 try { 
                     ici.chargecours(nombre,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
+                    System.out.print("t'as cliqué sur "+nombre);
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -10,6 +10,7 @@ import com.mysql.fabric.xmlrpc.base.Value;
 import java.awt.Color;
 import static java.awt.Color.blue;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.List;
@@ -17,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -44,11 +46,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.awt.event.*;
 /**
  *
  * @author lele1
  */
-public class ConnexionBDD implements ActionListener  {
+public class ConnexionBDD implements ActionListener {
     
     int typeU; // 1 = étudiant , 2= Enseignant 
     static JTextField login1,mdp1 ;  
@@ -226,13 +230,9 @@ public class ConnexionBDD implements ActionListener  {
            myConnection = init();
            Statement util = null;
            ResultSet resulutil = null;
-           
-          
-    
-     
            Object data[][] = new  Object [11][7];
            util= myConnection.createStatement();
-           
+           System.out.println("Semaine : "+semaine);
            if(etat==1)
                    {String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
                    sql+=" INNER JOIN seance_enseignant sa ON sa.ID_Seance=s.ID_Seance";
@@ -347,22 +347,19 @@ public class ConnexionBDD implements ActionListener  {
                 
           String columns[] = {"Lundi", "Mardi", "Mercredi","Jeudi","Vendredi","Samedi" };
        
-        
-         
+          
+          DefaultTableCellRenderer po = new DefaultTableCellRenderer();
          DefaultTableModel model = new DefaultTableModel(data, columns);
+         
         
           
           JTable table;
+          
+         
         table = new JTable(model) {
-               private Object value;
-            @Override
-            public boolean isCellEditable( int rowIndex, int columnIndex )
-            {
-                
-                return true;
-            }
             
-            
+           
+   
            
             public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,  int columnIndex) { //colorie les cases avec cours
                 //JComponent component1 = new JTextField();
@@ -372,7 +369,7 @@ public class ConnexionBDD implements ActionListener  {
                 if(la!=null&&!("".equals(la)))
                 {
                     
-                    essai.setToolTipText(la);
+                    //essai.setToolTipText(la);
                     
                     int java = la.indexOf("JAVA");//faire ça pour tout les cours
                     int web = la.indexOf("DYNAMIQUE");//pour l'instant flemme
@@ -389,13 +386,14 @@ public class ConnexionBDD implements ActionListener  {
                     //this.add(component1);
                   
                     
-                }else if(!essai.hasFocus()) essai.setBackground(null);
+                }
                 
                 if(rowIndex==1||rowIndex==3||rowIndex==5||rowIndex==7||rowIndex==9)
                     essai.setBackground(new Color(248,176,176));
+               
                 
                 
-                
+                        
                 return component;
             }
 
@@ -406,16 +404,21 @@ public class ConnexionBDD implements ActionListener  {
             
         };
         
+        
+        
+         table.setEnabled(false);
+        table.setDragEnabled(false);
       
-          table.setDragEnabled(true);
+                
         tableau(table,la,data);
-         
+        
 
       }
   
      public void tableau(JTable table, JPanel la,Object[][] data)
      {
-         
+        // System.out.println("DATA :");
+          
          int i = 0;
                JLabel h1=new JLabel("8h30");
                h1.setBounds(20, 100, 50, 20); 
@@ -470,36 +473,81 @@ public class ConnexionBDD implements ActionListener  {
           else table.setRowHeight(u,84);
           }
           
-          table.setColumnSelectionAllowed(true);
+          //table.setColumnSelectionAllowed(true);
           table.setShowGrid(true);
           table.setShowVerticalLines(true);
-          table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+          
+          /* for(int j=0;j<11;j++)
+           {for(int p=0;p<7;p++)
+           {
+               if(data[j][p]!=null)
+               {System.out.print(data[j][p]+" là :  "+ j + " "+p);
+               System.out.println("Value in the cell clicked :"+ " " +table.getValueAt(j,p).toString());
+               
+               }
+           
+           
+           } System.out.print(" ");
+           
+           }*/
+     //     table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
      
-            table.addMouseListener(new MouseAdapter() {
-             @Override
-            public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 1) {
-            JTable target = (JTable)e.getSource();
-            int row = target.getSelectedRow();
-            int column = target.getSelectedColumn();
-      
-             String bjr = null;
-            bjr=(String) data[row][column];
-            if(bjr!=null)
-            { System.out.print("bonjour"+bjr);
+           la.show();
+    
+          JScrollPane pane = new JScrollPane(table);
+          
+            table.addMouseListener(new java.awt.event.MouseListener()//test modif reduit à neant
+
+            {
+
+                @Override
+                public void mousePressed(java.awt.event.MouseEvent e)
+
+            {
+
+            int row=table.rowAtPoint(e.getPoint());
+             System.out.println("r"+row);
+            int col= table.columnAtPoint(e.getPoint());
+             System.out.println("c"+col);
+            if(data[row][col]!=null)
+            {
             int rep = JOptionPane.showConfirmDialog(null,"Voulez vous modifier cette séance ?", "Bonjour", JOptionPane.YES_NO_OPTION);
             
             if(rep == JOptionPane.YES_OPTION)
-            {System.out.print("Vous avez cliqué!");
+            {
+             
+             System.out.println("Value in the cell clicked :"+ "R "+row+" col "+col+table.getValueAt(row,col).toString());
              Modification modif = new Modification();
-             modif.modifseance(bjr);
-            }}
-  
-      
-    }
-  }
-});
-          JScrollPane pane = new JScrollPane(table);
+             modif.modifseance(table.getValueAt(row,col).toString());
+             System.out.println("ça modifie ");}
+            
+
+                }}
+
+             @Override
+             public void mouseClicked(MouseEvent e) {
+               System.out.println("coucou"); // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               System.out.println("mouse clicked at point:"
+                       + e.getX() + " "
+                       + e.getY() + "mouse clicked :" + e.getClickCount()); 
+             }
+
+             @Override
+             public void mouseReleased(MouseEvent me) {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+
+             @Override
+             public void mouseEntered(MouseEvent me) {
+                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+
+             @Override
+             public void mouseExited(MouseEvent me) {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+
+                });
           pane.setBounds(50,80,970,600);
           la.add(pane);
      }       
@@ -568,8 +616,11 @@ public class ConnexionBDD implements ActionListener  {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
+   
 
     }
 
