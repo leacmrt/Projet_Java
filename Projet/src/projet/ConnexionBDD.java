@@ -6,6 +6,7 @@
 package projet;
 
 
+import com.mysql.fabric.xmlrpc.base.Value;
 import java.awt.Color;
 import static java.awt.Color.blue;
 import java.awt.Component;
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.StringTokenizer;
 import static javafx.scene.paint.Color.GREY;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -32,6 +34,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -220,10 +223,11 @@ public class ConnexionBDD implements ActionListener  {
            myConnection = init();
            Statement util = null;
            ResultSet resulutil = null;
+           
           
     
      
-          String data[][] = new String[11][7];
+           Object data[][] = new  Object [11][7];
            util= myConnection.createStatement();
            
            if(etat==1)
@@ -262,7 +266,7 @@ public class ConnexionBDD implements ActionListener  {
                    sql += "  WHERE se.Semaine='"+semaine+"' AND sa.ID='"+ID_utli1+"'";
                    resulutil = util.executeQuery(sql);}
                    
-           
+           JTextArea textArea = new JTextArea(10, 50);
            
            
                int i = 0; 
@@ -323,10 +327,15 @@ public class ConnexionBDD implements ActionListener  {
                 Seance sea = new Seance(id,date,jour,semaine1,Heure_deb,Heure_fin,Etat,id_cours,id_groupe);
                 
                 
-                JTextArea textArea = new JTextArea(5, 20);
-                String remplir =" "+cours+"- "+nom+" - "+nom_salle;
-                textArea.append(remplir);
-                data[i][jour] =remplir;
+                StringTokenizer st = null;
+                textArea.setDragEnabled(true);
+                //ArrayList<String> remplir = new ArrayList<>();
+               String remplir =" "+cours+"- \n "+nom+" - \n"+nom_salle;
+                
+ 
+                //emplir.split(";");
+                //textArea.append(remplir+" ");
+                data[i][jour] = remplir ;
                
                
                 
@@ -337,39 +346,57 @@ public class ConnexionBDD implements ActionListener  {
        
         
          
-          DefaultTableModel model = new DefaultTableModel(data, columns);
+         DefaultTableModel model = new DefaultTableModel(data, columns);
+        
           
-          JTable table = new JTable(model) {
-        @Override
-        public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,  int columnIndex) { //colorie les cases avec cours 
-            JComponent component = (JComponent) super.prepareRenderer(renderer, rowIndex, columnIndex);  
-            String la= (String)this.getValueAt(rowIndex, columnIndex);
-             JComponent essai=(JComponent) renderer.getTableCellRendererComponent(this, la, false,true ,rowIndex, columnIndex);
-            if(la!=null&&!("".equals(la)))
+          JTable table;
+        table = new JTable(model) {
+            @Override
+            public boolean isCellEditable( int rowIndex, int columnIndex )
             {
-             int java = la.indexOf("JAVA");//faire ça pour tout les cours 
-             int web = la.indexOf("DYNAMIQUE");//pour l'instant flemme 
-             int anglais = la.indexOf("ANGLAIS");
-             
-             if (java>0) essai.setBackground(new Color(247,191,131) );
-             else if (web>0) essai.setBackground(new Color(247,234,211) );
-             else if (anglais>0) essai.setBackground(new Color(131,144,247));
-             else essai.setBackground(Color.lightGray);
-             
-             this.setForeground(Color.black);
-             
-             
-            }else if(!essai.hasFocus()) essai.setBackground(null);
+                
+                return true;
+            }
             
-            if(rowIndex==1||rowIndex==3||rowIndex==5||rowIndex==7||rowIndex==9)
-            essai.setBackground(new Color(248,176,176));
-   
-            return component;
-        }
-           
-        
-        
-          };
+            
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,  int columnIndex) { //colorie les cases avec cours
+                JComponent component = (JComponent) super.prepareRenderer(renderer, rowIndex, columnIndex);
+                String la= (String)this.getValueAt(rowIndex, columnIndex);
+                JComponent essai=(JComponent) renderer.getTableCellRendererComponent(this, la, false,true ,rowIndex, columnIndex);
+                if(la!=null&&!("".equals(la)))
+                {
+                    
+                    essai.setToolTipText(la);
+                    
+                    int java = la.indexOf("JAVA");//faire ça pour tout les cours
+                    int web = la.indexOf("DYNAMIQUE");//pour l'instant flemme
+                    int anglais = la.indexOf("ANGLAIS");
+                    
+                    if (java>0) essai.setBackground(new Color(247,191,131) );
+                    else if (web>0) essai.setBackground(new Color(247,234,211) );
+                    else if (anglais>0) essai.setBackground(new Color(131,144,247));
+                    else essai.setBackground(Color.lightGray);
+                    
+                    //essai.setValueAt((Value)la); 
+                    
+                    this.setForeground(Color.black);
+                    
+                    
+                }else if(!essai.hasFocus()) essai.setBackground(null);
+                
+                if(rowIndex==1||rowIndex==3||rowIndex==5||rowIndex==7||rowIndex==9)
+                    essai.setBackground(new Color(248,176,176));
+                
+                
+                
+                return component;
+            }
+            
+            
+            
+        };
+          table.setDragEnabled(true);
         tableau(table,la);
          
 
@@ -435,6 +462,7 @@ public class ConnexionBDD implements ActionListener  {
           table.setColumnSelectionAllowed(true);
           table.setShowGrid(true);
           table.setShowVerticalLines(true);
+          table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
      
      
           JScrollPane pane = new JScrollPane(table);
