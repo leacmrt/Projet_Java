@@ -15,6 +15,8 @@ import java.awt.Graphics;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import static javafx.scene.paint.Color.GREY;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -331,7 +334,7 @@ public class ConnexionBDD implements ActionListener  {
                 textArea.setDragEnabled(true);
                 //ArrayList<String> remplir = new ArrayList<>();
                String remplir =" "+cours+"- \n "+nom+" - \n"+nom_salle;
-                
+               
  
                 //emplir.split(";");
                 //textArea.append(remplir+" ");
@@ -351,6 +354,7 @@ public class ConnexionBDD implements ActionListener  {
           
           JTable table;
         table = new JTable(model) {
+               private Object value;
             @Override
             public boolean isCellEditable( int rowIndex, int columnIndex )
             {
@@ -359,8 +363,9 @@ public class ConnexionBDD implements ActionListener  {
             }
             
             
-            @Override
+           
             public Component prepareRenderer(TableCellRenderer renderer, int rowIndex,  int columnIndex) { //colorie les cases avec cours
+                //JComponent component1 = new JTextField();
                 JComponent component = (JComponent) super.prepareRenderer(renderer, rowIndex, columnIndex);
                 String la= (String)this.getValueAt(rowIndex, columnIndex);
                 JComponent essai=(JComponent) renderer.getTableCellRendererComponent(this, la, false,true ,rowIndex, columnIndex);
@@ -379,9 +384,10 @@ public class ConnexionBDD implements ActionListener  {
                     else essai.setBackground(Color.lightGray);
                     
                     //essai.setValueAt((Value)la); 
-                    
+                    //((JTextField)component1).setText("coucou \n ça va?");
                     this.setForeground(Color.black);
-                    
+                    //this.add(component1);
+                  
                     
                 }else if(!essai.hasFocus()) essai.setBackground(null);
                 
@@ -392,17 +398,22 @@ public class ConnexionBDD implements ActionListener  {
                 
                 return component;
             }
+
+              
             
+          
             
             
         };
+        
+      
           table.setDragEnabled(true);
-        tableau(table,la);
+        tableau(table,la,data);
          
 
       }
   
-     public void tableau(JTable table, JPanel la)
+     public void tableau(JTable table, JPanel la,Object[][] data)
      {
          
          int i = 0;
@@ -464,7 +475,30 @@ public class ConnexionBDD implements ActionListener  {
           table.setShowVerticalLines(true);
           table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
      
-     
+            table.addMouseListener(new MouseAdapter() {
+             @Override
+            public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 1) {
+            JTable target = (JTable)e.getSource();
+            int row = target.getSelectedRow();
+            int column = target.getSelectedColumn();
+      
+             String bjr = null;
+            bjr=(String) data[row][column];
+            if(bjr!=null)
+            { System.out.print("bonjour"+bjr);
+            int rep = JOptionPane.showConfirmDialog(null,"Voulez vous modifier cette séance ?", "Bonjour", JOptionPane.YES_NO_OPTION);
+            
+            if(rep == JOptionPane.YES_OPTION)
+            {System.out.print("Vous avez cliqué!");
+             Modification modif = new Modification();
+             modif.modifseance(bjr);
+            }}
+  
+      
+    }
+  }
+});
           JScrollPane pane = new JScrollPane(table);
           pane.setBounds(50,80,970,600);
           la.add(pane);

@@ -5,6 +5,7 @@
  */
 package projet;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -24,6 +25,8 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -44,6 +47,11 @@ class Modification extends JPanel implements ItemListener{
      private JTextField Semaine = new JTextField(" Semaine"); 
      private JTextField Heuredeb = new JTextField(" Heure de debut"); 
      private JTextField HeureFin= new JTextField(" Heure de fin");
+     
+    public Modification()
+    {}
+     
+     
     public Modification(View aThis,int ID_Utilisateur,String droit,int etat) throws SQLException
     {
     JButton etu= new JButton("ETUDIANT");
@@ -546,4 +554,17 @@ class Modification extends JPanel implements ItemListener{
        
    
 }
+     
+     public void modifseance(String titre )
+     { System.out.println("ça modifie ");
+     JLabel titre1 = new JLabel("SEANCE "+titre);
+      JFrame essai = new JFrame();
+      essai.setTitle("MODIFICATION");
+      essai.setSize(new Dimension(800,600));
+      essai.setLocationRelativeTo(null);
+      //essai.setResizable(false);
+      //titre1.setBounds(20,350,100,30);
+      essai.add(titre1);
+      essai.setVisible(true);
+     }
 }
