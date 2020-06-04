@@ -5,6 +5,7 @@
  */
 package projet;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -34,6 +35,7 @@ public class Edt {
     int semaine=1;
     int ID_Utilisateur1;
     int EtatUT;
+    int id_repport=0;
     JTextField recherche1;
     Statement statement;
     ResultSet resultat,resultat1,resultat2;
@@ -50,13 +52,20 @@ public class Edt {
     int tmp_ID=ID_Utilisateur;
     String tmp_droit=droit;
     int tmp_etat=etat;
+    if("Oui".equals(droit))
+    {Edt.this.id_repport=1;}
+    if("Non".equals(droit))
+    {Edt.this.id_repport=2;}
+    
     
     JButton recherche;
     JButton btnCration = new JButton("Emploi du temps ");
     JButton deco=new JButton("Deconnexion ");
+    JButton report= new JButton("Repporting ");
     //System.out.println("ID 0 : "+ID_Utilisateur);
     Edt.this.ID_Utilisateur1=ID_Utilisateur; 
     Edt.this.EtatUT=etat;
+    
     
     recherche = new JButton("Recherche");//module de recherche faire en sorte que ce soit que pour un enseignant 
     recherche1 = new JTextField();
@@ -89,6 +98,12 @@ public class Edt {
                  {
                  Edt.this.ID_Utilisateur1=nouveau;
                  Edt.this.EtatUT=nouveau1;
+                 
+                 if(nouveau1==1)
+                 {Edt.this.id_repport=1;}
+                 if(nouveau1==0)
+                 {Edt.this.id_repport=2;}
+                 
                  ici.chargecours(1,la,Edt.this.ID_Utilisateur1,Edt.this.EtatUT);
                  } else System.out.print("C'est pourtant égal à 0");
                 
@@ -97,8 +112,12 @@ public class Edt {
                
                  
                  if(nouveau!=0)//si on trouve une salle
-                 {  System.out.println("la salle existe");
+                 { 
+                      Edt.this.id_repport=3;
+                     Edt.this.ID_Utilisateur1=nouveau;
+                     System.out.println("la salle existe");
                     ici.chargecours(semaine, la,nouveau,2);
+                    
                  }
                 }
             
@@ -110,6 +129,25 @@ public class Edt {
             }
 
           
+        });
+    
+    
+        report.addActionListener(new ActionListener() {
+         @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("REPPORTING ");
+                   Graphique tpc = null; 
+             try {
+                 tpc = new Graphique(Edt.this.ID_Utilisateur1,id_repport);
+             } catch (SQLException ex) {
+                 Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                   tpc.setVisible(true); 
+                    //ici.repporting();
+                    // JOptionPane.showMessageDialog(null,"Votre emploi du temps","Success",JOptionPane.PLAIN_MESSAGE);
+                 
+                 
+            }
         });
     
         btnCration.addActionListener(new ActionListener() {
@@ -125,6 +163,8 @@ public class Edt {
                  
             }
         });
+        
+    
         
         
          
@@ -163,8 +203,14 @@ public class Edt {
         
         }
         
+        
+        report.setBorderPainted(true);
+        report.setBackground(Color.cyan);
+        report.setFont(new Font("Arial", Font.CENTER_BASELINE,15));
+        report.setBounds(430,690, 120, 40); 
         btnCration.setBounds(10, 10, 150, 20); 
         la.add(btnCration);
+        la.add(report);
         deco.setBounds(900,10, 130, 30);
         la.add(deco);
         //System.out.println(droit);

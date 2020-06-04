@@ -46,7 +46,7 @@ public class Groupe {
              int i=0;
              while (result.next())
              {
-                String nom=result.getString("groupe.Nom");
+                String nom=result.getString("groupe.Nom_Groupe");
                 //nom+=" - ";
                 //nom+=result.getString("promotion.Nom");
                 
@@ -75,7 +75,7 @@ public class Groupe {
              Statement statement;
              ResultSet resultat;
              statement = myConnection.createStatement();
-             String sql="SELECT * FROM groupe WHERE Nom= '"+nom+"'";  
+             String sql="SELECT * FROM groupe WHERE Nom_Groupe= '"+nom+"'";  
              ResultSet result = statement.executeQuery(sql);
              int i=0;
              while (result.next())
