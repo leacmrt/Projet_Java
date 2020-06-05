@@ -1,2 +1,0 @@
-vue.View
-vue.DeconnexionListener
