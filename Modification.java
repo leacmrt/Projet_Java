@@ -571,33 +571,31 @@ class Modification extends JPanel implements ItemListener{
    
             } 
                  
-                   if("Modifier TYPE Cours".equals(selected))
+                   if("Ajouter Enseignant".equals(selected))
             {
-                System.out.println("ON MODIFIE le type de cours ");
-                
-                
-              JFrame ModifType = new JFrame();
-               ModifType.setTitle("Modification du type de cours");
-               ModifType.setSize(300,300);
-               ModifType.setLocationRelativeTo(null);
-               ModifType.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               ModifType.setVisible(true);
+
+               JFrame AjoutEnseignant = new JFrame();
+               AjoutEnseignant.setTitle("Ajouter un enseignant");
+               AjoutEnseignant.setSize(600,600);
+               AjoutEnseignant.setLocationRelativeTo(null);
+               AjoutEnseignant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+               AjoutEnseignant.setVisible(true);
                
-               JPanel panModiftype = new JPanel();
-               ModifType.setContentPane(panModiftype);
+               JPanel ajout = new JPanel();
+               AjoutEnseignant.setContentPane(ajout);
                
-              JLabel labeltitre = new JLabel("Modification de l'etat de la seance : "+"\n");
-              panModiftype.add(labeltitre);
-              JLabel labelid = new JLabel("Saisir ID de la seance a modifier : "+"\n");
-              panModiftype.add(labelid);
+              JLabel labeltitre = new JLabel("Ajouter un enseignant : "+"\n");
+              ajout.add(labeltitre);
+              JLabel labelid = new JLabel("Saisir ID de la seance a laquelle on ajoute l'enseignant: "+"\n");
+              ajout.add(labelid);
               JTextField id = new JTextField(10);
-              panModiftype.add(id);
-              JLabel labeletat = new JLabel("Saisir le nouveau type du cours TD/TP : "+"\n");
-              panModiftype.add(labeletat);
-              JTextField type = new JTextField(10);
-              panModiftype.add(type);
+              ajout.add(id);
+              JLabel labenseignant = new JLabel("Saisir ID de l'enseignant: "+"\n");
+              ajout.add(labenseignant);
+              JTextField en = new JTextField(10);
+              ajout.add(en);
               JButton OK = new JButton("OK");
-              panModiftype.add(OK);
+              ajout.add(OK);
               
  
                 OK.addActionListener(new ActionListener()
@@ -609,17 +607,17 @@ class Modification extends JPanel implements ItemListener{
                         try{
                       String idseance ;
                       idseance = id.getText();
-                      String NouveauType ;
-                      NouveauType = type.getText();
+                      String NouveauEn ;
+                      NouveauEn = en.getText();
                       Connection myConnection;
                       myConnection=ConnexionBDD.init();
                         //System.out.print("co okkkkk");
                        statement = myConnection.createStatement();
-                       statement.executeUpdate("UPDATE type_cours SET Nom='"+NouveauType+"' WHERE ID='"+idseance+"'");
-                        //while(rst.next()){
+                       statement.executeUpdate("INSERT INTO seance_enseignant"+ " VALUES ('"+NouveauEn+"','"+idseance+"')");
+                       System.out.println("INSERT INTO seance_enseignant VALUES ('"+NouveauEn+"','"+idseance+"')");
                         //JLabel jour = new JLabel(rst.getInt("Jour")+"\t");
                         //}
-                        ModifType.setVisible(false);
+                        AjoutEnseignant.setVisible(false);
                   
                        } catch (SQLException e4) {
              
@@ -631,10 +629,7 @@ class Modification extends JPanel implements ItemListener{
               
    
             }
-                    
-                    
-                    
-                    
+                   
             
             }
         });
