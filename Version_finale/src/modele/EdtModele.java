@@ -478,20 +478,32 @@ public class EdtModele {
     public void modifetat(String NouveauType, String idseance) throws SQLException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         Statement statement;
+        int nouveau_id=0;
          Connection myConnection;
          myConnection=Authentification.init();
         statement = myConnection.createStatement();
-        statement.executeUpdate("UPDATE type_cours SET Nom='"+NouveauType+"' WHERE ID='"+idseance+"'");
+        if("TP".equals(NouveauType)||"TD".equals(NouveauType)||"Cours".equals(NouveauType))
+        {if("TP".equals(NouveauType))
+        {nouveau_id=1;}
+        if("TD".equals(NouveauType))
+        {nouveau_id=2;}
+        if("Cours".equals(NouveauType))
+        {nouveau_id=3;}
+        
+        
+        statement.executeUpdate("UPDATE seance SET ID_Type='"+nouveau_id+"' WHERE ID='"+idseance+"'");}
+        else{ JOptionPane.showMessageDialog(null,"Veuillez rentrer TP, TD ou Cours SVP !","Error",JOptionPane.PLAIN_MESSAGE);} 
     }
 
     public void ajout_enseignant(String NouveauEn, String idseance) throws SQLException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-         Statement statement,statementhi,statementhu,statementj;
-         ResultSet resultathi,resultathu,resultatj;
+         Statement statement,statementhf,statementhu,statementj,statementji;
+         ResultSet resultathi,resultathu,resultatj,resultatji,resultathf;
          Connection myConnection;
          int id_cours = 0;
+         int semaine = 0 ,heuredeb=0,heurefin=0,jour=0;
           myConnection=Authentification.init();
-          statement=statementhi=statementhu=statementj = myConnection.createStatement();
+          statement=statementhf=statementhu=statementj=statementji = myConnection.createStatement();
           String sqlj = "SELECT * FROM seance WHERE ID ='"+idseance+"'";
                 resultatj = statementj.executeQuery(sqlj);
                 while(resultatj.next())
@@ -505,10 +517,28 @@ public class EdtModele {
                 if(!resultathu.next()){   JOptionPane.showMessageDialog(null,"Cet enseignant n'enseigne pas ce cours !","Error",JOptionPane.PLAIN_MESSAGE);   }
                  
                 else{  
+                    
+           String sqlji = "SELECT * FROM seance WHERE ID ='"+idseance+"'";
+                resultatji = statementji.executeQuery(sqlji);
+                while(resultatji.next())
+                {
+                 semaine=resultatji.getInt("Semaine");
+                 heuredeb=resultatji.getInt("Heure_Debut");
+                 heurefin=resultatji.getInt("Heure_fin");
+                 jour=resultatji.getInt("Jour");
+                }
+                
+         String sqlf= "SELECT * FROM seance INNER JOIN seance_enseignant ON seance.ID=seance_enseignant.ID_Seance WHERE Semaine='"+semaine+"' AND Jour ='"+jour+"' AND Heure_Debut='"+heuredeb+"' AND Jour= '"+jour+"' AND ID_Enseignant='"+NouveauEn+"'" ;      
+          resultathf = statementhf.executeQuery(sqlf);       
+        myConnection=Authentification.init();
+        statement = myConnection.createStatement();
+         if(resultathf.next()){   JOptionPane.showMessageDialog(null,"Cet enseignant n'est pas disponible à cette date !","Error",JOptionPane.PLAIN_MESSAGE);   }
+                
+                else{         
                 
           
           statement.executeUpdate("INSERT INTO seance_enseignant"+ " VALUES ('"+NouveauEn+"','"+idseance+"')");
-          System.out.println("INSERT INTO seance_enseignant VALUES ('"+NouveauEn+"','"+idseance+"')");}
+          System.out.println("INSERT INTO seance_enseignant VALUES ('"+NouveauEn+"','"+idseance+"')");}}
     }
 
     public void modif_nomcours(String Changement, String substring) throws SQLException {
@@ -550,6 +580,38 @@ public class EdtModele {
                                     System.out.println("Vous supprimez pas d'enseignant");
                                     // Supprimerseance.setVisible(false);
                                 }
+    }
+
+    public void ajout_groupe(String valueOf, String ind) throws SQLException {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        Connection myConnection;
+         Statement statement,statementhi,statementhu,statementj;
+         ResultSet resultathi,resultathu,resultatj;
+         int semaine = 0 ,heuredeb=0,heurefin=0,jour=0;
+          myConnection=Authentification.init();
+          statement=statementhi=statementhu=statementj = myConnection.createStatement();
+          String sqlj = "SELECT * FROM seance WHERE ID ='"+ind+"'";
+                resultatj = statementj.executeQuery(sqlj);
+                while(resultatj.next())
+                {
+                 semaine=resultatj.getInt("Semaine");
+                 heuredeb=resultatj.getInt("Heure_Debut");
+                 heurefin=resultatj.getInt("Heure_fin");
+                 jour=resultatj.getInt("Jour");
+                }
+                
+         String sqlf= "SELECT * FROM seance INNER JOIN seance_groupe ON seance.ID=seance_groupe.ID_Seance WHERE Semaine='"+semaine+"' AND Jour ='"+jour+"' AND Heure_Debut='"+heuredeb+"' AND Jour= '"+jour+"' AND ID_Groupe='"+valueOf+"'" ;      
+          resultathu = statementhu.executeQuery(sqlf);       
+        myConnection=Authentification.init();
+        statement = myConnection.createStatement();
+         if(resultathu.next()){   JOptionPane.showMessageDialog(null,"Ce groupe n'est pas disponible à cette date !","Error",JOptionPane.PLAIN_MESSAGE);   }
+                
+                else{
+        
+        int query =  statement.executeUpdate("INSERT INTO seance_groupe"+ " VALUES ('"+ind+"','"+valueOf+"')");
+         }
+       // statement.executeUpdate(query) ;
     }
   
      

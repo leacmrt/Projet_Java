@@ -186,5 +186,11 @@ RecapCoursVue vue ;
        Edtt.supprimer(groupe,idseance,supenseigant);
     }
 
+    public void ajout_groupe(String valueOf, String ind) throws SQLException {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         Edtt= new EdtModele();
+       Edtt.ajout_groupe(valueOf,ind);
+    }
+
     
 }

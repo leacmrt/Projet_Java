@@ -60,29 +60,60 @@ public class SeanceDAO {
     {
         int recup=0;
         ArrayList<String> lis = new ArrayList<>();
+        ArrayList<Integer> lis2 = new ArrayList<>();
         String recupnom=null;
-       List<List<String>> listOfLists = new ArrayList<>();
+       
        Connection myConnection;
              myConnection=Authentification.init();
-             Statement statement;
+             Statement statement,statement1,statement2;
              ResultSet resultat;
              
-             statement = myConnection.createStatement();
-             String sql="SELECT * FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID INNER JOIN seance_groupe seg ON se.ID=seg.ID_Seance INNER JOIN seance_enseignant see ON see.ID_Seance=se.ID INNER JOIN enseignant en ON en.ID_Utilisateur=see.ID_Enseignant INNER JOIN groupe gr ON gr.ID=seg.ID_Groupe INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur WHERE NOT Etat= 'passe'";  
-             ResultSet result = statement.executeQuery(sql);
+             statement =statement1=statement2=myConnection.createStatement();
+             String sql="SELECT * FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID  WHERE NOT Etat= 'passe'"; 
+             
+         try (ResultSet result = statement.executeQuery(sql)) {
              int i=0;
              while (result.next())
-             {  
-               recupnom= result.getString("Nom_Cours");
-               recupnom+=" - "+result.getString("Nom_Groupe")+" - "+result.getString("Date");
-               System.out.println("mon la ="+result.getString("Nom"));
-               recup=result.getInt("ID_Seance");
-                lis.add(String.valueOf(recupnom));
-               //lis.add(String.valueOf(recup));
-               //listOfLists.add(lis);
+             {
+                 recupnom= result.getString("Nom_Cours");
+                 recupnom+=" - "+" - "+result.getString("Date");
+                 // System.out.println("mon la ="+result.getString("Nom"));
+                 recup=result.getInt("ID");
+                 lis2.add(recup);
+                 
+                 lis.add(String.valueOf(recupnom));
+                 //lis.add(String.valueOf(recup));
+                 //listOfLists.add(lis);
              }
              
-             System.out.println("ID SEANCE: "+recup );
+             for(int t=0;t<lis2.size();t++)
+             { String sql1="SELECT * FROM seance_enseignant WHERE ID_Seance= '"+lis2.get(t)+"'";
+              
+                 ResultSet result1 = statement1.executeQuery(sql1);
+                 if(!result1.next())
+                 {
+                     String u=lis.get(t);
+                     u+= " - sans enseignant";
+                     lis.set(t, u);
+                 }
+                 
+             } 
+             
+             for(int t=0;t<lis2.size();t++){
+            String sql2="SELECT * FROM seance_groupe WHERE ID_Seance= '"+lis2.get(t)+"'";
+             ResultSet result2= statement2.executeQuery(sql2);
+                 if(!result2.next())
+                 {
+                     
+                    String u=lis.get(t);
+                     u+= " - sans groupe";
+                     lis.set(t, u);
+                     System.out.println(lis.get(t));
+                 }}
+            
+         }
+             
+          
         return lis;
     }
      
@@ -94,20 +125,32 @@ public class SeanceDAO {
        List<List<String>> listOfLists = new ArrayList<>();
        Connection myConnection;
              myConnection=Authentification.init();
-             Statement statement;
-             ResultSet resultat;
+             Statement statement,statement1,statement2;
+             ResultSet resultat,resultat1,resultat2;
              
-             statement = myConnection.createStatement();
-             String sql="SELECT * FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID INNER JOIN seance_groupe seg ON se.ID=seg.ID_Seance INNER JOIN seance_enseignant see ON see.ID_Seance=se.ID INNER JOIN enseignant en ON en.ID_Utilisateur=see.ID_Enseignant INNER JOIN groupe gr ON gr.ID=seg.ID_Groupe INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur WHERE NOT Etat= 'passe'";  
+             statement = statement1=statement2=myConnection.createStatement();
+             String sql="SELECT * FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID  WHERE NOT Etat= 'passe'";
+             //String sql="SELECT * FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID INNER JOIN seance_groupe seg ON se.ID=seg.ID_Seance INNER JOIN seance_enseignant see ON see.ID_Seance=se.ID INNER JOIN enseignant en ON en.ID_Utilisateur=see.ID_Enseignant INNER JOIN groupe gr ON gr.ID=seg.ID_Groupe INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur WHERE NOT Etat= 'passe'";  
              ResultSet result = statement.executeQuery(sql);
              int i=0;
              while (result.next())
              {  
                
-               recup=result.getInt("ID_Seance");
+               recup=result.getInt("ID");
                lis.add(String.valueOf(recup));
                //listOfLists.add(lis);
              }
+            /* String sql1="SELECT DISTINCT Seance.ID_Seance,Nom_Cours,Nom_Groupe,Date FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID INNER JOIN seance_groupe seg ON se.ID=seg.ID_Seance INNER JOIN groupe gr ON gr.ID=seg.ID_Groupe INNER JOIN seance_enseignant WHERE NOT Etat= 'passe' AND seance_enseignant.ID_Seance!=se.ID";  
+             ResultSet result1 = statement1.executeQuery(sql1);
+             
+             while (result1.next())
+             {  
+               
+               recup=result1.getInt("Seance.ID_Seance");
+               lis.add(String.valueOf(recup));
+               //listOfLists.add(lis);
+             }*/
+             
              
              System.out.println("ID SEANCE: "+recup );
         return lis;

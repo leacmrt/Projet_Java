@@ -598,7 +598,22 @@ class Modification extends JPanel implements ItemListener{
                     if("Modifier TYPE Cours".equals(selected))
             {
                 System.out.println("ON MODIFIE le type de cours ");
-                
+                JButton deco;
+                SeanceDAO la= new SeanceDAO();
+               
+               JComboBox seance = new JComboBox();
+                        try {
+                            
+                            ArrayList<String> recupsean = la.recupseance();
+                            for (int y=0;y<recupsean.size();y++)
+               {
+                   System.out.println(recupsean.get(y));
+                   seance.addItem(recupsean.get(y));
+               }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+              
                 
               JFrame ModifType = new JFrame();
                ModifType.setTitle("Modification du type de cours");
@@ -614,11 +629,31 @@ class Modification extends JPanel implements ItemListener{
               panModiftype.add(labeltitre);
                
               
-              JLabel labelid = new JLabel("Saisir ID de la seance a modifier : "+"\n");
+              JLabel labelid = new JLabel("Saisir la seance a modifier : "+"\n");
               panModiftype.add(labelid);
               JTextField id = new JTextField(10);
-              panModiftype.add(id);
-              JLabel labeletat = new JLabel("Saisir le nouveau type du cours TD/TP : "+"\n");
+              //panModiftype.add(id);
+              panModiftype.add(seance);
+                 seance.addActionListener(new ActionListener()
+            {
+                
+              
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        ArrayList<String> idresult;
+                        try {
+                            idresult = la.recupseanceid();
+                            int y = seance.getSelectedIndex();
+                        seance1= (String)seance.getSelectedItem();
+                        ind = idresult.get(y);
+                       System.out.println("Selection : "+ind);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                         
+                    }
+            });
+              JLabel labeletat = new JLabel("Saisir le nouveau type du cours TD/TP/Cours : "+"\n");
               panModiftype.add(labeletat);
               JTextField type = new JTextField(10);
               panModiftype.add(type);
@@ -631,8 +666,8 @@ class Modification extends JPanel implements ItemListener{
                espace.setPreferredSize(new Dimension(70,100));
               panModiftype.add(espace);
               
-              JButton deco;
-                 deco=new JButton("RETOUR");
+              //JButton deco;
+                deco=new JButton("RETOUR");
                 deco.setMargin(new Insets(0, 0, 0, 0));
                 deco.setPreferredSize(new Dimension(60,60));
                 deco.addActionListener(new Modification.retourListener(panModiftype) );
@@ -652,7 +687,7 @@ class Modification extends JPanel implements ItemListener{
                       String NouveauType ;
                       NouveauType = type.getText();
                      
-                      control.modifetat(NouveauType,idseance);
+                      control.modifetat(NouveauType,ind);
                      
                         //while(rst.next()){
                         //JLabel jour = new JLabel(rst.getInt("Jour")+"\t");
@@ -789,9 +824,125 @@ class Modification extends JPanel implements ItemListener{
                 }); 
               
    
+            } if("Ajouter Groupe".equals(selected))
+            {
+                   System.out.println("Vous voulez ajouter un groupe à une seance!");
+                   JFrame AjoutEnseignant = new JFrame();
+               AjoutEnseignant.setTitle("Ajouter un enseignant");
+               AjoutEnseignant.setSize(600,600);
+               AjoutEnseignant.setLocationRelativeTo(null);
+               AjoutEnseignant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+               AjoutEnseignant.setVisible(true);
+                SeanceDAO la= new SeanceDAO();
+               
+               JComboBox seance = new JComboBox();
+                        try {
+                            
+                            ArrayList<String> recupsean = la.recupseance();
+                            for (int y=0;y<recupsean.size();y++)
+               {
+                   System.out.println(recupsean.get(y));
+                   seance.addItem(recupsean.get(y));
+               }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        
+               JPanel ajout = new JPanel();
+               AjoutEnseignant.setContentPane(ajout);
+               
+              JLabel labeltitre = new JLabel("Ajouter un Groupe à une séance : "+"\n");
+              
+              ajout.add(labeltitre);
+              
+              JLabel labelid = new JLabel("Saisir la seance: "+"\n");
+              ajout.add(labelid);
+              ajout.add(seance);
+               seance.addActionListener(new ActionListener()
+            {
+                
+              
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        ArrayList<String> idresult;
+                        try {
+                            idresult = la.recupseanceid();
+                            int y = seance.getSelectedIndex();
+                        seance1= (String)seance.getSelectedItem();
+                        ind = idresult.get(y);
+                       System.out.println("Selection : "+ind);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                         
+                    }
+            });
+               
+              JTextField id = new JTextField(10);
+             // ajout.add(id);
+              JLabel labenseignant = new JLabel("Saisir le gro^pet: "+"\n");
+              ajout.add(labenseignant);
+              ajout.add(choixgroupe);
+               choixgroupe.addActionListener(new ActionListener()
+            {
+                
+              
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        groupe1= (String)choixgroupe.getSelectedItem();
+                       System.out.println("Selection : "+groupe1);
+                        try {
+                             id_groupe=recuper.getsqlID(groupe1);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+            });
+              JTextField en = new JTextField(10);
+             // ajout.add(en);
+              JButton OK = new JButton("OK");
+              ajout.add(OK);
+              
+              JLabel espace= new JLabel("      "
+                      + "        "
+                      + "   "+"\n"+"\n");
+               espace.setPreferredSize(new Dimension(100,100));
+              ajout.add(espace);
+              JButton deco;
+                 deco=new JButton("RETOUR");
+                deco.setMargin(new Insets(0, 0, 0, 0));
+                deco.setPreferredSize(new Dimension(60,60));
+                deco.addActionListener(new Modification.retourListener(ajout) );
+              ajout.add(deco);
+ 
+                OK.addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                      
+                       
+                     
+   
+                        try {
+                            control.ajout_groupe(String.valueOf(id_groupe),ind);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                     
+                        //JLabel jour = new JLabel(rst.getInt("Jour")+"\t");
+                        //}
+                        AjoutEnseignant.setVisible(false);
+                  
+                      
+             
+                        
+                       
+                    } 
+                }); 
+              
             }
-                   
-            
             }
         });
    
