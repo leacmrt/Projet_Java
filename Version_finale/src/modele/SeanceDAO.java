@@ -5,10 +5,14 @@
  */
 package modele;
 
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.lang.String;
+import java.util.List;
 
 /**
  *
@@ -52,25 +56,61 @@ public class SeanceDAO {
       return recup;
     }
      
-     public void recupseance(String NewDate,int NewJour, int NewSemaine,int NewDeb,int NewFin,String NewEtat,int NewIDc,int NewIDt) throws SQLException
+     public ArrayList<String> recupseance() throws SQLException
     {
         int recup=0;
+        ArrayList<String> lis = new ArrayList<>();
+        String recupnom=null;
+       List<List<String>> listOfLists = new ArrayList<>();
        Connection myConnection;
              myConnection=Authentification.init();
              Statement statement;
              ResultSet resultat;
+             
              statement = myConnection.createStatement();
-             String sql="SELECT * FROM seance WHERE NOT Etat= 'passe'";  
+             String sql="SELECT * FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID INNER JOIN seance_groupe seg ON se.ID=seg.ID_Seance INNER JOIN seance_enseignant see ON see.ID_Seance=se.ID INNER JOIN enseignant en ON en.ID_Utilisateur=see.ID_Enseignant INNER JOIN groupe gr ON gr.ID=seg.ID_Groupe INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur WHERE NOT Etat= 'passe'";  
              ResultSet result = statement.executeQuery(sql);
              int i=0;
              while (result.next())
-             {
-               recup=result.getInt("ID");
-               
+             {  
+               recupnom= result.getString("Nom_Cours");
+               recupnom+=" - "+result.getString("Nom_Groupe")+" - "+result.getString("Date");
+               System.out.println("mon la ="+result.getString("Nom"));
+               recup=result.getInt("ID_Seance");
+                lis.add(String.valueOf(recupnom));
+               //lis.add(String.valueOf(recup));
+               //listOfLists.add(lis);
              }
              
              System.out.println("ID SEANCE: "+recup );
-    
+        return lis;
+    }
+     
+      public ArrayList<String> recupseanceid() throws SQLException
+    {
+        int recup=0;
+        ArrayList<String> lis = new ArrayList<>();
+        String recupnom=null;
+       List<List<String>> listOfLists = new ArrayList<>();
+       Connection myConnection;
+             myConnection=Authentification.init();
+             Statement statement;
+             ResultSet resultat;
+             
+             statement = myConnection.createStatement();
+             String sql="SELECT * FROM seance se INNER JOIN cours co ON se.ID_Cours=co.ID INNER JOIN seance_groupe seg ON se.ID=seg.ID_Seance INNER JOIN seance_enseignant see ON see.ID_Seance=se.ID INNER JOIN enseignant en ON en.ID_Utilisateur=see.ID_Enseignant INNER JOIN groupe gr ON gr.ID=seg.ID_Groupe INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur WHERE NOT Etat= 'passe'";  
+             ResultSet result = statement.executeQuery(sql);
+             int i=0;
+             while (result.next())
+             {  
+               
+               recup=result.getInt("ID_Seance");
+               lis.add(String.valueOf(recup));
+               //listOfLists.add(lis);
+             }
+             
+             System.out.println("ID SEANCE: "+recup );
+        return lis;
     }
      
      public void setid(int nouveau)

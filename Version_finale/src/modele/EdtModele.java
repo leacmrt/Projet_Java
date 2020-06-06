@@ -486,12 +486,29 @@ public class EdtModele {
 
     public void ajout_enseignant(String NouveauEn, String idseance) throws SQLException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-         Statement statement;
+         Statement statement,statementhi,statementhu,statementj;
+         ResultSet resultathi,resultathu,resultatj;
          Connection myConnection;
+         int id_cours = 0;
           myConnection=Authentification.init();
-          statement = myConnection.createStatement();
+          statement=statementhi=statementhu=statementj = myConnection.createStatement();
+          String sqlj = "SELECT * FROM seance WHERE ID ='"+idseance+"'";
+                resultatj = statementj.executeQuery(sqlj);
+                while(resultatj.next())
+                {
+                 id_cours=resultatj.getInt("ID_Cours");
+                }
+          
+          String sqlhu = "SELECT * FROM seance_enseignant see INNER JOIN enseignant en  ON en.ID_Utilisateur= see.ID_Enseignant WHERE ID_Cours ='"+id_cours+"' AND ID_Utilisateur='"+NouveauEn+"'";
+                resultathu = statementhu.executeQuery(sqlhu);
+      
+                if(!resultathu.next()){   JOptionPane.showMessageDialog(null,"Cet enseignant n'enseigne pas ce cours !","Error",JOptionPane.PLAIN_MESSAGE);   }
+                 
+                else{  
+                
+          
           statement.executeUpdate("INSERT INTO seance_enseignant"+ " VALUES ('"+NouveauEn+"','"+idseance+"')");
-          System.out.println("INSERT INTO seance_enseignant VALUES ('"+NouveauEn+"','"+idseance+"')");
+          System.out.println("INSERT INTO seance_enseignant VALUES ('"+NouveauEn+"','"+idseance+"')");}
     }
 
     public void modif_nomcours(String Changement, String substring) throws SQLException {
@@ -508,13 +525,14 @@ public class EdtModele {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
          Connection myConnection;
          Statement statement;
+         System.out.println("tu es dans supprimer ! groupe ="+groupe+" enseignant ="+supenseigant);
                        myConnection=Authentification.init();
                         //System.out.print("co okkkkk");
                        statement = myConnection.createStatement();
                        
                                 if( groupe.equals("O")){
-
-                                statement.execute("DELETE FROM groupe WHERE ID='"+idseance+"'");
+                                 System.out.println("ici?");
+                                statement.execute("DELETE FROM seance_groupe WHERE ID_Seance='"+idseance+"'");
                                 //Supprimerseance.setVisible(false);
                                 }
                                 else if(supenseigant.equals("O"))
