@@ -52,6 +52,27 @@ public class SeanceDAO {
       return recup;
     }
      
+     public void recupseance(String NewDate,int NewJour, int NewSemaine,int NewDeb,int NewFin,String NewEtat,int NewIDc,int NewIDt) throws SQLException
+    {
+        int recup=0;
+       Connection myConnection;
+             myConnection=Authentification.init();
+             Statement statement;
+             ResultSet resultat;
+             statement = myConnection.createStatement();
+             String sql="SELECT * FROM seance WHERE NOT Etat= 'passe'";  
+             ResultSet result = statement.executeQuery(sql);
+             int i=0;
+             while (result.next())
+             {
+               recup=result.getInt("ID");
+               
+             }
+             
+             System.out.println("ID SEANCE: "+recup );
+    
+    }
+     
      public void setid(int nouveau)
     {     this.id=nouveau;}
 }
