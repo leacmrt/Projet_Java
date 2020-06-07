@@ -62,7 +62,7 @@ public View(Onglet ong, Color color, int ID_Utilisateur,String droit,int etat) t
     
     }
         
-    if (COUNT==2)
+    if (COUNT==2)//on va ameliorer ça plus tard
     {this.message=" "; 
         RecapCours recapcours = new RecapCours(this,ID_Utilisateur,droit,etat);
         this.repaint();
