@@ -9,11 +9,14 @@ import controlleur.AuthentificationControleur;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.StringTokenizer;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -335,21 +338,38 @@ public class EdtModele {
        public boolean ajout(View aThis,JTextField Date, String jour1, JTextField Semaine, JTextField Heuredeb, JTextField HeureFin, String Etat, String cours, int Groupe,String Prof,String Salle,int id_prof,int id_cours,int id_salle) throws SQLException
      {
              boolean retour ; 
-            
+             int calsemaine;
+             int calannee;
+             int caljour;
+             int calmois; 
+             
+             SimpleDateFormat formater = null;
              Connection myco;
              myco=Authentification.init();
              Statement statement,statement2,statementhu,statementha,statementho,statementhi;
              ResultSet resultat,resultathu,resultatha,resultatho,resultathi;
              
+             Date aujourdhui = new Date(System.currentTimeMillis());
+             Calendar cal = Calendar.getInstance(Locale.FRANCE);
+             cal.setTime(aujourdhui);
+ 
+             calsemaine=cal.get(Calendar.WEEK_OF_YEAR);
+             calannee=cal.get(Calendar.YEAR);
+             caljour=cal.get(Calendar.DAY_OF_MONTH);
+             calmois=cal.get(Calendar.MONTH)+1;
+             formater = new SimpleDateFormat("dd-MM-yy");
+             System.out.println("affichage avec cal :"+caljour+":  jour "+calsemaine+":semaine"+calmois+":mois"+calannee+":annee");
            
             String date=Date.getText();
-            String annee= date.substring(0,4);
-            String mo=date.substring(5,7);
-            String jo=date.substring(8,10);
+            int annee=Integer.parseInt( date.substring(0,4));
+            int mo=Integer.parseInt( date.substring(5,7));
+            int jo=Integer.parseInt( date.substring(8,10));
             
 
           // String date1 = new SimpleDateFormat("yyyy-MM-dd").format(date);
            System.out.println("jour"+jo+" mois :"+mo+" annee :"+annee);
+           
+           
             
             int Semaine1 = 0,heuredeb = 0,heurefin = 0;
             String semaine=Semaine.getText();
@@ -408,7 +428,13 @@ public class EdtModele {
              
              System.out.println(heuredeb+" "+heurefin);
              
-            
+            if(annee==calannee)
+           {
+             if(mo>=calmois&&mo<13)
+             {
+                 if(jo>caljour&&jo<32)
+                 {
+                 
              
              if(Semaine1!=0&&(((8==heuredeb))&&(10==heurefin))||((10==heuredeb)&&(12==heurefin))||((12==heuredeb)&&(14==heurefin))||((14==heuredeb)&&(16==heurefin))||((16==heuredeb)&&(18==heurefin))||((18==heuredeb)&&(20==heurefin)))
              {    
@@ -484,7 +510,15 @@ public class EdtModele {
              }}}}}}else {   JOptionPane.showMessageDialog(null,"Erreur entrée Heure, incompatible ou les horraires ne se suivent pas","Error",JOptionPane.PLAIN_MESSAGE);
              retour= false;
              System.out.println("retour : "+retour);
-              return retour;}
+              return retour;}}else{ System.out.println(" Date déjà passée ou jour n'existe pas");
+                 JOptionPane.showMessageDialog(null," Date déjà passée ou jour n'existe pas","Error",JOptionPane.PLAIN_MESSAGE);}
+                 
+             }else{ System.out.println("Le mois est dajà passé ou n'existe pas");
+              JOptionPane.showMessageDialog(null,"Le mois est dajà passé ou n'existe pas","Error",JOptionPane.PLAIN_MESSAGE);
+             }
+           }else{ System.out.println(" Vous ne pouvez ajouter que pour ce semestre !");
+            JOptionPane.showMessageDialog(null," Vous ne pouvez ajouter une seance que sur ce semestre !","Error",JOptionPane.PLAIN_MESSAGE);}
+            
         return false;
            
        
