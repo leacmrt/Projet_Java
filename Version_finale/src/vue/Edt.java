@@ -290,7 +290,7 @@ try {
                 Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.print("t'as cliqué sur "+labelText);
-            System.out.print("etat l:"+Edt.this.EtatUT);
+            System.out.print("etat l:"+Edt.this.EtatUT+"id de l'utilisateur"+Edt.this.ID_Utilisateur1);
 
                 }   
             });

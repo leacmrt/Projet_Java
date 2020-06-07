@@ -31,7 +31,7 @@ public class Onglet extends JFrame {
     Color fond=new Color(128,188,216);
     Color fond2=new Color(128,140,202);
     Color fond3=new Color(181,239,237);
-    View edt = new View(this,fond,ID_Groupe,droit,etat); //page emploi du temps
+    View edt = new View(this,fond,ID_Utilisateur,droit,etat); //page emploi du temps
     View recap = new View(this,fond2,ID_Utilisateur,droit,etat); // page recapitulatif de cours 
     View modification = new View(this,fond3,ID_Groupe,droit,etat);
     

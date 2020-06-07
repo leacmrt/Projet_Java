@@ -132,20 +132,32 @@ public class EdtModele {
           if ((etat == 0)||(etat == 1)||(etat == 2)){
           control= new AuthentificationControleur();
            myConnection = init();
-           Statement util = null;
-           ResultSet resulutil = null;
+           int id_groupe2=1;
+           Statement util ,statement1 = null;
+           ResultSet resulutil = null ,resul1= null;
            Object data[][] = new  Object [11][7];
            util= myConnection.createStatement();
-           System.out.println("Semaine : "+semaine);
+           statement1= myConnection.createStatement();
+           System.out.println("Semaine : "+semaine+" id groupe = "+ID_utli1);
            if(etat==1)
-                   {String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
+                   {
+                      String sql1="SELECT * FROM utilisateur INNER JOIN etudiant on utilisateur.ID=etudiant.ID_Utilisateur WHERE ID='"+ID_utli1+"'";
+                     
+                      resul1 = statement1.executeQuery(sql1);
+                      if(resul1.next())
+                      {
+                        id_groupe2=resul1.getInt("ID_Groupe");
+                      }
+                       
+                       
+                    String sql = "SELECT * FROM seance_groupe s INNER JOIN seance se ON s.ID_Seance=se.ID ";
                    sql+=" INNER JOIN seance_enseignant sa ON sa.ID_Seance=s.ID_Seance";
                    sql+=" INNER JOIN enseignant en ON en.ID_Utilisateur=sa.ID_Enseignant";
                    sql+=" INNER JOIN utilisateur ut ON ut.ID=en.ID_Utilisateur";
                    sql+=" INNER JOIN seance_salle sea ON sea.ID_Seance=se.ID";
                    sql+=" INNER JOIN salle sal ON sal.ID=sea.ID_Salle";
                    sql+=" INNER JOIN cours co ON en.ID_Cours =co.ID";
-                   sql += "  WHERE s.ID_Groupe ='"+ID_utli1+"' AND se.Semaine='"+semaine+"'";
+                   sql += "  WHERE ID_Groupe ='"+id_groupe2+"' AND se.Semaine='"+semaine+"'";
                    resulutil = util.executeQuery(sql);
                   
                    }
@@ -415,7 +427,7 @@ public class EdtModele {
                  
                 else{
                     
-                   //vérification qu'une séance ne se passe pas déjà en même temps : salle 
+                   //vérification qu'une séance ne se passe pas déjà en même temps : enseignant 
                 statementho = myco.createStatement();
                 String sqlho = "SELECT * FROM seance INNER JOIN seance_enseignant ON seance.ID=seance_enseignant.ID_Seance WHERE ID_Enseignant ='"+id_prof+"' AND Heure_Debut='"+heuredeb+"' AND Heure_Fin='"+heurefin+"' AND Jour='"+jour+"' AND Semaine='"+Semaine1+"'";
                 resultatho = statementho.executeQuery(sqlho);
@@ -426,7 +438,7 @@ public class EdtModele {
                 
                    //vérification qu'une séance ne se passe pas déjà en même temps : salle 
                 statementhi = myco.createStatement();
-                String sqlhi = "SELECT * FROM seance se INNER JOIN seance_enseignant see ON se.ID=see.ID_Seance INNER JOIN enseignant en  ON en.ID_Utilisateur= see.ID_Enseignant WHERE en.ID_Cours ='"+id_cours+"' AND ID_Utilisateur='"+id_prof+"'";
+                String sqlhi = "SELECT * FROM  enseignant WHERE ID_Cours ='"+id_cours+"' AND ID_Utilisateur='"+id_prof+"'";
                 resultathi = statementhi.executeQuery(sqlhi);
                  
                 if(!resultathi.next()){   JOptionPane.showMessageDialog(null,"Cet enseignant n'enseigne pas ce cours !","Error",JOptionPane.PLAIN_MESSAGE);   }
