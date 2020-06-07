@@ -769,6 +769,7 @@ class Modification extends JPanel implements ItemListener{
              // ajout.add(id);
               JLabel labenseignant = new JLabel("Saisir l'enseignant: "+"\n");
               ajout.add(labenseignant);
+              choixenseignant.setVisible(true);
               ajout.add(choixenseignant);
                choixenseignant.addActionListener(new ActionListener()
             {
@@ -888,6 +889,7 @@ class Modification extends JPanel implements ItemListener{
              // ajout.add(id);
               JLabel labenseignant = new JLabel("Saisir le groupe: "+"\n");
               ajout.add(labenseignant);
+              choixgroupe.setVisible(true);
               ajout.add(choixgroupe);
                choixgroupe.addActionListener(new ActionListener()
             {
