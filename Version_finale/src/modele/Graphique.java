@@ -50,18 +50,29 @@ public class Graphique  {
               {
                   System.out.println("coucou je suis là");
                   statement = myConnection.createStatement();
+                  Statement statement1 = myConnection.createStatement();;
                   String sql = "SELECT * FROM cours WHERE 1";
                   resultat = statement.executeQuery(sql);
+                  ResultSet resul1;
                   ArrayList<String> re = new ArrayList<>();
                   ArrayList<Integer> pa =  new ArrayList<>();
                   ArrayList<Integer> at =  new ArrayList<>();
+                  int id_groupe2 = 0;
                   
                   int j=0;
                   while (resultat.next()) {
+                      
+                      String sql12="SELECT * FROM utilisateur INNER JOIN etudiant on utilisateur.ID=etudiant.ID_Utilisateur WHERE ID='"+id+"'";
+                     
+                      resul1 = statement1.executeQuery(sql12);
+                      if(resul1.next())
+                      {
+                        id_groupe2=resul1.getInt("ID_Groupe");
+                      }
                      
                       String nom = resultat.getString("Nom_Cours");
                       re.add(nom);
-                      String sql1 = "SELECT * FROM cours co INNER JOIN seance se ON co.ID=se.ID_Cours INNER JOIN seance_groupe seg ON seg.ID_Seance=se.ID WHERE Nom_Cours='"+nom+"' AND ID_Groupe='"+id+"'";
+                      String sql1 = "SELECT * FROM cours co INNER JOIN seance se ON co.ID=se.ID_Cours INNER JOIN seance_groupe seg ON seg.ID_Seance=se.ID WHERE Nom_Cours='"+nom+"' AND ID_Groupe='"+id_groupe2+"'";
                       statement2 = myConnection.createStatement();
                       
                       resultat2 = statement2.executeQuery(sql1);
