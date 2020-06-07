@@ -5,6 +5,7 @@
  */
 package controlleur;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -73,7 +74,7 @@ RecapCoursVue vue ;
       Admin admin = new Admin(ID,Email,Passwd,Prenom,Nom,Droit);
     }
         
-    public void chargefenetre(int ID_Utilisateur,int ID_Groupe, String droit, int NewEtat) throws SQLException {
+    public void chargefenetre(int ID_Utilisateur,int ID_Groupe, String droit, int NewEtat) throws SQLException, IOException {
          onglet = new Onglet(ID_Utilisateur,ID_Groupe,droit ,NewEtat);
     }
 

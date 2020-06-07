@@ -12,6 +12,7 @@ package vue;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.IOException;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -19,7 +20,7 @@ import javax.swing.JTabbedPane;
 public class Onglet extends JFrame {
   private JTabbedPane onglet;
    
-  public Onglet(int ID_Utilisateur,int ID_Groupe,String droit,int etat) throws SQLException{
+  public Onglet(int ID_Utilisateur,int ID_Groupe,String droit,int etat) throws SQLException, IOException{
    
       
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -361,6 +361,10 @@ public class EdtModele {
              System.out.println("affichage avec cal :"+caljour+":  jour "+calsemaine+":semaine"+calmois+":mois"+calannee+":annee");
            
             String date=Date.getText();
+            if(!date.isEmpty()&&date.length()==10)
+            {
+            if((estUnEntier(date.substring(0,4)))&&(estUnEntier( date.substring(5,7)))&&estUnEntier(date.substring(8,10)))    
+            {    
             int annee=Integer.parseInt( date.substring(0,4));
             int mo=Integer.parseInt( date.substring(5,7));
             int jo=Integer.parseInt( date.substring(8,10));
@@ -517,7 +521,8 @@ public class EdtModele {
               JOptionPane.showMessageDialog(null,"Le mois est dajà passé ou n'existe pas","Error",JOptionPane.PLAIN_MESSAGE);
              }
            }else{ System.out.println(" Vous ne pouvez ajouter que pour ce semestre !");
-            JOptionPane.showMessageDialog(null," Vous ne pouvez ajouter une seance que sur ce semestre !","Error",JOptionPane.PLAIN_MESSAGE);}
+            JOptionPane.showMessageDialog(null," Vous ne pouvez ajouter une seance que sur ce semestre !","Error",JOptionPane.PLAIN_MESSAGE);}}}
+            else{JOptionPane.showMessageDialog(null," Erreur format de Date","Error",JOptionPane.PLAIN_MESSAGE);}
             
         return false;
            
@@ -663,6 +668,16 @@ public class EdtModele {
          }
        // statement.executeUpdate(query) ;
     }
+    
+    public boolean estUnEntier(String chaine) {
+		try {
+			Integer.parseInt(chaine);
+		} catch (NumberFormatException e){
+			return false;
+		}
+ 
+		return true;
+	}
   
      
 }
