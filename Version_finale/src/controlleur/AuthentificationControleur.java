@@ -102,9 +102,9 @@ RecapCoursVue vue ;
         graphique.afficheenseignant(re,pa,at);
     }
      
-      public void remplirsalle (String nom,int poo,int web,int anglais) throws SQLException {
+      public void remplirsalle (String nom,int poo,int web,int anglais, ArrayList<String> noms, ArrayList<Integer> cap) throws SQLException {
        graphique = new GraphiqueVue(); 
-        graphique.affichesalle(nom,poo,web,anglais);
+        graphique.affichesalle(nom,poo,web,anglais,noms,cap);
     }
 
     public int recherche(String string) throws SQLException {
@@ -191,6 +191,8 @@ RecapCoursVue vue ;
          Edtt= new EdtModele();
        Edtt.ajout_groupe(valueOf,ind);
     }
+
+    
 
     
 }

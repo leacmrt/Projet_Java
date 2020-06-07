@@ -32,6 +32,7 @@ public class RecapCoursVue {
     
     int ID_Utilisateur1;
     int EtatUT;
+    int taillemax;
     
     public RecapCoursVue(int o) throws SQLException{
         System.out.println("coucou ça marche");
@@ -181,8 +182,8 @@ public class RecapCoursVue {
                     //model.addElement(info);
                 }
 
-                
-                
+                settaillemax(jcombo.getComponentCount());
+                System.out.println("taille max:"+gettaillemax());
                 jcombo.setEditable(true);
                
                 jcombo.setEnabled(true);
@@ -201,9 +202,9 @@ public class RecapCoursVue {
           }
           
              
-          if(tab.size()!=0)
+          if(!tab.isEmpty())
           {
-         // System.out.println("taille : "+tab.size()+" - "+jcombo.getComponentCount());
+         System.out.println("taille : "+tab.size()+" - "+jcombo.getComponentCount());
                 if(jcombo.getComponentCount()>tab.size())
           { System.out.println("probleme de taille");
           jcombo = new JComboBox();
@@ -213,6 +214,21 @@ public class RecapCoursVue {
             jcombo.setEnabled(true);
                 jcombo.setVisible(true);
             jcombo.setBounds(100, 100+(40*2), 850, 40);
+            la.add(jcombo);
+          }}
+          
+          if(tab.isEmpty())
+          {
+         System.out.println("cest vide"+gettaillemax());
+            for(int j=0;j<5;j++)   
+          { System.out.println("probleme de taille");
+          jcombo = new JComboBox();
+          String bonjour ="   ";
+            jcombo.addItem(bonjour);
+             jcombo.setEditable(true);
+            jcombo.setEnabled(true);
+              jcombo.setVisible(true);
+            jcombo.setBounds(100, 100+(40*j), 850, 40);
             la.add(jcombo);
           }}
           
@@ -239,6 +255,12 @@ public class RecapCoursVue {
              
         }
     
+   public void settaillemax(int newh)
+   { RecapCoursVue.this.taillemax=newh;
+   }
    
+   public int gettaillemax()
+   {  return RecapCoursVue.this.taillemax;
+   }
 }
     

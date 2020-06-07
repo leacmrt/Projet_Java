@@ -39,7 +39,8 @@ public class Graphique  {
   public Graphique(int id,int repport) throws SQLException { 
         
      System.out.println(repport+"repport");
-  
+     if(repport==2)
+     {repport=0;}   
    
      Connection myConnection;
      myConnection=Authentification.init();
@@ -106,30 +107,33 @@ public class Graphique  {
                   { anglais++;}
                   
               }
-             control.remplirsalle(nom_salle,poo,web,anglais);
+            
               
               // Capacité des salles pour un site
               String sql5 = "SELECT * FROM salle INNER JOIN site ON salle.ID_Site=site.ID WHERE ID_Site='"+Graphique.this.id_Site+"'";
               statement3= myConnection.createStatement();
               int site = 0;
-              DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+              ArrayList<String> noms = new ArrayList<>();
+              ArrayList<Integer> cap = new ArrayList<>();
+              
               resultat3 = statement3.executeQuery(sql5);
               int h=0;
               while (resultat3.next()) {
                   
                   String nom_salle=resultat3.getString("Nom_Salle");
+                  noms.add(nom_salle);
                   int capacite=resultat3.getInt("Capacite");
-                  dataset.addValue(capacite,"Nombre Eleve ", nom_salle);
+                  cap.add(capacite);
+                  
                   //h+=100;
                   
               }
-             /* JFreeChart barChart = ChartFactory.createBarChart("Site E1", "",
-                      "Capacité", dataset, PlotOrientation.VERTICAL, true, true, false);
-              ChartPanel cPanel1 = new ChartPanel(barChart);
-              panel.add(cPanel1);*/
+              
+              control.remplirsalle(nom_salle,poo,web,anglais,noms,cap);
+             
               break;
           }
-          case 2:
+          case 0:
               {
                   System.out.println("coucou Enseignant");
                   statement = myConnection.createStatement();

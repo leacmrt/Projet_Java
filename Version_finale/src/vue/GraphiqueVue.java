@@ -25,6 +25,8 @@ import javax.swing.JTextArea;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 /**
@@ -106,7 +108,7 @@ public class GraphiqueVue extends JFrame{
     }
     
     
-    public void affichesalle(String nom_salle,int poo,int web,int anglais)
+    public void affichesalle(String nom_salle,int poo,int web,int anglais,ArrayList<String> noms, ArrayList<Integer> cap)
     { GraphiqueVue jojo = new GraphiqueVue();
      DefaultPieDataset pieDataset = new DefaultPieDataset();
     // System.out.println("passe = "+passe+ " Attente : "+attente );
@@ -121,6 +123,15 @@ public class GraphiqueVue extends JFrame{
                       pieDataset, true, false, false);
               tot.setText("Total heures :"+total+" h");
               ChartPanel cPanel = new ChartPanel(pieChart);
+              
+              DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+              for(int j=0;j<noms.size();j++)
+              {dataset.addValue(cap.get(j),"Nombre Eleve ", noms.get(j));
+              }
+              JFreeChart barChart = ChartFactory.createBarChart("Site E1", "",
+                      "Capacité", dataset, PlotOrientation.VERTICAL, true, true, false);
+              ChartPanel cPanel1 = new ChartPanel(barChart);
+              panel.add(cPanel1);
               //cPanel.setBounds(10, 10+x ,60,60);
               panel.add(cPanel);
               affichefin(panel);
