@@ -25,7 +25,7 @@ public class RecapCoursmodele {
     
     AuthentificationControleur control;
     Connection myConnection;
-        public void chargecoursRecap(JPanel la,int ID_utli1,int etat) throws SQLException
+        public void chargecoursRecap(JPanel la,int ID_utli1,int etat,int recherche) throws SQLException
       {
           control = new AuthentificationControleur ();
           myConnection = Authentification.init();
@@ -300,7 +300,7 @@ public class RecapCoursmodele {
                  
                    }
       
-          control.recupcours(la,nbr_cours,tab);
+          control.recupcours(la,nbr_cours,tab,recherche);
           
       }
         

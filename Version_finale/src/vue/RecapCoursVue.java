@@ -77,7 +77,7 @@ public class RecapCoursVue {
                     RecapCoursVue.this.ID_Utilisateur1=idrecherche;
                     RecapCoursVue.this.EtatUT=etatrecherche;
                     //System.out.println(RecapCoursVue.this.ID_Utilisateur1+" lololl");
-                    rec.chargecoursRecap(aThis, RecapCoursVue.this.ID_Utilisateur1, RecapCoursVue.this.EtatUT);
+                    rec.chargecoursRecap(aThis, RecapCoursVue.this.ID_Utilisateur1, RecapCoursVue.this.EtatUT,0);
                     
                 } else System.out.println("Non"+idrecherche+" "+etatrecherche);
             } catch (SQLException ex) {}
@@ -85,7 +85,7 @@ public class RecapCoursVue {
         
     }else{
         
-        rec.chargecoursRecap(aThis,ID_Utilisateur,etat);  }
+        rec.chargecoursRecap(aThis,ID_Utilisateur,etat,1);  }
     
     //chargecoursRecap(JPanel la,int ID_utli1,int etat)
     
@@ -115,7 +115,7 @@ public class RecapCoursVue {
 
     
    
- public void affichage(JPanel la ,int nbr_cours,ArrayList<ArrayList<ArrayList<String>>> tab)
+ public void affichage(JPanel la ,int nbr_cours,ArrayList<ArrayList<ArrayList<String>>> tab,int recherche)
         {     
             la.updateUI();
             
@@ -182,8 +182,8 @@ public class RecapCoursVue {
                     //model.addElement(info);
                 }
 
-                settaillemax(jcombo.getComponentCount());
-                System.out.println("taille max:"+gettaillemax());
+                //settaillemax(jcombo.getComponentCount());
+                //System.out.println("taille max:"+gettaillemax());
                 jcombo.setEditable(true);
                
                 jcombo.setEnabled(true);
@@ -200,21 +200,26 @@ public class RecapCoursVue {
 
         
           }
-          
-             
+          if(recherche==0)//si on fait une recherche , adapter l'affichage
+          {   
           if(!tab.isEmpty())
           {
          System.out.println("taille : "+tab.size()+" - "+jcombo.getComponentCount());
                 if(jcombo.getComponentCount()>tab.size())
+                    for(int o=4;o>=tab.size();o--)
           { System.out.println("probleme de taille");
           jcombo = new JComboBox();
+          JComboBox jcombo2 = new JComboBox();
           String bonjour ="   ";
+          jcombo2.addItem(bonjour);
             jcombo.addItem(bonjour);
-               jcombo.setEditable(true);
+            jcombo.setEditable(true);
             jcombo.setEnabled(true);
-                jcombo.setVisible(true);
-            jcombo.setBounds(100, 100+(40*2), 850, 40);
+            
+            jcombo.setVisible(true);
+            jcombo.setBounds(100, 100+(40*(o)), 850, 40);
             la.add(jcombo);
+           
           }}
           
           if(tab.isEmpty())
@@ -227,12 +232,12 @@ public class RecapCoursVue {
             jcombo.addItem(bonjour);
              jcombo.setEditable(true);
             jcombo.setEnabled(true);
-              jcombo.setVisible(true);
+            jcombo.setVisible(true);
             jcombo.setBounds(100, 100+(40*j), 850, 40);
             la.add(jcombo);
           }}
           
-         
+          }
           
          
        }

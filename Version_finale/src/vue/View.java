@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import static java.lang.System.exit;
 import java.sql.SQLException;
 import javax.swing.JPanel;
@@ -39,7 +40,7 @@ public class View extends JPanel {
      * @param ong
      * @param color
      */
-public View(Onglet ong, Color color, int ID_Utilisateur,String droit,int etat) throws SQLException
+public View(Onglet ong, Color color, int ID_Utilisateur,String droit,int etat) throws SQLException, IOException
 {    
     this.setLayout(null);
     this.color = color;

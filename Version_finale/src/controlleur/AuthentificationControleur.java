@@ -147,10 +147,10 @@ RecapCoursVue vue ;
        EDT.tableau(table, la, data);
     }
 
-    public void recupcours(JPanel la, int nbr_cours, ArrayList<ArrayList<ArrayList<String>>> tab) throws SQLException {
+    public void recupcours(JPanel la, int nbr_cours, ArrayList<ArrayList<ArrayList<String>>> tab,int recherche) throws SQLException {
         vue = new RecapCoursVue(1);
         System.out.println("tu es là?");
-        vue.affichage(la, nbr_cours, tab);
+        vue.affichage(la, nbr_cours, tab,recherche);
     }
 
    public boolean ajout(View aThis,JTextField Date, String jour1, JTextField Semaine, JTextField Heuredeb, JTextField HeureFin, String Etat, String cours, int Groupe,String Prof,String Salle,int id_prof,int id_cours,int id_salle) throws SQLException
