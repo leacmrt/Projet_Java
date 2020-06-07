@@ -180,7 +180,7 @@ public class RecapCoursVue {
                 //Infos des diffÃ©rentes sÃ©ances
                 for (int k = 1; k < size-4 ; k++){
                     
-                    info = "            Date:  "+tab.get(j).get(k).get(2)+"                                                     DÃ©but:  "
+                    info = "            Date:  "+tab.get(j).get(k).get(2)+"                                                     Debut:  "
                             +tab.get(j).get(k).get(0)+" h                                                          Fin:  "
                             +tab.get(j).get(k).get(1)+" h                                                          Duree:  "
                             +tab.get(j).get(k).get(3)+" h";
