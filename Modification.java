@@ -73,7 +73,7 @@ class Modification extends JPanel implements ItemListener{
     JButton deco=new JButton("Deconnexion ");
     JCheckBox check1 = new JCheckBox("Nom");
     JCheckBox check2 = new JCheckBox("Type");
-     
+     //jcombo box marche enfin
  
       //JTextField ID = new JTextField("ID"); 
     /*
