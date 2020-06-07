@@ -25,7 +25,7 @@ public class Groupe {
      this.ID_Promotion=NewID_Promotion;
      this.Nom=NewNom;
      
-    }
+    }//ici aussi
 
    public Groupe() {
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
