@@ -109,7 +109,8 @@ public class SeanceDAO {
                      u+= " - sans groupe";
                      lis.set(t, u);
                      System.out.println(lis.get(t));
-                 }}
+                 }
+              }
             
          }
              

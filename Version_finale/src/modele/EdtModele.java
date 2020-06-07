@@ -343,9 +343,13 @@ public class EdtModele {
              
            
             String date=Date.getText();
+            String annee= date.substring(0,4);
+            String mo=date.substring(5,7);
+            String jo=date.substring(8,10);
             
 
-          // String date1 = new SimpleDateFormat("yyyy-MM-dd").format(getDate().getText());
+          // String date1 = new SimpleDateFormat("yyyy-MM-dd").format(date);
+           System.out.println("jour"+jo+" mois :"+mo+" annee :"+annee);
             
             int Semaine1 = 0,heuredeb = 0,heurefin = 0;
             String semaine=Semaine.getText();

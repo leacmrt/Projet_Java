@@ -886,7 +886,7 @@ class Modification extends JPanel implements ItemListener{
                
               JTextField id = new JTextField(10);
              // ajout.add(id);
-              JLabel labenseignant = new JLabel("Saisir le gro^pet: "+"\n");
+              JLabel labenseignant = new JLabel("Saisir le groupe: "+"\n");
               ajout.add(labenseignant);
               ajout.add(choixgroupe);
                choixgroupe.addActionListener(new ActionListener()
