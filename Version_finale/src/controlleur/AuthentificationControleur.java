@@ -97,9 +97,9 @@ RecapCoursVue vue ;
     }
     
     
-     public void remplirenseignant( ArrayList <String> re,ArrayList <Integer>   pa, ArrayList <Integer>  at) throws SQLException {
+     public void remplirenseignant( ArrayList <String> re,ArrayList <Integer>   pa, ArrayList <Integer>  at, ArrayList <Integer>  cor) throws SQLException {
        graphique = new GraphiqueVue(); 
-        graphique.afficheenseignant(re,pa,at);
+        graphique.afficheenseignant(re,pa,at,cor);
     }
      
       public void remplirsalle (String nom,int poo,int web,int anglais, ArrayList<String> noms, ArrayList<Integer> cap) throws SQLException {

@@ -137,7 +137,7 @@ public class GraphiqueVue extends JFrame{
               affichefin(panel);
     }
     
-    public void afficheenseignant(ArrayList<String> nom,ArrayList<Integer> tp,ArrayList<Integer>td)
+    public void afficheenseignant(ArrayList<String> nom,ArrayList<Integer> tp,ArrayList<Integer>td,ArrayList<Integer>cor)
     {
         GraphiqueVue jojo = new GraphiqueVue();
      DefaultPieDataset pieDataset1 = new DefaultPieDataset();
@@ -148,8 +148,10 @@ public class GraphiqueVue extends JFrame{
                       
                       pieDataset1.setValue(tp.get(u)+" h de TP ", tp.get(u));
                       pieDataset1.setValue(td.get(u)+ " h de TD",td.get(u));
-                      int chiffre1=tp.get(u) + td.get(u);
-                      
+                      pieDataset1.setValue(tp.get(u)+" h de TP ", tp.get(u));
+                      pieDataset1.setValue(cor.get(u)+ " h de Cours",cor.get(u));
+                      int chiffre1=tp.get(u) + td.get(u)+cor.get(u);
+                      total=chiffre1;
                       JFreeChart pieChart2 = ChartFactory.createPieChart("Cours : "+nom.get(u)+" : "+chiffre1+" h" ,
                               pieDataset1, true, false, false);
                       

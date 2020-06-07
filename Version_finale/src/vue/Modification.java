@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.System.exit;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -66,10 +71,10 @@ class Modification extends JPanel implements ItemListener{
     {}
      
      
-    public Modification(View aThis,int ID_Utilisateur,String droit,int etat) throws SQLException
+    public Modification(View aThis,int ID_Utilisateur,String droit,int etat) throws SQLException, IOException
     {
         control= new AuthentificationControleur();
-    JButton etu= new JButton("ETUDIANT");
+    JButton etu= new JButton("CHOISISSEZ PARMIS COURS ET SEANCE");
     JButton co = new JButton("COURS ");
     JButton se=new JButton(" SEANCE ");
     JButton ajout= new JButton("AJOUTER");
@@ -123,7 +128,7 @@ class Modification extends JPanel implements ItemListener{
     JComboBox choix = new JComboBox();
     choix.addItem("Ajouter");
     choix.addItem("Supprimer");
-    choix.addItem("Modifier");//sois modifier type sois nom 
+    choix.addItem("Modifier Etat");//sois modifier type sois nom 
     
     JComboBox jours = new JComboBox();
     jours.addItem("Lundi");
@@ -148,7 +153,7 @@ class Modification extends JPanel implements ItemListener{
                     String selected= (String)choix.getSelectedItem();
                     System.out.println("Selection : "+selected);
                     
-                    if("Modifier".equals(selected))
+                    if("Modifier Etat".equals(selected))
             {
                x=0;
                y=0;
@@ -950,7 +955,7 @@ class Modification extends JPanel implements ItemListener{
     choix.setBounds(150,330, 130, 30);
     choix1.setBounds(150,220, 130, 30);
     deco.setBounds(900,10, 130, 30);
-    etu.setBounds(10,50, 130, 30);
+    etu.setBounds(370,50,300, 30);
     co.setBounds(10,220, 130, 30);
     se.setBounds(10,330, 130, 30);
     aThis.add(deco);
@@ -977,6 +982,11 @@ class Modification extends JPanel implements ItemListener{
     aThis.add(ajout);
     aThis.add(check1);
     aThis.add(check2);
+    BufferedImage myPicture = ImageIO.read(new File("ece.jpg"));
+    ImageIcon image = new ImageIcon(myPicture);
+    JLabel jlabel = new JLabel(image);
+    jlabel.setBounds(100,450,150,150);
+    aThis.add(jlabel);
     aThis.validate();
     }
 

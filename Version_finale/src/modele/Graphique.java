@@ -29,7 +29,7 @@ public class Graphique  {
        static Connection myConnection; 
        Statement statement,statement2,statement3;
        ResultSet resultat,resultat2,resultat3;
-       int attente, passe,tp,td,compte, total,poo,web,anglais,id_Site,groupe = 0;
+       int attente, passe,tp,td,co,compte, total,poo,web,anglais,id_Site,groupe = 0;
        String groupe_titre,nom_salle;
        Label titre = new Label();
        Label titre1 = new Label();
@@ -142,6 +142,7 @@ public class Graphique  {
                   ArrayList<String> re = new ArrayList<>();
                   ArrayList<Integer> pa =  new ArrayList<>();
                   ArrayList<Integer> at =  new ArrayList<>();
+                  ArrayList<Integer> cor =  new ArrayList<>();
                   
                   while (resultat.next()) {
                      
@@ -158,14 +159,18 @@ public class Graphique  {
                           int ID = resultat2.getInt("ID_Type");
                           if(ID==1)
                           { tp++;}
-                          else td++;
+                          if(ID==2)
+                          { td++;}
+                          if(ID==3)
+                          {co++;}    
                           
                       }
                       pa.add(tp);
                       at.add(td);
+                      cor.add(co);
                       
                       total=tp+td;
-                      control.remplirenseignant(re,pa,at);
+                      control.remplirenseignant(re,pa,at,cor);
                       
                   }
                   break;
