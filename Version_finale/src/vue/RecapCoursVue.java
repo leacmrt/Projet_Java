@@ -13,6 +13,8 @@ import static java.lang.System.exit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import modele.Authentification;
@@ -35,7 +37,7 @@ public class RecapCoursVue {
     int taillemax;
     
     public RecapCoursVue(int o) throws SQLException{
-        System.out.println("coucou ça marche");
+        System.out.println("coucou Ã§a marche");
     }
 
     
@@ -98,6 +100,11 @@ public class RecapCoursVue {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Affichage du recapitulatif des cours ");
+                try {
+                    rec.chargecoursRecap(aThis,ID_Utilisateur,etat,0);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Edt.class.getName()).log(Level.SEVERE, null, ex);
+                }
                  aThis.repaint();
                  
             }
@@ -138,7 +145,7 @@ public class RecapCoursVue {
                 nbrcours.setBounds(680, 60, 780, 40); 
                 JLabel total=new JLabel("temps total");
                 total.setBounds(850, 60, 950, 40); 
-                System.out.print("t'as trouvé des cours?");
+                System.out.print("t'as trouvÃ© des cours?");
                 
                 la.add(cours);
                 la.add(premier);
@@ -156,7 +163,7 @@ public class RecapCoursVue {
                 DefaultComboBoxModel model = new DefaultComboBoxModel();
                 jcombo = new JComboBox();
                 
-                //Titre de la JcomboBox = Infos gÃ©nÃ©rales du cours
+                //Titre de la JcomboBox = Infos gÃƒÂ©nÃƒÂ©rales du cours
                 String titre = tab.get(j).get(0).get(0)+"                                             "
                         +tab.get(j).get(size-4).get(j)+"                                             "
                         + tab.get(j).get(size-3).get(j)+"                                              "
@@ -170,10 +177,10 @@ public class RecapCoursVue {
                 String info = new String();
 
                
-                //Infos des diffÃ©rentes sÃ©ances
+                //Infos des diffÃƒÂ©rentes sÃƒÂ©ances
                 for (int k = 1; k < size-4 ; k++){
                     
-                    info = "            Date:  "+tab.get(j).get(k).get(2)+"                                                     DÃ©but:  "
+                    info = "            Date:  "+tab.get(j).get(k).get(2)+"                                                     Debut:  "
                             +tab.get(j).get(k).get(0)+" h                                                          Fin:  "
                             +tab.get(j).get(k).get(1)+" h                                                          Duree:  "
                             +tab.get(j).get(k).get(3)+" h";
@@ -247,7 +254,7 @@ public class RecapCoursVue {
      
    
     
-    class DeconnexionListener extends JPanel implements ActionListener{ //pour se dÃ©connecter
+    class DeconnexionListener extends JPanel implements ActionListener{ //pour se dÃƒÂ©connecter
          
             @Override
             public void actionPerformed(ActionEvent e) {

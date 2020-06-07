@@ -440,7 +440,7 @@ public class EdtModele {
                  {
                  
              
-             if(Semaine1!=0&&(((8==heuredeb))&&(10==heurefin))||((10==heuredeb)&&(12==heurefin))||((12==heuredeb)&&(14==heurefin))||((14==heuredeb)&&(16==heurefin))||((16==heuredeb)&&(18==heurefin))||((18==heuredeb)&&(20==heurefin)))
+             if((Semaine1!=0)&&(Semaine1>=calsemaine)&&((((8==heuredeb))&&(10==heurefin))||((10==heuredeb)&&(12==heurefin))||((12==heuredeb)&&(14==heurefin))||((14==heuredeb)&&(16==heurefin))||((16==heuredeb)&&(18==heurefin))||((18==heuredeb)&&(20==heurefin))))
              {    
             
                  //vérification qu'une séance ne se passe pas déjà en même temps : groupe
