@@ -6,14 +6,18 @@
 package vue;
 
 import controlleur.AuthentificationControleur;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.System.exit;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import modele.Authentification;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -112,9 +116,13 @@ public class RecapCoursVue {
    
  public void affichage(JPanel la ,int nbr_cours,ArrayList<ArrayList<ArrayList<String>>> tab)
         {     
-            la.updateUI(); 
+            la.updateUI();
+            
+            la.repaint(-1);
+            
             JComboBox jcombo = null;
-        
+            
+            
            for (int u=0;u<tab.size();u++)
            { System.out.print(tab.get(u));}
            
@@ -144,7 +152,7 @@ public class RecapCoursVue {
               
              
                 int size = tab.get(j).size();
-                
+                DefaultComboBoxModel model = new DefaultComboBoxModel();
                 jcombo = new JComboBox();
                 
                 //Titre de la JcomboBox = Infos gÃ©nÃ©rales du cours
@@ -154,7 +162,10 @@ public class RecapCoursVue {
                         +tab.get(j).get(size-1).get(j)+"                                            "
                         +tab.get(j).get(size-2).get(j)+" h";
                 
-                jcombo.addItem(titre);
+               jcombo.addItem(titre);
+                
+               //model.addElement(titre);
+               
                 String info = new String();
 
                
@@ -167,21 +178,47 @@ public class RecapCoursVue {
                             +tab.get(j).get(k).get(3)+" h";
                     
                     jcombo.addItem(info);
+                    //model.addElement(info);
                 }
 
                 
                 
                 jcombo.setEditable(true);
+               
                 jcombo.setEnabled(true);
                 jcombo.setVisible(true);
-                jcombo.setBounds(100, 100+(40*j), 850, 40);
                 
+                //jcombo.setModel(model);
+               // jcombo.validate();
+                jcombo.setBounds(100, 100+(40*j), 850, 40);
                 la.add(jcombo);
+                
+                
                 
                           JComboBox jcombo2 = new JComboBox();
 
         
           }
+          
+             
+          if(tab.size()!=0)
+          {
+         // System.out.println("taille : "+tab.size()+" - "+jcombo.getComponentCount());
+                if(jcombo.getComponentCount()>tab.size())
+          { System.out.println("probleme de taille");
+          jcombo = new JComboBox();
+          String bonjour ="   ";
+            jcombo.addItem(bonjour);
+               jcombo.setEditable(true);
+            jcombo.setEnabled(true);
+                jcombo.setVisible(true);
+            jcombo.setBounds(100, 100+(40*2), 850, 40);
+            la.add(jcombo);
+          }}
+          
+         
+          
+         
        }
           
   
@@ -201,5 +238,7 @@ public class RecapCoursVue {
             }
              
         }
+    
+   
 }
     
