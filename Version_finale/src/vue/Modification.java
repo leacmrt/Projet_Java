@@ -167,7 +167,7 @@ class Modification extends JPanel implements ItemListener{
                
                 JFrame Modifierseance = new JFrame();
                Modifierseance.setTitle("Modification des seances");
-               Modifierseance.setSize(300,300);
+               Modifierseance.setSize(400,300);
                Modifierseance.setLocationRelativeTo(null);
                Modifierseance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                Modifierseance.setVisible(true);
